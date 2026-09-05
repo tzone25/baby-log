@@ -10,67 +10,46 @@
 
 <title>Baby Log</title>
 
-<link rel="manifest" href="./manifest.json">
-
 <style>
-:root{
-  --purple:#7c5cff;
-  --pink:#ff6fae;
-  --blue:#48a9ff;
-  --cyan:#36d9c5;
-  --yellow:#ffc857;
-  --green:#43c77a;
-  --red:#ff6262;
-  --orange:#ff9850;
-  --bg:#f5f6fc;
-  --card:#ffffff;
-  --text:#25253a;
-  --muted:#77788d;
-  --border:#e9e9f2;
-  --shadow:0 8px 25px rgba(50,45,90,.09);
-}
-
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:linear-gradient(180deg,#f8f6ff 0%,#f4f7fc 100%);
-  color:var(--text);
-  padding-bottom:90px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:#f5f6fc;
+  color:#222;
 }
 
-button,
-input,
-select,
-textarea{
+button,input,select,textarea{
   font:inherit;
 }
 
 button{
-  border:0;
   cursor:pointer;
 }
 
 .app{
   max-width:700px;
   margin:auto;
+  min-height:100vh;
+  padding-bottom:100px;
 }
 
 header{
-  padding:22px 18px 16px;
+  background:linear-gradient(135deg,#7c5cff,#a86cff);
   color:white;
-  background:linear-gradient(135deg,#7c5cff,#a15cff,#ff6fae);
+  padding:22px 18px 26px;
   border-radius:0 0 28px 28px;
-  box-shadow:0 10px 30px rgba(124,92,255,.25);
+  box-shadow:0 6px 20px #0002;
 }
 
 .header-row{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
 
 header h1{
@@ -83,315 +62,226 @@ header p{
   opacity:.9;
 }
 
-.baby-avatar{
-  width:55px;
-  height:55px;
-  background:white;
-  color:var(--purple);
+.settings-btn{
+  width:44px;
+  height:44px;
+  border:0;
   border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  box-shadow:0 5px 15px rgba(0,0,0,.15);
+  background:#ffffff25;
+  color:white;
+  font-size:22px;
 }
 
-main{
+.content{
   padding:16px;
 }
 
-.page{
-  display:none;
+.card{
+  background:white;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 3px 15px #0000000d;
 }
 
-.page.active{
-  display:block;
+.card h2{
+  margin:0 0 14px;
+  font-size:19px;
 }
 
-.grid{
+.dashboard{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:12px;
 }
 
-.card{
-  background:var(--card);
-  border-radius:20px;
+.stat{
   padding:16px;
-  box-shadow:var(--shadow);
-  margin-bottom:14px;
+  border-radius:18px;
+  background:#f1efff;
 }
 
-.stat-card{
-  min-height:115px;
-  position:relative;
-  overflow:hidden;
+.stat:nth-child(2){
+  background:#fff1f6;
 }
 
-.stat-card:after{
-  content:"";
-  position:absolute;
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  right:-25px;
-  bottom:-25px;
-  background:rgba(255,255,255,.35);
+.stat:nth-child(3){
+  background:#eefaf4;
 }
 
-.stat-icon{
-  font-size:25px;
+.stat:nth-child(4){
+  background:#fff8e9;
 }
 
-.stat-title{
-  color:var(--muted);
+.stat-label{
   font-size:13px;
-  margin-top:7px;
+  color:#666;
 }
 
 .stat-value{
-  font-size:23px;
+  font-size:25px;
   font-weight:800;
-  margin-top:3px;
+  margin-top:5px;
 }
 
-.purple{background:#eeeaff}
-.pink{background:#ffe8f1}
-.blue{background:#e6f4ff}
-.green{background:#e5faee}
-.yellow{background:#fff5d9}
-.orange{background:#fff0e5}
-.cyan{background:#e3faf7}
-
-.section-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin:22px 2px 10px;
-}
-
-.section-title h2{
-  margin:0;
-  font-size:18px;
-}
-
-.quick-actions{
+.actions{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:12px;
 }
 
 .action{
-  padding:18px 12px;
-  border-radius:20px;
+  border:0;
+  border-radius:18px;
+  padding:18px 10px;
   color:white;
-  font-weight:800;
+  font-weight:700;
   font-size:15px;
-  box-shadow:var(--shadow);
-}
-
-.action span{
-  display:block;
-  font-size:27px;
-  margin-bottom:7px;
 }
 
 .feed-btn{
-  background:linear-gradient(135deg,#7c5cff,#a45cff);
+  background:#7c5cff;
+}
+
+.breast-btn{
+  background:#ef6ca8;
 }
 
 .nappy-btn{
-  background:linear-gradient(135deg,#35b9ff,#4c8cff);
+  background:#35ad79;
 }
 
 .sleep-btn{
-  background:linear-gradient(135deg,#635bff,#9b6cff);
+  background:#536dfe;
 }
 
-.alarm-btn{
-  background:linear-gradient(135deg,#ff8d52,#ff5f82);
+.note-btn{
+  background:#f39c32;
 }
 
-.live{
-  border:2px solid var(--green);
-  background:#ecfff4;
+.history-btn{
+  background:#687080;
 }
 
-.live .stat-value{
-  color:#1d9b59;
-}
-
-.timeline-item{
+.section-title{
   display:flex;
-  gap:12px;
-  align-items:flex-start;
-  padding:13px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.timeline-item:last-child{
-  border-bottom:0;
-}
-
-.event-icon{
-  width:44px;
-  height:44px;
-  border-radius:15px;
-  display:flex;
+  justify-content:space-between;
   align-items:center;
-  justify-content:center;
-  font-size:22px;
-  flex-shrink:0;
-}
-
-.event-info{
-  flex:1;
-  min-width:0;
-}
-
-.event-title{
-  font-weight:800;
-}
-
-.event-detail{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:3px;
-}
-
-.event-time{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:5px;
-}
-
-.event-actions{
-  display:flex;
-  gap:5px;
-  flex-shrink:0;
 }
 
 .small-btn{
-  background:#f1f1f7;
+  border:0;
+  background:#eeeafd;
+  color:#6048d9;
+  padding:8px 12px;
   border-radius:10px;
-  padding:7px 9px;
+  font-weight:600;
+}
+
+.timeline-item{
+  border-left:4px solid #7c5cff;
+  padding:12px 12px 12px 15px;
+  margin-bottom:12px;
+  background:#fafaff;
+  border-radius:0 15px 15px 0;
+}
+
+.timeline-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.timeline-title{
+  font-weight:800;
+}
+
+.timeline-time{
+  font-size:13px;
+  color:#777;
+}
+
+.timeline-detail{
+  margin-top:6px;
+  color:#555;
+  font-size:14px;
+}
+
+.item-actions{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.item-actions button{
+  border:0;
+  padding:8px 12px;
+  border-radius:9px;
+  font-size:13px;
+}
+
+.edit{
+  background:#e9e5ff;
+  color:#5b45cf;
+}
+
+.delete{
+  background:#ffe6e6;
+  color:#d33;
 }
 
 .empty{
   text-align:center;
   padding:25px 10px;
-  color:var(--muted);
+  color:#888;
 }
 
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:76px;
-  background:rgba(255,255,255,.96);
-  backdrop-filter:blur(15px);
-  border-top:1px solid var(--border);
-  display:flex;
-  justify-content:center;
-  z-index:50;
-  padding-bottom:env(safe-area-inset-bottom);
-}
-
-.nav-inner{
-  max-width:700px;
-  width:100%;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-}
-
-.nav-btn{
-  background:transparent;
-  color:#8b8b9b;
-  font-size:10px;
-  font-weight:700;
-}
-
-.nav-btn span{
-  display:block;
-  font-size:22px;
-  margin-bottom:3px;
-}
-
-.nav-btn.active{
-  color:var(--purple);
-}
-
-.modal{
-  display:none;
+.overlay{
   position:fixed;
   inset:0;
-  background:rgba(25,25,45,.5);
-  z-index:100;
+  background:#0007;
+  z-index:1000;
+  display:none;
   align-items:flex-end;
   justify-content:center;
 }
 
-.modal.show{
+.overlay.show{
   display:flex;
 }
 
-.modal-box{
+.modal{
   width:100%;
   max-width:700px;
   max-height:92vh;
   overflow:auto;
   background:white;
   border-radius:28px 28px 0 0;
-  padding:20px;
-  animation:slideUp .25s ease;
+  padding:22px 18px 30px;
 }
 
-@keyframes slideUp{
-  from{
-    transform:translateY(100%);
-  }
-
-  to{
-    transform:translateY(0);
-  }
+.modal h2{
+  margin:0 0 18px;
 }
 
-.modal-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.form-group{
   margin-bottom:15px;
 }
 
-.modal-header h2{
-  margin:0;
-}
-
-.close{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  background:#f1f1f6;
-  font-size:20px;
-}
-
-label{
+.form-group label{
   display:block;
-  font-size:13px;
   font-weight:700;
-  margin:14px 0 7px;
+  margin-bottom:7px;
 }
 
 input,
 select,
 textarea{
   width:100%;
-  border:1px solid var(--border);
-  background:#f9f9fc;
+  border:1px solid #ddd;
   border-radius:13px;
   padding:13px;
-  outline:none;
+  background:white;
 }
 
 textarea{
@@ -399,232 +289,142 @@ textarea{
   resize:vertical;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
-  border-color:var(--purple);
-}
-
-.type-grid{
+.row{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:9px;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
-.type-option{
-  padding:13px;
-  border:2px solid var(--border);
-  background:white;
-  border-radius:15px;
+.amount-display{
   text-align:center;
+  font-size:30px;
+  font-weight:800;
+  color:#6b50df;
+  margin:10px;
+}
+
+input[type="range"]{
+  padding:0;
+}
+
+.modal-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:20px;
+}
+
+.modal-buttons button{
+  padding:14px;
+  border:0;
+  border-radius:13px;
   font-weight:700;
 }
 
-.type-option.selected{
-  border-color:var(--purple);
-  background:#f0edff;
-  color:var(--purple);
+.cancel{
+  background:#eee;
 }
 
-.range-wrap{
-  background:#f6f6fb;
-  padding:14px;
-  border-radius:16px;
-  margin-top:10px;
+.save{
+  background:#7c5cff;
+  color:white;
 }
 
-.range-value{
-  text-align:center;
-  font-size:25px;
-  font-weight:900;
-  color:var(--purple);
+.full{
+  grid-column:1/-1;
 }
 
-input[type=range]{
-  padding:0;
-  accent-color:var(--purple);
-}
-
-.primary{
-  width:100%;
+.sleep-duration{
+  background:#eef0ff;
+  border-radius:15px;
   padding:15px;
-  border-radius:15px;
-  background:linear-gradient(135deg,#7c5cff,#ff6fae);
-  color:white;
-  font-weight:900;
-  margin-top:18px;
-}
-
-.secondary{
-  width:100%;
-  padding:13px;
-  border-radius:15px;
-  background:#f1f1f6;
-  font-weight:800;
-  margin-top:8px;
-}
-
-.danger{
-  color:white;
-  background:var(--red);
-}
-
-.date-bar{
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
-
-.date-bar button{
-  background:#eeeaff;
-  color:var(--purple);
-  border-radius:12px;
-  padding:12px;
-  font-weight:800;
-}
-
-.chart{
-  display:flex;
-  align-items:flex-end;
-  gap:8px;
-  height:180px;
-  padding:10px 2px 0;
-}
-
-.bar-wrap{
-  flex:1;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  align-items:center;
-}
-
-.bar{
-  width:70%;
-  min-height:5px;
-  border-radius:8px 8px 3px 3px;
-  background:linear-gradient(180deg,#7c5cff,#a967ff);
-}
-
-.bar-label{
-  font-size:10px;
-  color:var(--muted);
-  margin-top:7px;
-}
-
-.bar-value{
-  font-size:10px;
-  font-weight:800;
-  margin-bottom:3px;
-}
-
-.alarm-row{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:13px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.alarm-time{
-  font-size:24px;
-  font-weight:900;
-  color:var(--orange);
-}
-
-.toggle{
-  margin-left:auto;
-  width:48px;
-  height:28px;
-  border-radius:20px;
-  background:#ddd;
-  position:relative;
-}
-
-.toggle:after{
-  content:"";
-  position:absolute;
-  width:22px;
-  height:22px;
-  top:3px;
-  left:3px;
-  background:white;
-  border-radius:50%;
-  transition:.2s;
-}
-
-.toggle.on{
-  background:var(--green);
-}
-
-.toggle.on:after{
-  left:23px;
-}
-
-.setting-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:9px;
-  background:#eeeaff;
-  color:var(--purple);
-  font-size:11px;
-  font-weight:800;
-}
-
-.notice{
-  padding:12px;
-  border-radius:14px;
-  background:#fff5d9;
-  font-size:12px;
-  color:#806100;
-  margin-top:10px;
-}
-
-.sleep-calculation{
-  background:#e3faf7;
-  border-radius:18px;
-  padding:18px;
   text-align:center;
-  margin-top:15px;
+  font-size:19px;
+  font-weight:800;
+  color:#4f58c8;
+  margin:15px 0;
 }
 
-.sleep-calculation-label{
-  color:var(--muted);
+.live-sleep{
+  background:#eaf4ff;
+  border:1px solid #cddfff;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:15px;
+}
+
+.live-sleep strong{
+  color:#315fc4;
+}
+
+.calendar-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.calendar-row input{
+  flex:1;
+}
+
+.day-total{
+  margin-top:12px;
+  padding:13px;
+  background:#f5f5ff;
+  border-radius:12px;
+  font-weight:700;
+}
+
+.warning{
+  background:#fff4d9;
+  border:1px solid #ffe3a0;
+  padding:12px;
+  border-radius:12px;
+  font-size:13px;
+  margin-bottom:12px;
+}
+
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  border-top:1px solid #ddd;
+  display:flex;
+  justify-content:center;
+  z-index:900;
+  padding:8px;
+}
+
+.nav-inner{
+  max-width:700px;
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
+
+.nav button{
+  border:0;
+  background:none;
+  padding:8px;
+  color:#777;
   font-size:13px;
 }
 
-.sleep-calculation-value{
-  font-size:30px;
-  font-weight:900;
-  color:var(--purple);
-  margin-top:5px;
+.nav button.active{
+  color:#694fe0;
+  font-weight:800;
 }
 
-.manual-badge{
-  background:#eeeaff;
-  color:var(--purple);
+.hidden{
+  display:none!important;
 }
 
-.tracked-badge{
-  background:#e5faee;
-  color:#1d9b59;
-}
-
-@media(min-width:600px){
-
-  .quick-actions{
-    grid-template-columns:repeat(4,1fr);
+@media(min-width:700px){
+  .nav{
+    position:fixed;
   }
-
 }
 </style>
 </head>
@@ -634,1426 +434,496 @@ input[type=range]{
 <div class="app">
 
 <header>
-
   <div class="header-row">
-
     <div>
-
-      <h1>
-        👶 <span id="headerBabyName">Baby Log</span>
-      </h1>
-
-      <p id="headerDate"></p>
-
+      <h1>👶 Baby Log</h1>
+      <p id="babyGreeting">Baby's daily tracker</p>
     </div>
-
-    <div class="baby-avatar">
-      🍼
-    </div>
-
+    <button class="settings-btn" onclick="openSettings()">⚙️</button>
   </div>
-
 </header>
 
-<main>
+<main class="content">
 
-<!-- HOME -->
+<section id="homePage">
 
-<section id="homePage" class="page active">
+<div id="liveSleepContainer"></div>
 
+<div class="card">
+  <h2>📊 Today</h2>
+
+  <div class="dashboard">
+
+    <div class="stat">
+      <div class="stat-label">Feeds</div>
+      <div class="stat-value" id="feedCount">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Milk</div>
+      <div class="stat-value" id="milkTotal">0 mL</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Nappies</div>
+      <div class="stat-value" id="nappyCount">0</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-label">Sleep</div>
+      <div class="stat-value" id="sleepTotal">0h 0m</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+<h2>➕ Log</h2>
+
+<div class="actions">
+
+<button class="action feed-btn" onclick="openFeed()">
+🍼 Bottle Feed
+</button>
+
+<button class="action breast-btn" onclick="openBreast()">
+🤱 Breastfeed
+</button>
+
+<button class="action nappy-btn" onclick="openNappy()">
+🧷 Nappy
+</button>
+
+<button class="action sleep-btn" onclick="startSleep()">
+😴 Start Sleep
+</button>
+
+<button class="action note-btn" onclick="openNote()">
+📝 Note
+</button>
+
+<button class="action history-btn" onclick="showHistory()">
+📅 History
+</button>
+
+</div>
+</div>
+
+<div class="card">
   <div class="section-title">
-
-    <h2>Today</h2>
-
-    <span class="badge" id="todayLabel"></span>
-
+    <h2>🕐 Today's Timeline</h2>
+    <button class="small-btn" onclick="showHistory()">View All</button>
   </div>
 
-
-  <div class="grid">
-
-    <div class="card stat-card purple">
-
-      <div class="stat-icon">🍼</div>
-
-      <div class="stat-title">
-        Last Feed
-      </div>
-
-      <div class="stat-value" id="lastFeed">
-        —
-      </div>
-
-    </div>
-
-
-    <div class="card stat-card pink">
-
-      <div class="stat-icon">⏱️</div>
-
-      <div class="stat-title">
-        Since Feed
-      </div>
-
-      <div class="stat-value" id="sinceFeed">
-        —
-      </div>
-
-    </div>
-
-
-    <div class="card stat-card blue">
-
-      <div class="stat-icon">🥛</div>
-
-      <div class="stat-title">
-        Today's Milk
-      </div>
-
-      <div class="stat-value" id="todayMilk">
-        0 mL
-      </div>
-
-    </div>
-
-
-    <div class="card stat-card yellow">
-
-      <div class="stat-icon">💧</div>
-
-      <div class="stat-title">
-        Nappies
-      </div>
-
-      <div class="stat-value" id="todayNappies">
-        0
-      </div>
-
-    </div>
-
-
-    <div class="card stat-card cyan">
-
-      <div class="stat-icon">😴</div>
-
-      <div class="stat-title">
-        Today's Sleep
-      </div>
-
-      <div class="stat-value" id="todaySleep">
-        0h 0m
-      </div>
-
-    </div>
-
-
-    <div class="card stat-card green">
-
-      <div class="stat-icon">👀</div>
-
-      <div class="stat-title">
-        Awake Time
-      </div>
-
-      <div class="stat-value" id="awakeTime">
-        —
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div id="sleepStatus"></div>
-
-
-  <div class="section-title">
-
-    <h2>Quick Add</h2>
-
-  </div>
-
-
-  <div class="quick-actions">
-
-    <button
-      class="action feed-btn"
-      onclick="openFeed()"
-    >
-
-      <span>🍼</span>
-      Add Feed
-
-    </button>
-
-
-    <button
-      class="action nappy-btn"
-      onclick="openNappy()"
-    >
-
-      <span>💧</span>
-      Add Nappy
-
-    </button>
-
-
-    <button
-      class="action sleep-btn"
-      onclick="toggleSleep()"
-    >
-
-      <span id="sleepButtonIcon">
-        😴
-      </span>
-
-      <span id="sleepButtonText">
-        Start Sleep
-      </span>
-
-    </button>
-
-
-    <button
-      class="action alarm-btn"
-      onclick="openAlarm()"
-    >
-
-      <span>⏰</span>
-      Add Reminder
-
-    </button>
-
-  </div>
-
-
-  <button
-    class="secondary"
-    onclick="openManualSleep()"
-  >
-
-    🕐 Enter Sleep Manually
-
-  </button>
-
-
-  <div class="section-title">
-
-    <h2>Today's Timeline</h2>
-
-    <button
-      class="small-btn"
-      onclick="showPage('calendar')"
-    >
-      See all
-    </button>
-
-  </div>
-
-
-  <div
-    class="card"
-    id="homeTimeline"
-  ></div>
+  <div id="todayTimeline"></div>
+</div>
 
 </section>
 
+<section id="historyPage" class="hidden">
 
-<!-- CALENDAR -->
+<div class="card">
 
-<section id="calendarPage" class="page">
+<h2>📅 History</h2>
 
-  <div class="section-title">
+<div class="calendar-row">
+<input type="date" id="historyDate" onchange="renderHistory()">
+<button class="small-btn" onclick="setToday()">Today</button>
+</div>
 
-    <h2>📅 History</h2>
+<div id="historyTimeline" style="margin-top:15px"></div>
 
-  </div>
+</div>
 
-
-  <div class="card">
-
-    <label>
-      Select Date
-    </label>
-
-    <div class="date-bar">
-
-      <button onclick="changeDate(-1)">
-        ‹
-      </button>
-
-      <input
-        type="date"
-        id="historyDate"
-        onchange="renderCalendar()"
-      >
-
-      <button onclick="changeDate(1)">
-        ›
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div id="daySummary"></div>
-
-    <div id="dayTimeline"></div>
-
-  </div>
+<div class="card">
+<h2>📊 Selected Day</h2>
+<div id="historyStats"></div>
+</div>
 
 </section>
 
-
-<!-- STATS -->
-
-<section id="statsPage" class="page">
-
-  <div class="section-title">
-
-    <h2>📊 Statistics</h2>
-
-  </div>
-
-
-  <div class="grid">
-
-    <div class="card stat-card purple">
-
-      <div class="stat-icon">
-        🍼
-      </div>
-
-      <div class="stat-title">
-        Feeds Today
-      </div>
-
-      <div
-        class="stat-value"
-        id="statFeeds"
-      >
-        0
-      </div>
-
-    </div>
-
-
-    <div class="card stat-card blue">
-
-      <div class="stat-icon">
-        🥛
-      </div>
-
-      <div class="stat-title">
-        Milk Today
-      </div>
-
-      <div
-        class="stat-value"
-        id="statMilk"
-      >
-        0 mL
-      </div>
-
-    </div>
-
-
-    <div class="card stat-card yellow">
-
-      <div class="stat-icon">
-        💩
-      </div>
-
-      <div class="stat-title">
-        Poo Today
-      </div>
-
-      <div
-        class="stat-value"
-        id="statPoo"
-      >
-        0
-      </div>
-
-    </div>
-
-
-    <div class="card stat-card cyan">
-
-      <div class="stat-icon">
-        😴
-      </div>
-
-      <div class="stat-title">
-        Sleep Today
-      </div>
-
-      <div
-        class="stat-value"
-        id="statSleep"
-      >
-        0h 0m
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="section-title">
-
-      <h2>
-        🥛 Milk — Last 7 Days
-      </h2>
-
-    </div>
-
-    <div
-      class="chart"
-      id="milkChart"
-    ></div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="section-title">
-
-      <h2>
-        😴 Sleep — Last 7 Days
-      </h2>
-
-    </div>
-
-    <div
-      class="chart"
-      id="sleepChart"
-    ></div>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="section-title">
-
-      <h2>
-        💧 Nappies — Last 7 Days
-      </h2>
-
-    </div>
-
-    <div
-      class="chart"
-      id="nappyChart"
-    ></div>
-
-  </div>
-
-</section>
-
-
-<!-- ALARMS -->
-
-<section id="alarmsPage" class="page">
-
-  <div class="section-title">
-
-    <h2>⏰ Reminders</h2>
-
-    <button
-      class="small-btn"
-      onclick="openAlarm()"
-    >
-      ＋ Add
-    </button>
-
-  </div>
-
-
-  <div class="card">
-
-    <button
-      class="primary"
-      onclick="requestNotifications()"
-    >
-
-      🔔 Enable Notifications
-
-    </button>
-
-
-    <div class="notice">
-
-      Keep Baby Log open or installed as a web app
-      for the best reminder reliability.
-      iPhone browsers can restrict background
-      notifications.
-
-    </div>
-
-  </div>
-
-
-  <div
-    class="card"
-    id="alarmList"
-  ></div>
-
-</section>
-
-
-<!-- SETTINGS -->
-
-<section id="settingsPage" class="page">
-
-  <div class="section-title">
-
-    <h2>⚙️ Settings</h2>
-
-  </div>
-
-
-  <div class="card">
-
-    <label>
-      Baby's Name
-    </label>
-
-    <input
-      id="babyName"
-      placeholder="Baby"
-    >
-
-
-    <label>
-      Date of Birth
-    </label>
-
-    <input
-      type="date"
-      id="babyDob"
-    >
-
-
-    <label>
-      Default Bottle Amount
-    </label>
-
-    <input
-      type="number"
-      id="defaultAmount"
-      min="0"
-      max="500"
-      step="5"
-    >
-
-
-    <button
-      class="primary"
-      onclick="saveSettings()"
-    >
-
-      💾 Save Profile
-
-    </button>
-
-  </div>
-
-
-  <div class="card">
-
-    <div class="setting-row">
-
-      <span>
-        🔔 Notifications
-      </span>
-
-      <button
-        class="small-btn"
-        onclick="requestNotifications()"
-      >
-        Enable
-      </button>
-
-    </div>
-
-
-    <div class="setting-row">
-
-      <span>
-        💾 Automatic Saving
-      </span>
-
-      <span class="badge">
-        ON
-      </span>
-
-    </div>
-
-
-    <div class="setting-row">
-
-      <span>
-        📱 Offline Mode
-      </span>
-
-      <span class="badge">
-        PWA
-      </span>
-
-    </div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>
-      💾 Backup & Restore
-    </h3>
-
-
-    <button
-      class="primary"
-      onclick="exportData()"
-    >
-
-      📤 Export Backup
-
-    </button>
-
-
-    <button
-      class="secondary"
-      onclick="document.getElementById('importFile').click()"
-    >
-
-      📥 Restore Backup
-
-    </button>
-
-
-    <input
-      type="file"
-      id="importFile"
-      accept=".json,application/json"
-      style="display:none"
-      onchange="importData(event)"
-    >
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>
-      ⚠️ Danger Zone
-    </h3>
-
-
-    <button
-      class="secondary danger"
-      onclick="clearAllData()"
-    >
-
-      Delete All Baby Log Data
-
-    </button>
-
-  </div>
+<section id="statsPage" class="hidden">
+
+<div class="card">
+<h2>📈 7 Day Summary</h2>
+<div id="sevenDayStats"></div>
+</div>
 
 </section>
 
 </main>
 
-
-<!-- NAVIGATION -->
-
-<nav class="bottom-nav">
-
-  <div class="nav-inner">
-
-    <button
-      class="nav-btn active"
-      data-page="home"
-      onclick="showPage('home')"
-    >
-
-      <span>🏠</span>
-      Home
-
-    </button>
-
-
-    <button
-      class="nav-btn"
-      data-page="calendar"
-      onclick="showPage('calendar')"
-    >
-
-      <span>📅</span>
-      History
-
-    </button>
-
-
-    <button
-      class="nav-btn"
-      data-page="stats"
-      onclick="showPage('stats')"
-    >
-
-      <span>📊</span>
-      Stats
-
-    </button>
-
-
-    <button
-      class="nav-btn"
-      data-page="alarms"
-      onclick="showPage('alarms')"
-    >
-
-      <span>⏰</span>
-      Alarms
-
-    </button>
-
-
-    <button
-      class="nav-btn"
-      data-page="settings"
-      onclick="showPage('settings')"
-    >
-
-      <span>⚙️</span>
-      Settings
-
-    </button>
-
-  </div>
-
-</nav>
-
 </div>
 
+<div class="nav">
+<div class="nav-inner">
+
+<button id="navHome" class="active" onclick="showPage('home')">
+🏠<br>Home
+</button>
+
+<button id="navHistory" onclick="showPage('history')">
+📅<br>History
+</button>
+
+<button id="navStats" onclick="showPage('stats')">
+📊<br>Stats
+</button>
+
+</div>
+</div>
 
 <!-- FEED MODAL -->
 
-<div
-  class="modal"
-  id="feedModal"
->
+<div class="overlay" id="feedModal">
+<div class="modal">
 
-<div class="modal-box">
+<h2 id="feedModalTitle">🍼 Bottle Feed</h2>
 
-  <div class="modal-header">
+<div class="form-group">
+<label>Amount</label>
 
-    <h2>
-      🍼 Add Feed
-    </h2>
+<div class="amount-display">
+<span id="amountValue">120</span> mL
+</div>
 
-    <button
-      class="close"
-      onclick="closeModal('feedModal')"
-    >
-      ×
-    </button>
+<input
+type="range"
+id="feedAmount"
+min="10"
+max="300"
+step="10"
+value="120"
+oninput="updateAmount()">
+</div>
 
-  </div>
+<div class="form-group">
+<label>Time</label>
+<input type="datetime-local" id="feedTime">
+</div>
 
+<div class="form-group">
+<label>Notes</label>
+<textarea id="feedNotes"></textarea>
+</div>
 
-  <label>
-    Feed Type
-  </label>
+<div class="modal-buttons">
+<button class="cancel" onclick="closeModals()">Cancel</button>
+<button class="save" onclick="saveFeed()">Save</button>
+</div>
 
+</div>
+</div>
 
-  <div class="type-grid">
+<!-- BREAST MODAL -->
 
-    <button
-      class="type-option selected"
-      data-feed="bottle"
-      onclick="selectFeedType('bottle')"
-    >
-      🍼 Bottle
-    </button>
+<div class="overlay" id="breastModal">
+<div class="modal">
 
+<h2>🤱 Breastfeed</h2>
 
-    <button
-      class="type-option"
-      data-feed="left"
-      onclick="selectFeedType('left')"
-    >
-      🤱 Left
-    </button>
+<div class="form-group">
+<label>Side</label>
 
+<select id="breastSide">
+<option value="left">Left</option>
+<option value="right">Right</option>
+<option value="both">Both</option>
+</select>
+</div>
 
-    <button
-      class="type-option"
-      data-feed="right"
-      onclick="selectFeedType('right')"
-    >
-      🤱 Right
-    </button>
+<div class="row">
 
+<div class="form-group">
+<label>Duration (minutes)</label>
+<input type="number" id="breastDuration" min="0" value="15">
+</div>
 
-    <button
-      class="type-option"
-      data-feed="both"
-      onclick="selectFeedType('both')"
-    >
-      🤱 Both
-    </button>
-
-  </div>
-
-
-  <div id="bottleAmountArea">
-
-    <label>
-      Bottle Amount
-    </label>
-
-
-    <div class="range-wrap">
-
-      <div class="range-value">
-
-        <span id="amountDisplay">
-          120
-        </span>
-
-        mL
-
-      </div>
-
-
-      <input
-        type="range"
-        id="feedAmount"
-        min="0"
-        max="400"
-        step="5"
-        value="120"
-        oninput="document.getElementById('amountDisplay').textContent=this.value"
-      >
-
-    </div>
-
-  </div>
-
-
-  <div
-    id="breastDurationArea"
-    style="display:none"
-  >
-
-    <label>
-      Breastfeeding Duration
-    </label>
-
-    <input
-      type="number"
-      id="breastDuration"
-      min="0"
-      placeholder="Minutes"
-    >
-
-  </div>
-
-
-  <label>
-    Date & Time
-  </label>
-
-  <input
-    type="datetime-local"
-    id="feedTime"
-  >
-
-
-  <label>
-    Notes
-  </label>
-
-  <textarea
-    id="feedNotes"
-    placeholder="Optional notes..."
-  ></textarea>
-
-
-  <button
-    class="primary"
-    onclick="saveFeed()"
-  >
-
-    Save Feed
-
-  </button>
-
+<div class="form-group">
+<label>Time</label>
+<input type="datetime-local" id="breastTime">
 </div>
 
 </div>
 
+<div class="form-group">
+<label>Notes</label>
+<textarea id="breastNotes"></textarea>
+</div>
+
+<div class="modal-buttons">
+<button class="cancel" onclick="closeModals()">Cancel</button>
+<button class="save" onclick="saveBreast()">Save</button>
+</div>
+
+</div>
+</div>
 
 <!-- NAPPY MODAL -->
 
-<div
-  class="modal"
-  id="nappyModal"
->
-
-<div class="modal-box">
-
-  <div class="modal-header">
-
-    <h2>
-      💧 Add Nappy
-    </h2>
-
-    <button
-      class="close"
-      onclick="closeModal('nappyModal')"
-    >
-      ×
-    </button>
-
-  </div>
-
-
-  <label>
-    Nappy Type
-  </label>
-
-
-  <div class="type-grid">
-
-    <button
-      class="type-option selected"
-      data-nappy="wee"
-      onclick="selectNappyType('wee')"
-    >
-      💧 Wee
-    </button>
-
-
-    <button
-      class="type-option"
-      data-nappy="poo"
-      onclick="selectNappyType('poo')"
-    >
-      💩 Poo
-    </button>
-
-
-    <button
-      class="type-option"
-      data-nappy="both"
-      onclick="selectNappyType('both')"
-    >
-      💧💩 Both
-    </button>
-
-  </div>
-
-
-  <div id="weeArea">
-
-    <label>
-      Wee Amount
-    </label>
-
-    <select id="weeSize">
-
-      <option>
-        Small
-      </option>
-
-      <option selected>
-        Medium
-      </option>
-
-      <option>
-        Large
-      </option>
-
-      <option>
-        Very wet
-      </option>
-
-    </select>
-
-
-    <label>
-      Wee Colour
-    </label>
-
-    <select id="weeColour">
-
-      <option>
-        Clear
-      </option>
-
-      <option>
-        Pale yellow
-      </option>
-
-      <option>
-        Yellow
-      </option>
-
-      <option>
-        Dark yellow
-      </option>
-
-      <option>
-        Other
-      </option>
-
-    </select>
-
-  </div>
-
-
-  <div
-    id="pooArea"
-    style="display:none"
-  >
-
-    <label>
-      Poo Colour
-    </label>
-
-    <select id="pooColour">
-
-      <option>
-        Yellow
-      </option>
-
-      <option>
-        Brown
-      </option>
-
-      <option>
-        Green
-      </option>
-
-      <option>
-        Black
-      </option>
-
-      <option>
-        Red
-      </option>
-
-      <option>
-        White
-      </option>
-
-      <option>
-        Other
-      </option>
-
-    </select>
-
-
-    <label>
-      Poo Consistency
-    </label>
-
-    <select id="pooConsistency">
-
-      <option>
-        Soft
-      </option>
-
-      <option>
-        Runny
-      </option>
-
-      <option>
-        Watery
-      </option>
-
-      <option>
-        Firm
-      </option>
-
-      <option>
-        Hard
-      </option>
-
-      <option>
-        Mucousy
-      </option>
-
-      <option>
-        Other
-      </option>
-
-    </select>
-
-
-    <label>
-      Poo Amount
-    </label>
-
-    <select id="pooAmount">
-
-      <option>
-        Small
-      </option>
-
-      <option selected>
-        Medium
-      </option>
-
-      <option>
-        Large
-      </option>
-
-    </select>
-
-  </div>
-
-
-  <label>
-    Date & Time
-  </label>
-
-  <input
-    type="datetime-local"
-    id="nappyTime"
-  >
-
-
-  <label>
-    Notes
-  </label>
-
-  <textarea
-    id="nappyNotes"
-    placeholder="Optional notes..."
-  ></textarea>
-
-
-  <button
-    class="primary"
-    onclick="saveNappy()"
-  >
-
-    Save Nappy
-
-  </button>
+<div class="overlay" id="nappyModal">
+<div class="modal">
+
+<h2>🧷 Nappy</h2>
+
+<div class="form-group">
+<label>Type</label>
+
+<select id="nappyType" onchange="updateNappyFields()">
+<option value="wee">💧 Wee</option>
+<option value="poo">💩 Poo</option>
+<option value="both">💧💩 Wee + Poo</option>
+</select>
+</div>
+
+<div id="weeFields">
+
+<div class="row">
+
+<div class="form-group">
+<label>Wee Amount</label>
+<select id="weeSize">
+<option value="">Not recorded</option>
+<option value="small">Small</option>
+<option value="medium">Medium</option>
+<option value="large">Large</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Wee Colour</label>
+<select id="weeColour">
+<option value="">Not recorded</option>
+<option>Clear</option>
+<option>Pale yellow</option>
+<option>Yellow</option>
+<option>Dark yellow</option>
+<option>Orange</option>
+<option>Pink/red</option>
+<option>Other</option>
+</select>
+</div>
 
 </div>
 
 </div>
 
+<div id="pooFields">
 
-<!-- MANUAL SLEEP MODAL -->
+<div class="row">
 
-<div
-  class="modal"
-  id="sleepModal"
->
+<div class="form-group">
+<label>Poo Colour</label>
+<select id="pooColour">
+<option value="">Not recorded</option>
+<option>Yellow</option>
+<option>Brown</option>
+<option>Green</option>
+<option>Black</option>
+<option>Red</option>
+<option>White</option>
+<option>Other</option>
+</select>
+</div>
 
-<div class="modal-box">
-
-  <div class="modal-header">
-
-    <h2 id="sleepModalTitle">
-      😴 Enter Sleep
-    </h2>
-
-    <button
-      class="close"
-      onclick="closeModal('sleepModal')"
-    >
-      ×
-    </button>
-
-  </div>
-
-
-  <div class="notice">
-
-    Forgot to start sleep tracking?
-    Enter when baby went to sleep and when baby woke.
-
-  </div>
-
-
-  <label>
-    Sleep Date
-  </label>
-
-  <input
-    type="date"
-    id="sleepDate"
-    onchange="updateManualSleepDuration()"
-  >
-
-
-  <label>
-    Sleep Started
-  </label>
-
-  <input
-    type="time"
-    id="sleepStartTime"
-    onchange="updateManualSleepDuration()"
-    oninput="updateManualSleepDuration()"
-  >
-
-
-  <label>
-    Woke Up
-  </label>
-
-  <input
-    type="time"
-    id="sleepEndTime"
-    onchange="updateManualSleepDuration()"
-    oninput="updateManualSleepDuration()"
-  >
-
-
-  <div class="sleep-calculation">
-
-    <div class="sleep-calculation-label">
-      Calculated Sleep
-    </div>
-
-    <div
-      id="manualSleepDuration"
-      class="sleep-calculation-value"
-    >
-      0m
-    </div>
-
-  </div>
-
-
-  <label>
-    Notes
-  </label>
-
-  <textarea
-    id="sleepNotes"
-    placeholder="Optional notes..."
-  ></textarea>
-
-
-  <button
-    class="primary"
-    onclick="saveManualSleep()"
-  >
-
-    💾 Save Sleep
-
-  </button>
-
+<div class="form-group">
+<label>Poo Amount</label>
+<select id="pooAmount">
+<option value="">Not recorded</option>
+<option>Small</option>
+<option>Medium</option>
+<option>Large</option>
+</select>
 </div>
 
 </div>
 
-
-<!-- ALARM MODAL -->
-
-<div
-  class="modal"
-  id="alarmModal"
->
-
-<div class="modal-box">
-
-  <div class="modal-header">
-
-    <h2>
-      ⏰ Add Reminder
-    </h2>
-
-    <button
-      class="close"
-      onclick="closeModal('alarmModal')"
-    >
-      ×
-    </button>
-
-  </div>
-
-
-  <label>
-    Reminder Name
-  </label>
-
-  <input
-    id="alarmName"
-    placeholder="Next feed"
-  >
-
-
-  <label>
-    Time
-  </label>
-
-  <input
-    type="time"
-    id="alarmTime"
-  >
-
-
-  <label>
-    Repeat
-  </label>
-
-  <select id="alarmRepeat">
-
-    <option value="once">
-      Once
-    </option>
-
-    <option value="daily">
-      Every day
-    </option>
-
-  </select>
-
-
-  <button
-    class="secondary"
-    onclick="setAlarmFromNow(2)"
-  >
-
-    🕑 2 hours from now
-
-  </button>
-
-
-  <button
-    class="secondary"
-    onclick="setAlarmFromNow(3)"
-  >
-
-    🕒 3 hours from now
-
-  </button>
-
-
-  <button
-    class="secondary"
-    onclick="setAlarmFromNow(4)"
-  >
-
-    🕓 4 hours from now
-
-  </button>
-
-
-  <button
-    class="primary"
-    onclick="saveAlarm()"
-  >
-
-    Save Reminder
-
-  </button>
-
+<div class="form-group">
+<label>Consistency</label>
+<select id="pooConsistency">
+<option value="">Not recorded</option>
+<option>Soft</option>
+<option>Runny</option>
+<option>Watery</option>
+<option>Firm</option>
+<option>Hard</option>
+<option>Mucousy</option>
+<option>Other</option>
+</select>
 </div>
 
 </div>
 
+<div class="form-group">
+<label>Time</label>
+<input type="datetime-local" id="nappyTime">
+</div>
+
+<div class="form-group">
+<label>Notes</label>
+<textarea id="nappyNotes"></textarea>
+</div>
+
+<div class="modal-buttons">
+<button class="cancel" onclick="closeModals()">Cancel</button>
+<button class="save" onclick="saveNappy()">Save</button>
+</div>
+
+</div>
+</div>
+
+<!-- SLEEP MODAL -->
+
+<div class="overlay" id="sleepModal">
+<div class="modal">
+
+<h2 id="sleepModalTitle">😴 Enter Sleep</h2>
+
+<div class="warning">
+For overnight sleep, enter the start time first and the wake time second. If the wake time is earlier than the start time, Baby Log automatically treats it as the following day.
+</div>
+
+<div class="form-group">
+<label>Sleep Date</label>
+<input type="date" id="sleepDate">
+</div>
+
+<div class="row">
+
+<div class="form-group">
+<label>Start Time</label>
+<input type="time" id="sleepStartTime" oninput="updateSleepDuration()">
+</div>
+
+<div class="form-group">
+<label>Wake Time</label>
+<input type="time" id="sleepEndTime" oninput="updateSleepDuration()">
+</div>
+
+</div>
+
+<div class="sleep-duration">
+⏱️ Duration: <span id="sleepDurationDisplay">0h 0m</span>
+</div>
+
+<div class="form-group">
+<label>Notes</label>
+<textarea id="sleepNotes" placeholder="Optional notes"></textarea>
+</div>
+
+<div class="modal-buttons">
+
+<button class="cancel" onclick="closeSleepModal()">
+Cancel
+</button>
+
+<button class="save" onclick="saveSleep()">
+Save Sleep
+</button>
+
+</div>
+
+</div>
+</div>
+
+<!-- NOTE MODAL -->
+
+<div class="overlay" id="noteModal">
+<div class="modal">
+
+<h2>📝 Note</h2>
+
+<div class="form-group">
+<label>Time</label>
+<input type="datetime-local" id="noteTime">
+</div>
+
+<div class="form-group">
+<label>Note</label>
+<textarea id="noteText"></textarea>
+</div>
+
+<div class="modal-buttons">
+<button class="cancel" onclick="closeModals()">Cancel</button>
+<button class="save" onclick="saveNote()">Save</button>
+</div>
+
+</div>
+</div>
+
+<!-- SETTINGS MODAL -->
+
+<div class="overlay" id="settingsModal">
+<div class="modal">
+
+<h2>⚙️ Settings</h2>
+
+<div class="form-group">
+<label>Baby's Name</label>
+<input id="babyName">
+</div>
+
+<div class="form-group">
+<label>Date of Birth</label>
+<input type="date" id="babyDob">
+</div>
+
+<div class="form-group">
+<label>Default Bottle Amount (mL)</label>
+<input type="number" id="defaultAmount" min="10" max="500">
+</div>
+
+<div class="modal-buttons">
+<button class="cancel" onclick="closeModals()">Cancel</button>
+<button class="save" onclick="saveSettings()">Save</button>
+</div>
+
+</div>
+</div>
 
 <script>
 
-const STORAGE_KEY =
-  "babyLogData";
+const STORAGE_KEY="baby-log-v3";
 
-
-let data = {
-
+let data={
   version:3,
-
   baby:{
     name:"Baby",
     dob:"",
     defaultAmount:120
   },
-
   events:[],
-
   alarms:[],
-
   currentSleepStart:null
-
 };
 
-
-let selectedFeedType =
-  "bottle";
-
-
-let selectedNappyType =
-  "wee";
+let editingFeedId=null;
+let editingNappyId=null;
+let editingSleepId=null;
+let editingNoteId=null;
 
 
-let currentPage =
-  "home";
-
-
-let editingSleepId =
-  null;
-
-
-// -----------------------------
-// DATA
-// -----------------------------
+/* =========================
+   STORAGE
+========================= */
 
 function loadData(){
 
   try{
 
-    const saved =
-      localStorage.getItem(STORAGE_KEY);
+    const saved=localStorage.getItem(STORAGE_KEY);
 
     if(saved){
 
-      const parsed =
-        JSON.parse(saved);
+      const parsed=JSON.parse(saved);
 
       data={
-
         ...data,
-
         ...parsed,
-
         baby:{
-
           ...data.baby,
-
-          ...(parsed.baby || {})
-
-        },
-
-        events:
-          Array.isArray(parsed.events)
-            ? parsed.events
-            : [],
-
-        alarms:
-          Array.isArray(parsed.alarms)
-            ? parsed.alarms
-            : []
-
+          ...(parsed.baby||{})
+        }
       };
 
     }
@@ -2066,7 +936,6 @@ function loadData(){
 
 }
 
-
 function saveData(){
 
   localStorage.setItem(
@@ -2074,836 +943,762 @@ function saveData(){
     JSON.stringify(data)
   );
 
-  renderAll();
-
 }
 
 
-// -----------------------------
-// ID
-// -----------------------------
-
-function makeId(){
-
-  if(
-    typeof crypto !== "undefined" &&
-    crypto.randomUUID
-  ){
-
-    return crypto.randomUUID();
-
-  }
-
-  return (
-    Date.now().toString(36)+
-    Math.random().toString(36).slice(2)
-  );
-
-}
-
-
-// -----------------------------
-// DATES
-// -----------------------------
+/* =========================
+   DATE HELPERS
+========================= */
 
 function pad(n){
-
   return String(n).padStart(2,"0");
-
 }
-
 
 function localDateKey(date){
 
-  const d =
-    new Date(date);
+  const d=new Date(date);
 
   return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 
 }
 
+function localDateTimeValue(date){
 
-function todayKey(){
-
-  return localDateKey(
-    new Date()
-  );
-
-}
-
-
-function dateTimeLocalValue(
-  date=new Date()
-){
-
-  const d =
-    new Date(date);
+  const d=new Date(date);
 
   return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 
 }
 
+function localTimeValue(date){
 
-function formatTime(date){
-
-  return new Date(date)
-    .toLocaleTimeString([],{
-      hour:"numeric",
-      minute:"2-digit"
-    });
-
-}
-
-
-function formatDate(date){
-
-  return new Date(date)
-    .toLocaleDateString([],{
-      weekday:"short",
-      day:"numeric",
-      month:"short"
-    });
-
-}
-
-
-function formatDuration(minutes){
-
-  minutes =
-    Math.max(
-      0,
-      Math.round(minutes || 0)
-    );
-
-  const h =
-    Math.floor(minutes/60);
-
-  const m =
-    minutes%60;
-
-  if(h){
-
-    return `${h}h ${m}m`;
-
-  }
-
-  return `${m}m`;
-
-}
-
-
-function minutesSince(date){
-
-  return Math.max(
-    0,
-    Math.floor(
-      (
-        Date.now()-
-        new Date(date).getTime()
-      )/60000
-    )
-  );
-
-}
-
-
-// -----------------------------
-// NAVIGATION
-// -----------------------------
-
-function showPage(page){
-
-  currentPage =
-    page;
-
-  document
-    .querySelectorAll(".page")
-    .forEach(p=>{
-      p.classList.remove("active");
-    });
-
-  const target =
-    document.getElementById(
-      page+"Page"
-    );
-
-  if(target){
-
-    target.classList.add("active");
-
-  }
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(btn=>{
-
-      btn.classList.toggle(
-        "active",
-        btn.dataset.page===page
-      );
-
-    });
-
-  renderAll();
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-// -----------------------------
-// MODALS
-// -----------------------------
-
-function openModal(id){
-
-  document
-    .getElementById(id)
-    .classList.add("show");
-
-}
-
-
-function closeModal(id){
-
-  document
-    .getElementById(id)
-    .classList.remove("show");
-
-}
-
-
-// -----------------------------
-// FEED MODAL
-// -----------------------------
-
-function openFeed(){
-
-  selectedFeedType =
-    "bottle";
-
-  document.getElementById(
-    "feedTime"
-  ).value =
-    dateTimeLocalValue();
-
-  document.getElementById(
-    "feedNotes"
-  ).value =
-    "";
-
-  const amount =
-    data.baby.defaultAmount || 120;
-
-  document.getElementById(
-    "feedAmount"
-  ).value =
-    amount;
-
-  document.getElementById(
-    "amountDisplay"
-  ).textContent =
-    amount;
-
-  document.getElementById(
-    "breastDuration"
-  ).value =
-    "";
-
-  updateFeedTypeUI();
-
-  openModal(
-    "feedModal"
-  );
-
-}
-
-
-// -----------------------------
-// NAPPY MODAL
-// -----------------------------
-
-function openNappy(){
-
-  selectedNappyType =
-    "wee";
-
-  document.getElementById(
-    "nappyTime"
-  ).value =
-    dateTimeLocalValue();
-
-  document.getElementById(
-    "nappyNotes"
-  ).value =
-    "";
-
-  updateNappyTypeUI();
-
-  openModal(
-    "nappyModal"
-  );
-
-}
-
-
-// -----------------------------
-// ALARM MODAL
-// -----------------------------
-
-function openAlarm(){
-
-  document.getElementById(
-    "alarmName"
-  ).value =
-    "Next feed";
-
-  document.getElementById(
-    "alarmTime"
-  ).value =
-    "";
-
-  document.getElementById(
-    "alarmRepeat"
-  ).value =
-    "once";
-
-  openModal(
-    "alarmModal"
-  );
-
-}
-
-
-// -----------------------------
-// FEED
-// -----------------------------
-
-function selectFeedType(type){
-
-  selectedFeedType =
-    type;
-
-  updateFeedTypeUI();
-
-}
-
-
-function updateFeedTypeUI(){
-
-  document
-    .querySelectorAll("[data-feed]")
-    .forEach(btn=>{
-
-      btn.classList.toggle(
-        "selected",
-        btn.dataset.feed ===
-        selectedFeedType
-      );
-
-    });
-
-  const bottle =
-    selectedFeedType ===
-    "bottle";
-
-  document.getElementById(
-    "bottleAmountArea"
-  ).style.display =
-    bottle
-      ? "block"
-      : "none";
-
-  document.getElementById(
-    "breastDurationArea"
-  ).style.display =
-    bottle
-      ? "none"
-      : "block";
-
-}
-
-
-function saveFeed(){
-
-  const time =
-    document.getElementById(
-      "feedTime"
-    ).value;
-
-  if(!time){
-
-    alert(
-      "Please choose a date and time."
-    );
-
-    return;
-
-  }
-
-  const event={
-
-    id:makeId(),
-
-    type:"feed",
-
-    feedType:
-      selectedFeedType,
-
-    amount:
-      selectedFeedType==="bottle"
-        ? Number(
-            document.getElementById(
-              "feedAmount"
-            ).value
-          )
-        : 0,
-
-    duration:
-      selectedFeedType==="bottle"
-        ? 0
-        : Number(
-            document.getElementById(
-              "breastDuration"
-            ).value || 0
-          ),
-
-    time:
-      new Date(time).toISOString(),
-
-    notes:
-      document.getElementById(
-        "feedNotes"
-      ).value.trim()
-
-  };
-
-  data.events.push(
-    event
-  );
-
-  saveData();
-
-  closeModal(
-    "feedModal"
-  );
-
-}
-
-
-// -----------------------------
-// NAPPY
-// -----------------------------
-
-function selectNappyType(type){
-
-  selectedNappyType =
-    type;
-
-  updateNappyTypeUI();
-
-}
-
-
-function updateNappyTypeUI(){
-
-  document
-    .querySelectorAll("[data-nappy]")
-    .forEach(btn=>{
-
-      btn.classList.toggle(
-        "selected",
-        btn.dataset.nappy ===
-        selectedNappyType
-      );
-
-    });
-
-  document.getElementById(
-    "weeArea"
-  ).style.display =
-    (
-      selectedNappyType==="wee" ||
-      selectedNappyType==="both"
-    )
-      ? "block"
-      : "none";
-
-  document.getElementById(
-    "pooArea"
-  ).style.display =
-    (
-      selectedNappyType==="poo" ||
-      selectedNappyType==="both"
-    )
-      ? "block"
-      : "none";
-
-}
-
-
-function saveNappy(){
-
-  const time =
-    document.getElementById(
-      "nappyTime"
-    ).value;
-
-  if(!time){
-
-    alert(
-      "Please choose a date and time."
-    );
-
-    return;
-
-  }
-
-  const event={
-
-    id:makeId(),
-
-    type:"nappy",
-
-    nappyType:
-      selectedNappyType,
-
-    weeSize:
-      document.getElementById(
-        "weeSize"
-      ).value,
-
-    weeColour:
-      document.getElementById(
-        "weeColour"
-      ).value,
-
-    pooColour:
-      document.getElementById(
-        "pooColour"
-      ).value,
-
-    pooConsistency:
-      document.getElementById(
-        "pooConsistency"
-      ).value,
-
-    pooAmount:
-      document.getElementById(
-        "pooAmount"
-      ).value,
-
-    time:
-      new Date(time).toISOString(),
-
-    notes:
-      document.getElementById(
-        "nappyNotes"
-      ).value.trim()
-
-  };
-
-  data.events.push(
-    event
-  );
-
-  saveData();
-
-  closeModal(
-    "nappyModal"
-  );
-
-}
-
-
-// -----------------------------
-// LIVE SLEEP
-// -----------------------------
-
-function toggleSleep(){
-
-  if(data.currentSleepStart){
-
-    const start =
-      new Date(
-        data.currentSleepStart
-      );
-
-    const end =
-      new Date();
-
-    if(end <= start){
-
-      alert(
-        "The sleep start time is invalid."
-      );
-
-      return;
-
-    }
-
-    data.events.push({
-
-      id:makeId(),
-
-      type:"sleep",
-
-      start:
-        start.toISOString(),
-
-      time:
-        end.toISOString(),
-
-      duration:
-        Math.max(
-          1,
-          Math.round(
-            (end-start)/60000
-          )
-        ),
-
-      source:
-        "live",
-
-      notes:
-        ""
-
-    });
-
-    data.currentSleepStart =
-      null;
-
-  }else{
-
-    data.currentSleepStart =
-      new Date().toISOString();
-
-  }
-
-  saveData();
-
-}
-
-
-function currentSleepMinutes(){
-
-  if(!data.currentSleepStart){
-
-    return 0;
-
-  }
-
-  return Math.max(
-    0,
-    Math.floor(
-      (
-        Date.now()-
-        new Date(
-          data.currentSleepStart
-        ).getTime()
-      )/60000
-    )
-  );
-
-}
-
-
-// -----------------------------
-// MANUAL SLEEP
-// -----------------------------
-
-function openManualSleep(){
-
-  editingSleepId =
-    null;
-
-  document.getElementById(
-    "sleepModalTitle"
-  ).textContent =
-    "😴 Enter Sleep";
-
-  const now =
-    new Date();
-
-  document.getElementById(
-    "sleepDate"
-  ).value =
-    localDateKey(now);
-
-  document.getElementById(
-    "sleepStartTime"
-  ).value =
-    "20:00";
-
-  document.getElementById(
-    "sleepEndTime"
-  ).value =
-    formatTimeForInput(now);
-
-  document.getElementById(
-    "sleepNotes"
-  ).value =
-    "";
-
-  updateManualSleepDuration();
-
-  openModal(
-    "sleepModal"
-  );
-
-}
-
-
-function formatTimeForInput(date){
-
-  const d =
-    new Date(date);
+  const d=new Date(date);
 
   return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
 
 }
 
+function todayKey(){
 
-function getManualSleepTimes(){
+  return localDateKey(new Date());
 
-  const date =
-    document.getElementById(
-      "sleepDate"
-    ).value;
+}
 
-  const startTime =
-    document.getElementById(
-      "sleepStartTime"
-    ).value;
+function formatTime(date){
 
-  const endTime =
-    document.getElementById(
-      "sleepEndTime"
-    ).value;
+  return new Date(date).toLocaleTimeString([],{
+    hour:"numeric",
+    minute:"2-digit"
+  });
+
+}
+
+function formatDate(date){
+
+  return new Date(date).toLocaleDateString([],{
+    day:"numeric",
+    month:"short",
+    year:"numeric"
+  });
+
+}
+
+function formatDuration(minutes){
+
+  minutes=Math.max(0,Math.round(minutes||0));
+
+  const h=Math.floor(minutes/60);
+  const m=minutes%60;
+
+  return `${h}h ${m}m`;
+
+}
+
+
+/* =========================
+   INITIALISE
+========================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+  loadData();
+
+  document.getElementById("historyDate").value=todayKey();
+
+  document.getElementById("feedAmount").value=data.baby.defaultAmount||120;
+
+  document.getElementById("amountValue").textContent=
+    data.baby.defaultAmount||120;
+
+  updateBabyGreeting();
+
+  renderAll();
+
+});
+
+
+function updateBabyGreeting(){
+
+  const name=data.baby.name||"Baby";
+
+  document.getElementById("babyGreeting").textContent=
+    `${name}'s daily tracker`;
+
+}
+
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function showPage(page){
+
+  document.getElementById("homePage").classList.toggle(
+    "hidden",
+    page!=="home"
+  );
+
+  document.getElementById("historyPage").classList.toggle(
+    "hidden",
+    page!=="history"
+  );
+
+  document.getElementById("statsPage").classList.toggle(
+    "hidden",
+    page!=="stats"
+  );
+
+  document.getElementById("navHome").classList.toggle(
+    "active",
+    page==="home"
+  );
+
+  document.getElementById("navHistory").classList.toggle(
+    "active",
+    page==="history"
+  );
+
+  document.getElementById("navStats").classList.toggle(
+    "active",
+    page==="stats"
+  );
+
+  if(page==="history") renderHistory();
+
+  if(page==="stats") renderSevenDayStats();
+
+}
+
+function showHistory(){
+
+  showPage("history");
+
+}
+
+
+/* =========================
+   MODALS
+========================= */
+
+function closeModals(){
+
+  document.querySelectorAll(".overlay").forEach(
+    el=>el.classList.remove("show")
+  );
+
+  editingFeedId=null;
+  editingNappyId=null;
+  editingNoteId=null;
+
+}
+
+function closeSleepModal(){
+
+  document.getElementById("sleepModal").classList.remove("show");
+
+  editingSleepId=null;
+
+}
+
+
+/* =========================
+   FEED
+========================= */
+
+function openFeed(event=null){
+
+  editingFeedId=event ? event.id:null;
+
+  document.getElementById("feedModalTitle").textContent=
+    event ? "✏️ Edit Bottle Feed":"🍼 Bottle Feed";
+
+  if(event){
+
+    document.getElementById("feedAmount").value=
+      event.amount||data.baby.defaultAmount;
+
+    document.getElementById("feedTime").value=
+      localDateTimeValue(event.time);
+
+    document.getElementById("feedNotes").value=
+      event.notes||"";
+
+  }else{
+
+    document.getElementById("feedAmount").value=
+      data.baby.defaultAmount||120;
+
+    document.getElementById("feedTime").value=
+      localDateTimeValue(new Date());
+
+    document.getElementById("feedNotes").value="";
+
+  }
+
+  updateAmount();
+
+  document.getElementById("feedModal").classList.add("show");
+
+}
+
+function updateAmount(){
+
+  document.getElementById("amountValue").textContent=
+    document.getElementById("feedAmount").value;
+
+}
+
+function saveFeed(){
+
+  const amount=Number(
+    document.getElementById("feedAmount").value
+  );
+
+  const time=document.getElementById("feedTime").value;
+
+  if(!time){
+
+    alert("Please select a time.");
+
+    return;
+
+  }
+
+  if(editingFeedId){
+
+    const event=data.events.find(
+      e=>e.id===editingFeedId
+    );
+
+    if(event){
+
+      event.amount=amount;
+      event.time=new Date(time).toISOString();
+      event.notes=document.getElementById("feedNotes").value;
+
+    }
+
+  }else{
+
+    data.events.push({
+
+      id:crypto.randomUUID(),
+      type:"feed",
+      feedType:"bottle",
+      amount,
+      duration:0,
+      time:new Date(time).toISOString(),
+      notes:document.getElementById("feedNotes").value
+
+    });
+
+  }
+
+  saveData();
+  closeModals();
+  renderAll();
+
+}
+
+
+/* =========================
+   BREASTFEED
+========================= */
+
+function openBreast(){
+
+  document.getElementById("breastSide").value="left";
+  document.getElementById("breastDuration").value=15;
+  document.getElementById("breastTime").value=
+    localDateTimeValue(new Date());
+  document.getElementById("breastNotes").value="";
+
+  document.getElementById("breastModal").classList.add("show");
+
+}
+
+function saveBreast(){
+
+  const side=document.getElementById("breastSide").value;
+
+  const duration=Number(
+    document.getElementById("breastDuration").value||0
+  );
+
+  const time=document.getElementById("breastTime").value;
+
+  if(!time){
+
+    alert("Please select a time.");
+
+    return;
+
+  }
+
+  data.events.push({
+
+    id:crypto.randomUUID(),
+    type:"feed",
+    feedType:side,
+    amount:0,
+    duration,
+    time:new Date(time).toISOString(),
+    notes:document.getElementById("breastNotes").value
+
+  });
+
+  saveData();
+  closeModals();
+  renderAll();
+
+}
+
+
+/* =========================
+   NAPPY
+========================= */
+
+function openNappy(event=null){
+
+  editingNappyId=event ? event.id:null;
+
+  if(event){
+
+    document.getElementById("nappyType").value=
+      event.nappyType||"wee";
+
+    document.getElementById("weeSize").value=
+      event.weeSize||"";
+
+    document.getElementById("weeColour").value=
+      event.weeColour||"";
+
+    document.getElementById("pooColour").value=
+      event.pooColour||"";
+
+    document.getElementById("pooConsistency").value=
+      event.pooConsistency||"";
+
+    document.getElementById("pooAmount").value=
+      event.pooAmount||"";
+
+    document.getElementById("nappyTime").value=
+      localDateTimeValue(event.time);
+
+    document.getElementById("nappyNotes").value=
+      event.notes||"";
+
+  }else{
+
+    document.getElementById("nappyType").value="wee";
+    document.getElementById("weeSize").value="";
+    document.getElementById("weeColour").value="";
+    document.getElementById("pooColour").value="";
+    document.getElementById("pooConsistency").value="";
+    document.getElementById("pooAmount").value="";
+    document.getElementById("nappyTime").value=
+      localDateTimeValue(new Date());
+    document.getElementById("nappyNotes").value="";
+
+  }
+
+  updateNappyFields();
+
+  document.getElementById("nappyModal").classList.add("show");
+
+}
+
+function updateNappyFields(){
+
+  const type=document.getElementById("nappyType").value;
+
+  document.getElementById("weeFields").style.display=
+    type==="wee"||type==="both"
+      ?"block":"none";
+
+  document.getElementById("pooFields").style.display=
+    type==="poo"||type==="both"
+      ?"block":"none";
+
+}
+
+function saveNappy(){
+
+  const type=document.getElementById("nappyType").value;
+  const time=document.getElementById("nappyTime").value;
+
+  if(!time){
+
+    alert("Please select a time.");
+
+    return;
+
+  }
+
+  const values={
+
+    nappyType:type,
+
+    weeSize:document.getElementById("weeSize").value,
+    weeColour:document.getElementById("weeColour").value,
+
+    pooColour:document.getElementById("pooColour").value,
+    pooConsistency:document.getElementById("pooConsistency").value,
+    pooAmount:document.getElementById("pooAmount").value,
+
+    time:new Date(time).toISOString(),
+
+    notes:document.getElementById("nappyNotes").value
+
+  };
+
+  if(editingNappyId){
+
+    const event=data.events.find(
+      e=>e.id===editingNappyId
+    );
+
+    if(event){
+
+      Object.assign(event,values);
+
+    }
+
+  }else{
+
+    data.events.push({
+
+      id:crypto.randomUUID(),
+      type:"nappy",
+      ...values
+
+    });
+
+  }
+
+  saveData();
+  closeModals();
+  renderAll();
+
+}
+
+
+/* =========================
+   SLEEP
+========================= */
+
+/*
+  THIS IS THE IMPORTANT FIX.
+
+  Sleep editing does NOT delete the existing record.
+
+  The existing record stays in data.events until
+  Save Sleep is pressed.
+
+  Cancel simply closes the modal.
+
+  Overnight sleep is supported automatically.
+*/
+
+function startSleep(){
+
+  if(data.currentSleepStart){
+
+    stopSleep();
+
+    return;
+
+  }
+
+  data.currentSleepStart=new Date().toISOString();
+
+  saveData();
+
+  renderAll();
+
+}
+
+
+function stopSleep(){
+
+  if(!data.currentSleepStart){
+
+    return;
+
+  }
+
+  const start=new Date(data.currentSleepStart);
+  const end=new Date();
+
+  const duration=Math.round(
+    (end-start)/60000
+  );
+
+  if(duration<=0){
+
+    data.currentSleepStart=null;
+
+    saveData();
+    renderAll();
+
+    return;
+
+  }
+
+  data.events.push({
+
+    id:crypto.randomUUID(),
+
+    type:"sleep",
+
+    start:start.toISOString(),
+
+    time:end.toISOString(),
+
+    duration,
+
+    source:"tracked",
+
+    edited:false,
+
+    notes:""
+
+  });
+
+  data.currentSleepStart=null;
+
+  saveData();
+
+  renderAll();
+
+}
+
+
+/*
+  Opens the sleep editor for an EXISTING sleep event.
+*/
+
+function editSleep(eventId){
+
+  const event=data.events.find(
+    e=>e.id===eventId &&
+       e.type==="sleep"
+  );
+
+  if(!event){
+
+    alert("Sleep record could not be found.");
+
+    return;
+
+  }
+
+  editingSleepId=event.id;
+
+  const start=new Date(event.start);
+  const end=new Date(event.time);
+
+  document.getElementById("sleepModalTitle").textContent=
+    "✏️ Edit Sleep";
+
+  document.getElementById("sleepDate").value=
+    localDateKey(start);
+
+  document.getElementById("sleepStartTime").value=
+    localTimeValue(start);
+
+  document.getElementById("sleepEndTime").value=
+    localTimeValue(end);
+
+  document.getElementById("sleepNotes").value=
+    event.notes||"";
+
+  updateSleepDuration();
+
+  document.getElementById("sleepModal").classList.add("show");
+
+}
+
+
+/*
+  Manual sleep entry.
+*/
+
+function openManualSleep(){
+
+  editingSleepId=null;
+
+  const end=new Date();
+
+  const start=new Date(
+    end.getTime()-60*60000
+  );
+
+  document.getElementById("sleepModalTitle").textContent=
+    "😴 Enter Sleep";
+
+  document.getElementById("sleepDate").value=
+    localDateKey(start);
+
+  document.getElementById("sleepStartTime").value=
+    localTimeValue(start);
+
+  document.getElementById("sleepEndTime").value=
+    localTimeValue(end);
+
+  document.getElementById("sleepNotes").value="";
+
+  updateSleepDuration();
+
+  document.getElementById("sleepModal").classList.add("show");
+
+}
+
+
+/*
+  Convert the modal values into actual Date objects.
+
+  If wake time is earlier than start time,
+  the wake time is automatically moved to
+  the following day.
+*/
+
+function getSleepTimes(){
+
+  const dateValue=
+    document.getElementById("sleepDate").value;
+
+  const startValue=
+    document.getElementById("sleepStartTime").value;
+
+  const endValue=
+    document.getElementById("sleepEndTime").value;
+
+  if(!dateValue||!startValue||!endValue){
+
+    return null;
+
+  }
+
+  const start=new Date(
+    `${dateValue}T${startValue}`
+  );
+
+  let end=new Date(
+    `${dateValue}T${endValue}`
+  );
 
   if(
-    !date ||
-    !startTime ||
-    !endTime
+    isNaN(start.getTime()) ||
+    isNaN(end.getTime())
   ){
 
     return null;
 
   }
 
-  const start =
-    new Date(
-      `${date}T${startTime}:00`
-    );
-
-  let end =
-    new Date(
-      `${date}T${endTime}:00`
-    );
-
   /*
-    If wake time is earlier than or equal to
-    the start time, assume sleep crossed midnight.
-
+    Overnight sleep.
     Example:
     10:00 PM -> 6:00 AM
   */
 
-  if(end <= start){
+  if(end<start){
 
-    end.setDate(
-      end.getDate()+1
-    );
+    end.setDate(end.getDate()+1);
 
   }
 
+  if(end.getTime()===start.getTime()){
+
+    return null;
+
+  }
+
+  const duration=Math.round(
+    (end-start)/60000
+  );
+
   return {
-
     start,
-
     end,
-
-    duration:
-      Math.round(
-        (end-start)/60000
-      )
-
+    duration
   };
 
 }
 
 
-function updateManualSleepDuration(){
+function updateSleepDuration(){
 
-  const result =
-    getManualSleepTimes();
+  const times=getSleepTimes();
 
-  const display =
+  if(!times){
+
     document.getElementById(
-      "manualSleepDuration"
-    );
-
-  if(!display){
+      "sleepDurationDisplay"
+    ).textContent="Enter valid times";
 
     return;
 
   }
 
-  if(
-    !result ||
-    result.duration<=0
-  ){
-
-    display.textContent =
-      "0m";
-
-    return;
-
-  }
-
-  display.textContent =
-    formatDuration(
-      result.duration
-    );
+  document.getElementById(
+    "sleepDurationDisplay"
+  ).textContent=
+    formatDuration(times.duration);
 
 }
 
 
-function saveManualSleep(){
+/*
+  SAVE SLEEP.
 
-  const result =
-    getManualSleepTimes();
+  If editingSleepId exists:
+  UPDATE the existing record.
 
-  if(!result){
+  Otherwise:
+  CREATE a new record.
+
+  This is the part that was missing/broken before.
+*/
+
+function saveSleep(){
+
+  const times=getSleepTimes();
+
+  if(!times){
 
     alert(
-      "Please choose the date, start time and wake time."
+      "Please enter a valid sleep start and wake time. " +
+      "The start and wake time cannot be exactly the same."
     );
 
     return;
 
   }
 
-  if(
-    result.duration<=0
-  ){
-
-    alert(
-      "Please check the sleep times."
-    );
-
-    return;
-
-  }
-
-  const notes =
-    document.getElementById(
-      "sleepNotes"
-    ).value.trim();
-
+  const notes=
+    document.getElementById("sleepNotes").value;
 
   /*
     EDIT EXISTING SLEEP
@@ -2911,2317 +1706,967 @@ function saveManualSleep(){
 
   if(editingSleepId){
 
-    const event =
-      data.events.find(
-        e =>
-          e.id===editingSleepId &&
-          e.type==="sleep"
-      );
+    const event=data.events.find(
+      e=>e.id===editingSleepId &&
+         e.type==="sleep"
+    );
 
-    if(event){
+    if(!event){
 
-      event.start =
-        result.start.toISOString();
+      alert("The sleep record could not be found.");
 
-      event.time =
-        result.end.toISOString();
-
-      event.duration =
-        result.duration;
-
-      event.source =
-        "manual";
-
-      event.notes =
-        notes;
+      return;
 
     }
 
-  }else{
+    /*
+      IMPORTANT:
+      Keep the SAME ID.
+      We are updating the existing record.
+    */
+
+    event.start=times.start.toISOString();
+
+    event.time=times.end.toISOString();
+
+    event.duration=times.duration;
+
+    event.notes=notes;
+
+    event.edited=true;
 
     /*
-      ADD NEW MANUAL SLEEP
+      If the user edits the currently running sleep,
+      stop the live timer so a duplicate isn't created.
     */
+
+    if(data.currentSleepStart){
+
+      const liveStart=new Date(
+        data.currentSleepStart
+      );
+
+      if(
+        Math.abs(
+          liveStart.getTime()-
+          times.start.getTime()
+        )<60000
+      ){
+
+        data.currentSleepStart=null;
+
+      }
+
+    }
+
+  }
+
+  /*
+    CREATE NEW MANUAL SLEEP
+  */
+
+  else{
 
     data.events.push({
 
-      id:makeId(),
+      id:crypto.randomUUID(),
 
       type:"sleep",
 
-      start:
-        result.start.toISOString(),
+      start:times.start.toISOString(),
 
-      time:
-        result.end.toISOString(),
+      time:times.end.toISOString(),
 
-      duration:
-        result.duration,
+      duration:times.duration,
 
-      source:
-        "manual",
+      source:"manual",
 
-      notes:
-        notes
+      edited:false,
+
+      notes
 
     });
 
   }
 
+  saveData();
 
-  /*
-    If the manually entered sleep is the same
-    as the currently running sleep, stop the
-    running tracker so it isn't counted twice.
-  */
+  closeSleepModal();
 
-  if(data.currentSleepStart){
+  renderAll();
 
-    const currentStart =
-      new Date(
-        data.currentSleepStart
-      );
+}
 
-    if(
-      Math.abs(
-        currentStart.getTime()-
-        result.start.getTime()
-      )<1000
-    ){
 
-      data.currentSleepStart =
-        null;
+/* =========================
+   NOTES
+========================= */
 
-    }
+function openNote(){
+
+  editingNoteId=null;
+
+  document.getElementById("noteTime").value=
+    localDateTimeValue(new Date());
+
+  document.getElementById("noteText").value="";
+
+  document.getElementById("noteModal").classList.add("show");
+
+}
+
+function saveNote(){
+
+  const time=document.getElementById("noteTime").value;
+
+  const text=document.getElementById("noteText").value.trim();
+
+  if(!text){
+
+    alert("Please enter a note.");
+
+    return;
 
   }
 
+  data.events.push({
 
-  editingSleepId =
-    null;
+    id:crypto.randomUUID(),
+    type:"note",
+    time:new Date(time).toISOString(),
+    notes:text
+
+  });
+
+  saveData();
+  closeModals();
+  renderAll();
+
+}
+
+
+/* =========================
+   EVENT EDIT
+========================= */
+
+function editEvent(id){
+
+  const event=data.events.find(
+    e=>e.id===id
+  );
+
+  if(!event) return;
+
+  if(event.type==="feed"){
+
+    if(event.feedType==="bottle"){
+
+      openFeed(event);
+
+    }else{
+
+      alert(
+        "Breastfeeding records can be viewed but are not editable in this version."
+      );
+
+    }
+
+    return;
+
+  }
+
+  if(event.type==="nappy"){
+
+    openNappy(event);
+
+    return;
+
+  }
+
+  if(event.type==="sleep"){
+
+    editSleep(event.id);
+
+    return;
+
+  }
+
+  if(event.type==="note"){
+
+    alert("Notes can be deleted but are not editable in this version.");
+
+  }
+
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteEvent(id){
+
+  const event=data.events.find(
+    e=>e.id===id
+  );
+
+  if(!event) return;
+
+  if(
+    !confirm(
+      "Delete this record?"
+    )
+  ){
+
+    return;
+
+  }
+
+  data.events=data.events.filter(
+    e=>e.id!==id
+  );
 
   saveData();
 
-  closeModal(
-    "sleepModal"
-  );
+  renderAll();
 
 }
 
 
-// -----------------------------
-// DAY CALCULATIONS
-// -----------------------------
+/* =========================
+   SLEEP DATE OVERLAP
+========================= */
 
-function eventsForDate(key){
+/*
+  Returns sleep events that overlap a selected day.
 
-  return data.events.filter(
-    e =>
-      localDateKey(e.time)===key
-  );
+  This fixes overnight sleep appearing on the wrong day.
+*/
 
-}
+function sleepEventsForDate(key){
 
+  const dayStart=new Date(`${key}T00:00:00`);
 
-function getFeedEvents(
-  key=todayKey()
-){
+  const dayEnd=new Date(dayStart);
 
-  return eventsForDate(key)
-    .filter(
-      e =>
-        e.type==="feed"
-    );
+  dayEnd.setDate(dayEnd.getDate()+1);
 
-}
+  return data.events.filter(event=>{
 
+    if(event.type!=="sleep") return false;
 
-function milkForDate(key){
+    const start=new Date(event.start);
+    const end=new Date(event.time);
 
-  return getFeedEvents(key)
-    .reduce(
-      (sum,e)=>
-        sum+
-        (Number(e.amount)||0),
-      0
-    );
+    return start<dayEnd && end>dayStart;
 
-}
-
-
-function nappiesForDate(key){
-
-  return eventsForDate(key)
-    .filter(
-      e =>
-        e.type==="nappy"
-    );
+  });
 
 }
 
 
 /*
-  Returns all sleep events that overlap
-  the selected calendar day.
+  Calculate how many minutes of sleep occurred
+  during a particular day.
 */
-
-function sleepEventsForDate(key){
-
-  const dayStart =
-    new Date(
-      key+"T00:00:00"
-    );
-
-  const dayEnd =
-    new Date(
-      dayStart
-    );
-
-  dayEnd.setDate(
-    dayEnd.getDate()+1
-  );
-
-  return data.events
-    .filter(
-      e =>
-        e.type==="sleep"
-    )
-    .filter(e=>{
-
-      const start =
-        new Date(e.start);
-
-      const end =
-        new Date(e.time);
-
-      return (
-        end.getTime()>
-        dayStart.getTime() &&
-        start.getTime()<
-        dayEnd.getTime()
-      );
-
-    });
-
-}
-
 
 function sleepForDate(key){
 
-  const dayStart =
-    new Date(
-      key+"T00:00:00"
-    );
+  const dayStart=new Date(`${key}T00:00:00`);
 
-  const dayEnd =
-    new Date(
-      dayStart
-    );
+  const dayEnd=new Date(dayStart);
 
-  dayEnd.setDate(
-    dayEnd.getDate()+1
-  );
+  dayEnd.setDate(dayEnd.getDate()+1);
 
   let total=0;
 
+  sleepEventsForDate(key).forEach(event=>{
 
-  data.events
-    .filter(
-      e =>
-        e.type==="sleep"
-    )
-    .forEach(e=>{
+    const start=Math.max(
+      new Date(event.start).getTime(),
+      dayStart.getTime()
+    );
 
-      const start =
-        new Date(e.start);
+    const end=Math.min(
+      new Date(event.time).getTime(),
+      dayEnd.getTime()
+    );
 
-      const end =
-        new Date(e.time);
+    if(end>start){
 
-      const overlapStart =
-        Math.max(
-          start.getTime(),
-          dayStart.getTime()
-        );
-
-      const overlapEnd =
-        Math.min(
-          end.getTime(),
-          dayEnd.getTime()
-        );
-
-      if(
-        overlapEnd>
-        overlapStart
-      ){
-
-        total +=
-          (
-            overlapEnd-
-            overlapStart
-          )/60000;
-
-      }
-
-    });
-
-
-  /*
-    Currently running sleep
-  */
-
-  if(
-    data.currentSleepStart &&
-    key===todayKey()
-  ){
-
-    const start =
-      new Date(
-        data.currentSleepStart
-      );
-
-    const now =
-      new Date();
-
-    const overlapStart =
-      Math.max(
-        start.getTime(),
-        dayStart.getTime()
-      );
-
-    const overlapEnd =
-      Math.min(
-        now.getTime(),
-        dayEnd.getTime()
-      );
-
-    if(
-      overlapEnd>
-      overlapStart
-    ){
-
-      total +=
-        (
-          overlapEnd-
-          overlapStart
-        )/60000;
+      total+=(end-start)/60000;
 
     }
 
-  }
+  });
 
-  return Math.round(
-    total
-  );
-
-}
-
-
-function awakeTimeToday(){
-
-  const sleep =
-    sleepForDate(
-      todayKey()
-    );
-
-  const elapsed =
-    Math.floor(
-      (
-        Date.now()-
-        new Date(
-          todayKey()+
-          "T00:00:00"
-        ).getTime()
-      )/60000
-    );
-
-  return Math.max(
-    0,
-    elapsed-sleep
-  );
-
-}
-
-
-// -----------------------------
-// HOME
-// -----------------------------
-
-function renderHome(){
-
-  const feeds =
-    getFeedEvents();
-
-  const lastFeed =
-    [...feeds]
-      .sort(
-        (a,b)=>
-          new Date(b.time)-
-          new Date(a.time)
-      )[0];
-
-
-  document.getElementById(
-    "lastFeed"
-  ).textContent =
-    lastFeed
-      ? formatTime(lastFeed.time)
-      : "—";
-
-
-  document.getElementById(
-    "sinceFeed"
-  ).textContent =
-    lastFeed
-      ? formatDuration(
-          minutesSince(
-            lastFeed.time
-          )
-        )
-      : "—";
-
-
-  document.getElementById(
-    "todayMilk"
-  ).textContent =
-    milkForDate(
-      todayKey()
-    )+
-    " mL";
-
-
-  document.getElementById(
-    "todayNappies"
-  ).textContent =
-    nappiesForDate(
-      todayKey()
-    ).length;
-
-
-  document.getElementById(
-    "todaySleep"
-  ).textContent =
-    formatDuration(
-      sleepForDate(
-        todayKey()
-      )
-    );
-
-
-  document.getElementById(
-    "awakeTime"
-  ).textContent =
-    formatDuration(
-      awakeTimeToday()
-    );
-
-
-  document.getElementById(
-    "headerBabyName"
-  ).textContent =
-    data.baby.name ||
-    "Baby";
-
-
-  document.getElementById(
-    "headerDate"
-  ).textContent =
-    new Date()
-      .toLocaleDateString([],{
-        weekday:"long",
-        day:"numeric",
-        month:"long"
-      });
-
-
-  document.getElementById(
-    "todayLabel"
-  ).textContent =
-    new Date()
-      .toLocaleDateString([],{
-        day:"numeric",
-        month:"short"
-      });
-
-
-  const sleepStatus =
-    document.getElementById(
-      "sleepStatus"
-    );
-
+  /*
+    Add currently running sleep to today's total.
+  */
 
   if(data.currentSleepStart){
 
-    sleepStatus.innerHTML=`
+    const start=new Date(
+      data.currentSleepStart
+    ).getTime();
 
-      <div class="card live">
+    const now=Date.now();
 
-        <div class="stat-icon">
-          😴
-        </div>
+    const overlapStart=Math.max(
+      start,
+      dayStart.getTime()
+    );
 
-        <div class="stat-title">
-          Baby is currently sleeping
-        </div>
+    const overlapEnd=Math.min(
+      now,
+      dayEnd.getTime()
+    );
 
-        <div class="stat-value">
-          ${formatDuration(
-            currentSleepMinutes()
-          )}
-        </div>
+    if(overlapEnd>overlapStart){
 
-        <button
-          class="primary"
-          onclick="toggleSleep()"
-        >
-          ☀️ Stop Sleep
-        </button>
-
-      </div>
-
-    `;
-
-
-    document.getElementById(
-      "sleepButtonText"
-    ).textContent =
-      "Stop Sleep";
-
-
-    document.getElementById(
-      "sleepButtonIcon"
-    ).textContent =
-      "☀️";
-
-  }else{
-
-    sleepStatus.innerHTML =
-      "";
-
-
-    document.getElementById(
-      "sleepButtonText"
-    ).textContent =
-      "Start Sleep";
-
-
-    document.getElementById(
-      "sleepButtonIcon"
-    ).textContent =
-      "😴";
-
-  }
-
-
-  renderTimeline(
-    document.getElementById(
-      "homeTimeline"
-    ),
-    todayKey(),
-    8
-  );
-
-}
-
-
-// -----------------------------
-// TIMELINE
-// -----------------------------
-
-function eventIcon(event){
-
-  if(event.type==="feed"){
-
-    if(
-      event.feedType==="bottle"
-    ){
-
-      return "🍼";
+      total+=(overlapEnd-overlapStart)/60000;
 
     }
 
-    return "🤱";
-
   }
 
-
-  if(event.type==="nappy"){
-
-    if(
-      event.nappyType==="wee"
-    ){
-
-      return "💧";
-
-    }
-
-    if(
-      event.nappyType==="poo"
-    ){
-
-      return "💩";
-
-    }
-
-    return "💧💩";
-
-  }
-
-
-  if(event.type==="sleep"){
-
-    return "😴";
-
-  }
-
-
-  return "📝";
+  return Math.round(total);
 
 }
 
 
-function eventColour(event){
-
-  if(event.type==="feed")
-    return "purple";
-
-  if(event.type==="nappy")
-    return "yellow";
-
-  if(event.type==="sleep")
-    return "cyan";
-
-  return "blue";
-
-}
-
-
-function eventTitle(event){
-
-  if(event.type==="feed"){
-
-    if(
-      event.feedType==="bottle"
-    )
-      return "Bottle Feed";
-
-    if(
-      event.feedType==="left"
-    )
-      return "Left Breast";
-
-    if(
-      event.feedType==="right"
-    )
-      return "Right Breast";
-
-    return "Breast Feed";
-
-  }
-
-
-  if(event.type==="nappy"){
-
-    if(
-      event.nappyType==="wee"
-    )
-      return "Wet Nappy";
-
-    if(
-      event.nappyType==="poo"
-    )
-      return "Dirty Nappy";
-
-    return "Wet + Dirty Nappy";
-
-  }
-
-
-  if(event.type==="sleep")
-    return "Sleep";
-
-
-  return "Event";
-
-}
-
+/* =========================
+   EVENT DISPLAY
+========================= */
 
 function eventDetail(event){
 
   if(event.type==="feed"){
 
-    if(
-      event.feedType==="bottle"
-    ){
+    if(event.feedType==="bottle"){
 
-      return `${event.amount || 0} mL`;
+      return `🍼 ${event.amount||0} mL`;
 
     }
 
-    return event.duration
-      ? `${event.duration} min`
-      : "Breast feed";
+    const side={
+      left:"Left",
+      right:"Right",
+      both:"Both"
+    }[event.feedType]||event.feedType;
+
+    return `🤱 ${side} • ${event.duration||0} min`;
 
   }
-
 
   if(event.type==="nappy"){
 
-    let parts=[];
+    let text="";
 
+    if(event.nappyType==="wee") text="💧 Wee";
+    if(event.nappyType==="poo") text="💩 Poo";
+    if(event.nappyType==="both") text="💧💩 Wee + Poo";
 
-    if(
-      event.nappyType==="wee" ||
-      event.nappyType==="both"
-    ){
+    const extras=[];
 
-      parts.push(
-        `${event.weeSize} wee`
-      );
+    if(event.weeSize)
+      extras.push(`Wee: ${event.weeSize}`);
 
-    }
+    if(event.weeColour)
+      extras.push(event.weeColour);
 
+    if(event.pooColour)
+      extras.push(`Poo: ${event.pooColour}`);
 
-    if(
-      event.nappyType==="poo" ||
-      event.nappyType==="both"
-    ){
+    if(event.pooConsistency)
+      extras.push(event.pooConsistency);
 
-      parts.push(
-        `${event.pooColour}, ${event.pooConsistency}`
-      );
+    if(event.pooAmount)
+      extras.push(event.pooAmount);
 
-    }
-
-
-    return parts.join(
-      " • "
-    );
+    return text+
+      (extras.length
+        ?" • "+extras.join(" • ")
+        :"");
 
   }
-
 
   if(event.type==="sleep"){
 
-    const duration =
-      formatDuration(
-        event.duration
-      );
-
-    const source =
+    return `😴 ${formatDuration(event.duration)}${
       event.source==="manual"
-        ? "Manual"
-        : "Tracked";
-
-
-    return `${duration} • ${source}`;
+        ?" • Manual"
+        :" • Tracked"
+    }${
+      event.edited
+        ?" • Edited"
+        :""
+    }`;
 
   }
 
+  if(event.type==="note"){
+
+    return `📝 ${event.notes}`;
+
+  }
 
   return "";
 
 }
 
 
-function sleepTimeForDay(
-  event,
-  key
-){
+/* =========================
+   TIMELINE
+========================= */
 
-  const dayStart =
-    new Date(
-      key+"T00:00:00"
-    );
+function renderTimeline(container,events){
 
-  const dayEnd =
-    new Date(
-      dayStart
-    );
+  if(!events.length){
 
-  dayEnd.setDate(
-    dayEnd.getDate()+1
-  );
-
-
-  const start =
-    new Date(
-      event.start
-    );
-
-  const end =
-    new Date(
-      event.time
-    );
-
-
-  const overlapStart =
-    new Date(
-      Math.max(
-        start.getTime(),
-        dayStart.getTime()
-      )
-    );
-
-
-  const overlapEnd =
-    new Date(
-      Math.min(
-        end.getTime(),
-        dayEnd.getTime()
-      )
-    );
-
-
-  if(
-    overlapEnd<=overlapStart
-  ){
-
-    return null;
-
-  }
-
-
-  return {
-    start:overlapStart,
-    end:overlapEnd
-  };
-
-}
-
-
-function renderTimeline(
-  container,
-  key,
-  limit=999
-){
-
-  /*
-    Normal events that happen on this day.
-  */
-
-  const normalEvents =
-    eventsForDate(key)
-      .filter(
-        e =>
-          e.type!=="sleep"
-      )
-      .map(e=>({
-
-        event:e,
-
-        sortTime:
-          new Date(e.time).getTime()
-
-      }));
-
-
-  /*
-    Sleep events that overlap this day.
-    Overnight sleeps are included here too.
-  */
-
-  const sleepEvents =
-    sleepEventsForDate(key)
-      .map(e=>({
-
-        event:e,
-
-        sortTime:
-          new Date(e.start).getTime()
-
-      }));
-
-
-  const combined =
-    [
-      ...normalEvents,
-      ...sleepEvents
-    ]
-      .sort(
-        (a,b)=>
-          b.sortTime-a.sortTime
-      )
-      .slice(
-        0,
-        limit
-      );
-
-
-  if(!combined.length){
-
-    container.innerHTML=`
-
-      <div class="empty">
-        Nothing logged yet 👶
-      </div>
-
-    `;
+    container.innerHTML=
+      `<div class="empty">No records for this day yet.</div>`;
 
     return;
 
   }
 
+  events.sort(
+    (a,b)=>
+      new Date(a.time)-
+      new Date(b.time)
+  );
 
-  container.innerHTML =
-    combined
-      .map(item=>{
+  container.innerHTML="";
 
-        const event =
-          item.event;
+  events.forEach(event=>{
 
+    const div=document.createElement("div");
 
-        let displayTime =
-          formatTime(
-            event.time
-          );
+    div.className="timeline-item";
 
+    let title="";
+    let time="";
 
-        let detail =
-          eventDetail(
-            event
-          );
+    if(event.type==="sleep"){
 
+      title="😴 Sleep";
 
-        /*
-          For sleep, show the portion
-          that overlaps the selected day.
-        */
+      const start=new Date(event.start);
+      const end=new Date(event.time);
 
-        if(
-          event.type==="sleep"
-        ){
+      time=
+        `${formatTime(start)} → ${formatTime(end)}`;
 
-          const sleepPart =
-            sleepTimeForDay(
-              event,
-              key
-            );
+      if(
+        localDateKey(start)!==
+        localDateKey(end)
+      ){
 
+        time+=` • ${formatDate(end)}`;
 
-          if(sleepPart){
+      }
 
-            displayTime =
-              formatTime(
-                sleepPart.start
-              )+
-              " → "+
-              formatTime(
-                sleepPart.end
-              );
+    }else{
 
+      if(event.type==="feed"){
 
-            const overlapMinutes =
-              Math.round(
-                (
-                  sleepPart.end-
-                  sleepPart.start
-                )/60000
-              );
+        title=
+          event.feedType==="bottle"
+            ?"🍼 Bottle"
+            :"🤱 Breastfeed";
 
+      }
 
-            const source =
-              event.source==="manual"
-                ? "Manual"
-                : "Tracked";
+      if(event.type==="nappy"){
 
+        title="🧷 Nappy";
 
-            detail =
-              `${formatDuration(overlapMinutes)} • ${source}`;
+      }
 
-          }
+      if(event.type==="note"){
 
-        }
+        title="📝 Note";
 
+      }
 
-        return `
+      time=formatTime(event.time);
 
-          <div class="timeline-item">
+    }
 
-            <div class="event-icon ${eventColour(event)}">
-              ${eventIcon(event)}
-            </div>
+    div.innerHTML=`
 
+      <div class="timeline-top">
 
-            <div class="event-info">
+        <div class="timeline-title">
+          ${title}
+        </div>
 
-              <div class="event-title">
-                ${eventTitle(event)}
-              </div>
+        <div class="timeline-time">
+          ${time}
+        </div>
 
+      </div>
 
-              <div class="event-detail">
-                ${detail}
-              </div>
+      <div class="timeline-detail">
+        ${eventDetail(event)}
+      </div>
 
+      ${
+        event.notes
+        ?
+        `<div class="timeline-detail">
+          📝 ${escapeHtml(event.notes)}
+        </div>`
+        :""
+      }
 
-              <div class="event-time">
-                ${displayTime}
-                ${
-                  event.notes
-                    ? " • "+
-                      escapeHtml(
-                        event.notes
-                      )
-                    : ""
-                }
-              </div>
+      <div class="item-actions">
 
-            </div>
+        <button
+          class="edit"
+          onclick="editEvent('${event.id}')">
+          ✏️ Edit
+        </button>
 
+        <button
+          class="delete"
+          onclick="deleteEvent('${event.id}')">
+          🗑️ Delete
+        </button>
 
-            <div class="event-actions">
+      </div>
 
-              <button
-                class="small-btn"
-                onclick="editEvent('${event.id}')"
-              >
-                ✏️
-              </button>
+    `;
 
+    container.appendChild(div);
 
-              <button
-                class="small-btn"
-                onclick="deleteEvent('${event.id}')"
-              >
-                🗑️
-              </button>
-
-            </div>
-
-          </div>
-
-        `;
-
-      })
-      .join("");
+  });
 
 }
 
 
 function escapeHtml(text){
 
-  return String(text)
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
+  return String(text||"")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
 }
 
 
-// -----------------------------
-// CALENDAR
-// -----------------------------
+/*
+  Events displayed on today's timeline.
 
-function renderCalendar(){
+  Sleep is included if it overlaps today.
+*/
 
-  const key =
-    document.getElementById(
-      "historyDate"
-    ).value;
+function eventsForDate(key){
 
-  if(!key)
+  const normal=data.events.filter(event=>{
+
+    if(event.type==="sleep") return false;
+
+    return localDateKey(event.time)===key;
+
+  });
+
+  const sleeps=sleepEventsForDate(key);
+
+  return [
+    ...normal,
+    ...sleeps
+  ].sort(
+    (a,b)=>
+      new Date(a.type==="sleep"?a.time:a.time)-
+      new Date(b.type==="sleep"?b.time:b.time)
+  );
+
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+function renderHome(){
+
+  const key=todayKey();
+
+  const events=eventsForDate(key);
+
+  const feeds=events.filter(
+    e=>e.type==="feed"
+  );
+
+  const nappies=events.filter(
+    e=>e.type==="nappy"
+  );
+
+  const milk=feeds
+    .filter(e=>e.feedType==="bottle")
+    .reduce(
+      (sum,e)=>sum+Number(e.amount||0),
+      0
+    );
+
+  document.getElementById("feedCount")
+    .textContent=feeds.length;
+
+  document.getElementById("milkTotal")
+    .textContent=`${milk} mL`;
+
+  document.getElementById("nappyCount")
+    .textContent=nappies.length;
+
+  document.getElementById("sleepTotal")
+    .textContent=
+      formatDuration(sleepForDate(key));
+
+  renderTimeline(
+    document.getElementById("todayTimeline"),
+    events
+  );
+
+  renderLiveSleep();
+
+}
+
+
+function renderLiveSleep(){
+
+  const container=
+    document.getElementById("liveSleepContainer");
+
+  if(!data.currentSleepStart){
+
+    container.innerHTML="";
+
+    const btn=document.querySelector(
+      ".sleep-btn"
+    );
+
+    if(btn){
+
+      btn.textContent="😴 Start Sleep";
+
+    }
+
     return;
 
+  }
 
-  const feeds =
-    getFeedEvents(key);
+  const start=new Date(
+    data.currentSleepStart
+  );
 
-  const nappies =
-    nappiesForDate(key);
+  const minutes=Math.round(
+    (Date.now()-start.getTime())/60000
+  );
 
-  const milk =
-    milkForDate(key);
+  container.innerHTML=`
 
-  const sleep =
-    sleepForDate(key);
+    <div class="live-sleep">
+
+      <strong>😴 Baby is sleeping</strong>
+
+      <div style="margin-top:7px">
+        Started ${formatTime(start)}
+      </div>
+
+      <div style="font-size:24px;font-weight:800;margin-top:7px">
+        ${formatDuration(minutes)}
+      </div>
+
+      <button
+        class="action sleep-btn"
+        style="width:100%;margin-top:12px"
+        onclick="stopSleep()">
+        ☀️ Wake Up & Save Sleep
+      </button>
+
+    </div>
+
+  `;
+
+}
 
 
-  document.getElementById(
-    "daySummary"
-  ).innerHTML=`
+/* =========================
+   HISTORY
+========================= */
 
-    <div class="grid">
+function setToday(){
 
-      <div class="stat-card purple">
+  document.getElementById("historyDate").value=
+    todayKey();
 
-        <div class="stat-icon">
-          🍼
-        </div>
+  renderHistory();
 
-        <div class="stat-title">
-          Feeds
-        </div>
+}
 
+function renderHistory(){
+
+  const key=
+    document.getElementById("historyDate").value ||
+    todayKey();
+
+  const events=eventsForDate(key);
+
+  renderTimeline(
+    document.getElementById("historyTimeline"),
+    events
+  );
+
+  const feeds=events.filter(
+    e=>e.type==="feed"
+  );
+
+  const nappies=events.filter(
+    e=>e.type==="nappy"
+  );
+
+  const bottles=feeds.filter(
+    e=>e.feedType==="bottle"
+  );
+
+  const milk=bottles.reduce(
+    (sum,e)=>sum+Number(e.amount||0),
+    0
+  );
+
+  const sleep=sleepForDate(key);
+
+  document.getElementById("historyStats").innerHTML=`
+
+    <div class="dashboard">
+
+      <div class="stat">
+        <div class="stat-label">Feeds</div>
         <div class="stat-value">
           ${feeds.length}
         </div>
-
       </div>
 
-
-      <div class="stat-card blue">
-
-        <div class="stat-icon">
-          🥛
-        </div>
-
-        <div class="stat-title">
-          Milk
-        </div>
-
+      <div class="stat">
+        <div class="stat-label">Milk</div>
         <div class="stat-value">
           ${milk} mL
         </div>
-
       </div>
 
-
-      <div class="stat-card yellow">
-
-        <div class="stat-icon">
-          💧
-        </div>
-
-        <div class="stat-title">
-          Nappies
-        </div>
-
+      <div class="stat">
+        <div class="stat-label">Nappies</div>
         <div class="stat-value">
           ${nappies.length}
         </div>
-
       </div>
 
-
-      <div class="stat-card cyan">
-
-        <div class="stat-icon">
-          😴
-        </div>
-
-        <div class="stat-title">
-          Sleep
-        </div>
-
+      <div class="stat">
+        <div class="stat-label">Sleep</div>
         <div class="stat-value">
           ${formatDuration(sleep)}
         </div>
-
       </div>
 
     </div>
 
   `;
 
-
-  renderTimeline(
-    document.getElementById(
-      "dayTimeline"
-    ),
-    key
-  );
-
 }
 
 
-function changeDate(amount){
+/* =========================
+   7 DAY STATS
+========================= */
 
-  const input =
-    document.getElementById(
-      "historyDate"
+function renderSevenDayStats(){
+
+  const container=
+    document.getElementById("sevenDayStats");
+
+  container.innerHTML="";
+
+  for(let i=6;i>=0;i--){
+
+    const date=new Date();
+
+    date.setDate(
+      date.getDate()-i
     );
 
-  const d =
-    new Date(
-      input.value+
-      "T12:00:00"
+    const key=localDateKey(date);
+
+    const events=eventsForDate(key);
+
+    const feeds=events.filter(
+      e=>e.type==="feed"
     );
 
-  d.setDate(
-    d.getDate()+amount
-  );
-
-  input.value =
-    localDateKey(d);
-
-  renderCalendar();
-
-}
-
-
-// -----------------------------
-// STATS
-// -----------------------------
-
-function last7Days(){
-
-  const days=[];
-
-
-  for(
-    let i=6;
-    i>=0;
-    i--
-  ){
-
-    const d =
-      new Date();
-
-    d.setHours(
-      12,
-      0,
-      0,
-      0
+    const nappies=events.filter(
+      e=>e.type==="nappy"
     );
 
-    d.setDate(
-      d.getDate()-i
-    );
+    const milk=feeds
+      .filter(e=>e.feedType==="bottle")
+      .reduce(
+        (sum,e)=>sum+Number(e.amount||0),
+        0
+      );
 
-    days.push(
-      localDateKey(d)
-    );
+    const sleep=sleepForDate(key);
 
-  }
+    const row=document.createElement("div");
 
+    row.className="card";
 
-  return days;
+    row.style.marginBottom="10px";
 
-}
+    row.innerHTML=`
 
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        gap:10px;
+        align-items:center;
+      ">
 
-function shortDay(key){
+        <strong>
+          ${date.toLocaleDateString([],{
+            weekday:"short",
+            day:"numeric",
+            month:"short"
+          })}
+        </strong>
 
-  return new Date(
-    key+
-    "T12:00:00"
-  )
-    .toLocaleDateString([],{
-      weekday:"short"
-    });
+        <span>
+          🍼 ${milk} mL
+        </span>
 
-}
+        <span>
+          🧷 ${nappies.length}
+        </span>
 
+        <span>
+          😴 ${formatDuration(sleep)}
+        </span>
 
-function renderChart(
-  id,
-  values,
-  unit
-){
-
-  const container =
-    document.getElementById(id);
-
-  const max =
-    Math.max(
-      ...values.map(
-        v=>v.value
-      ),
-      1
-    );
-
-
-  container.innerHTML =
-    values
-      .map(item=>{
-
-        const height =
-          Math.max(
-            4,
-            (
-              item.value/
-              max
-            )*140
-          );
-
-
-        return `
-
-          <div class="bar-wrap">
-
-            <div class="bar-value">
-              ${item.value}${unit}
-            </div>
-
-            <div
-              class="bar"
-              style="height:${height}px"
-            ></div>
-
-            <div class="bar-label">
-              ${shortDay(item.key)}
-            </div>
-
-          </div>
-
-        `;
-
-      })
-      .join("");
-
-}
-
-
-function renderStats(){
-
-  const key =
-    todayKey();
-
-  const feeds =
-    getFeedEvents(key);
-
-  const nappies =
-    nappiesForDate(key);
-
-
-  document.getElementById(
-    "statFeeds"
-  ).textContent =
-    feeds.length;
-
-
-  document.getElementById(
-    "statMilk"
-  ).textContent =
-    milkForDate(key)+
-    " mL";
-
-
-  document.getElementById(
-    "statPoo"
-  ).textContent =
-    nappies.filter(
-      n =>
-        n.nappyType==="poo" ||
-        n.nappyType==="both"
-    ).length;
-
-
-  document.getElementById(
-    "statSleep"
-  ).textContent =
-    formatDuration(
-      sleepForDate(key)
-    );
-
-
-  const days =
-    last7Days();
-
-
-  renderChart(
-    "milkChart",
-    days.map(key=>({
-
-      key,
-
-      value:
-        milkForDate(key)
-
-    })),
-    "mL"
-  );
-
-
-  renderChart(
-    "sleepChart",
-    days.map(key=>({
-
-      key,
-
-      value:
-        sleepForDate(key)
-
-    })),
-    "m"
-  );
-
-
-  renderChart(
-    "nappyChart",
-    days.map(key=>({
-
-      key,
-
-      value:
-        nappiesForDate(key).length
-
-    })),
-    ""
-  );
-
-}
-
-
-// -----------------------------
-// ALARMS
-// -----------------------------
-
-function setAlarmFromNow(
-  hours
-){
-
-  const d =
-    new Date(
-      Date.now()+
-      hours*
-      60*
-      60*
-      1000
-    );
-
-
-  document.getElementById(
-    "alarmTime"
-  ).value =
-    `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-
-}
-
-
-function saveAlarm(){
-
-  const name =
-    document.getElementById(
-      "alarmName"
-    ).value.trim()
-    ||
-    "Baby reminder";
-
-
-  const time =
-    document.getElementById(
-      "alarmTime"
-    ).value;
-
-
-  if(!time){
-
-    alert(
-      "Please choose a time."
-    );
-
-    return;
-
-  }
-
-
-  data.alarms.push({
-
-    id:makeId(),
-
-    name,
-
-    time,
-
-    repeat:
-      document.getElementById(
-        "alarmRepeat"
-      ).value,
-
-    enabled:true,
-
-    lastTriggered:null
-
-  });
-
-
-  saveData();
-
-  closeModal(
-    "alarmModal"
-  );
-
-}
-
-
-function renderAlarms(){
-
-  const container =
-    document.getElementById(
-      "alarmList"
-    );
-
-
-  if(
-    !data.alarms.length
-  ){
-
-    container.innerHTML=`
-
-      <div class="empty">
-        No reminders set yet ⏰
       </div>
 
     `;
 
-    return;
+    container.appendChild(row);
 
   }
 
-
-  container.innerHTML =
-    data.alarms
-      .map(alarm=>`
-
-        <div class="alarm-row">
-
-          <div>
-
-            <div class="alarm-time">
-              ${alarm.time}
-            </div>
-
-            <strong>
-              ${escapeHtml(
-                alarm.name
-              )}
-            </strong>
-
-            <div class="event-detail">
-              ${
-                alarm.repeat==="daily"
-                  ? "Every day"
-                  : "One time"
-              }
-            </div>
-
-          </div>
-
-
-          <button
-            class="toggle ${
-              alarm.enabled
-                ? "on"
-                : ""
-            }"
-            onclick="toggleAlarm('${alarm.id}')"
-          ></button>
-
-
-          <button
-            class="small-btn"
-            onclick="deleteAlarm('${alarm.id}')"
-          >
-            🗑️
-          </button>
-
-        </div>
-
-      `)
-      .join("");
-
 }
 
 
-function toggleAlarm(id){
+/* =========================
+   SETTINGS
+========================= */
 
-  const alarm =
-    data.alarms.find(
-      a =>
-        a.id===id
-    );
+function openSettings(){
 
-  if(!alarm)
-    return;
+  document.getElementById("babyName").value=
+    data.baby.name||"";
 
-  alarm.enabled =
-    !alarm.enabled;
+  document.getElementById("babyDob").value=
+    data.baby.dob||"";
 
-  saveData();
-
-}
-
-
-function deleteAlarm(id){
-
-  if(
-    !confirm(
-      "Delete this reminder?"
-    )
-  )
-    return;
-
-
-  data.alarms =
-    data.alarms.filter(
-      a =>
-        a.id!==id
-    );
-
-
-  saveData();
-
-}
-
-
-function checkAlarms(){
-
-  const now =
-    new Date();
-
-
-  const currentTime =
-    `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-
-
-  const today =
-    todayKey();
-
-
-  data.alarms.forEach(
-    alarm=>{
-
-      if(!alarm.enabled)
-        return;
-
-
-      if(
-        alarm.time!==currentTime
-      )
-        return;
-
-
-      if(
-        alarm.lastTriggered===
-        today
-      )
-        return;
-
-
-      alarm.lastTriggered =
-        today;
-
-
-      if(
-        "Notification" in window &&
-        Notification.permission===
-        "granted"
-      ){
-
-        new Notification(
-          "👶 Baby Log",
-          {
-            body:alarm.name,
-            icon:"./icon-192.png"
-          }
-        );
-
-      }else{
-
-        alert(
-          "👶 Baby Log\n\n"+
-          alarm.name
-        );
-
-      }
-
-
-      if(
-        alarm.repeat==="once"
-      ){
-
-        alarm.enabled =
-          false;
-
-      }
-
-    }
-  );
-
-
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(data)
-  );
-
-
-  renderAlarms();
-
-}
-
-
-async function requestNotifications(){
-
-  if(
-    !("Notification" in window)
-  ){
-
-    alert(
-      "Notifications are not supported by this browser."
-    );
-
-    return;
-
-  }
-
-
-  const permission =
-    await Notification.requestPermission();
-
-
-  if(
-    permission==="granted"
-  ){
-
-    alert(
-      "🔔 Notifications enabled."
-    );
-
-  }
-
-}
-
-
-// -----------------------------
-// EDIT / DELETE
-// -----------------------------
-
-function deleteEvent(id){
-
-  if(
-    !confirm(
-      "Delete this record?"
-    )
-  )
-    return;
-
-
-  data.events =
-    data.events.filter(
-      e =>
-        e.id!==id
-    );
-
-
-  saveData();
-
-}
-
-
-function editEvent(id){
-
-  const event =
-    data.events.find(
-      e =>
-        e.id===id
-    );
-
-
-  if(!event)
-    return;
-
-
-  // ---------------------------
-  // EDIT FEED
-  // ---------------------------
-
-  if(
-    event.type==="feed"
-  ){
-
-    selectedFeedType =
-      event.feedType;
-
-
-    document.getElementById(
-      "feedTime"
-    ).value =
-      dateTimeLocalValue(
-        event.time
-      );
-
-
-    document.getElementById(
-      "feedNotes"
-    ).value =
-      event.notes || "";
-
-
-    document.getElementById(
-      "feedAmount"
-    ).value =
-      event.amount ||
-      data.baby.defaultAmount;
-
-
-    document.getElementById(
-      "amountDisplay"
-    ).textContent =
-      event.amount ||
-      data.baby.defaultAmount;
-
-
-    document.getElementById(
-      "breastDuration"
-    ).value =
-      event.duration ||
-      "";
-
-
-    updateFeedTypeUI();
-
-
-    /*
-      Keep the event in place until
-      the replacement is saved.
-    */
-
-    const originalEvents =
-      [...data.events];
-
-
-    data.events =
-      data.events.filter(
-        e =>
-          e.id!==id
-      );
-
-
-    openModal(
-      "feedModal"
-    );
-
-
-    return;
-
-  }
-
-
-  // ---------------------------
-  // EDIT NAPPY
-  // ---------------------------
-
-  if(
-    event.type==="nappy"
-  ){
-
-    selectedNappyType =
-      event.nappyType;
-
-
-    document.getElementById(
-      "nappyTime"
-    ).value =
-      dateTimeLocalValue(
-        event.time
-      );
-
-
-    document.getElementById(
-      "nappyNotes"
-    ).value =
-      event.notes ||
-      "";
-
-
-    document.getElementById(
-      "weeSize"
-    ).value =
-      event.weeSize ||
-      "Medium";
-
-
-    document.getElementById(
-      "weeColour"
-    ).value =
-      event.weeColour ||
-      "Pale yellow";
-
-
-    document.getElementById(
-      "pooColour"
-    ).value =
-      event.pooColour ||
-      "Yellow";
-
-
-    document.getElementById(
-      "pooConsistency"
-    ).value =
-      event.pooConsistency ||
-      "Soft";
-
-
-    document.getElementById(
-      "pooAmount"
-    ).value =
-      event.pooAmount ||
-      "Medium";
-
-
-    updateNappyTypeUI();
-
-
-    data.events =
-      data.events.filter(
-        e =>
-          e.id!==id
-      );
-
-
-    openModal(
-      "nappyModal"
-    );
-
-
-    return;
-
-  }
-
-
-  // ---------------------------
-  // EDIT SLEEP
-  // ---------------------------
-
-  if(
-    event.type==="sleep"
-  ){
-
-    editingSleepId =
-      event.id;
-
-
-    document.getElementById(
-      "sleepModalTitle"
-    ).textContent =
-      "✏️ Edit Sleep";
-
-
-    const start =
-      new Date(
-        event.start
-      );
-
-
-    const end =
-      new Date(
-        event.time
-      );
-
-
-    document.getElementById(
-      "sleepDate"
-    ).value =
-      localDateKey(
-        start
-      );
-
-
-    document.getElementById(
-      "sleepStartTime"
-    ).value =
-      formatTimeForInput(
-        start
-      );
-
-
-    /*
-      If the sleep crosses midnight,
-      use the next day's time.
-      The calculation function will
-      automatically detect this.
-    */
-
-    document.getElementById(
-      "sleepEndTime"
-    ).value =
-      formatTimeForInput(
-        end
-      );
-
-
-    document.getElementById(
-      "sleepNotes"
-    ).value =
-      event.notes ||
-      "";
-
-
-    updateManualSleepDuration();
-
-
-    openModal(
-      "sleepModal"
-    );
-
-
-    return;
-
-  }
-
-}
-
-
-// -----------------------------
-// SETTINGS
-// -----------------------------
-
-function loadSettings(){
+  document.getElementById("defaultAmount").value=
+    data.baby.defaultAmount||120;
 
   document.getElementById(
-    "babyName"
-  ).value =
-    data.baby.name ||
-    "";
-
-
-  document.getElementById(
-    "babyDob"
-  ).value =
-    data.baby.dob ||
-    "";
-
-
-  document.getElementById(
-    "defaultAmount"
-  ).value =
-    data.baby.defaultAmount ||
-    120;
+    "settingsModal"
+  ).classList.add("show");
 
 }
-
 
 function saveSettings(){
 
-  data.baby.name =
-    document.getElementById(
-      "babyName"
-    ).value.trim()
-    ||
+  data.baby.name=
+    document.getElementById("babyName").value.trim()||
     "Baby";
 
+  data.baby.dob=
+    document.getElementById("babyDob").value;
 
-  data.baby.dob =
-    document.getElementById(
-      "babyDob"
-    ).value;
-
-
-  data.baby.defaultAmount =
+  data.baby.defaultAmount=
     Number(
-      document.getElementById(
-        "defaultAmount"
-      ).value
-    ) ||
-    120;
-
+      document.getElementById("defaultAmount").value
+    )||120;
 
   saveData();
 
+  closeModals();
 
-  alert(
-    "Profile saved."
-  );
+  updateBabyGreeting();
 
-}
-
-
-// -----------------------------
-// BACKUP
-// -----------------------------
-
-function exportData(){
-
-  const blob =
-    new Blob(
-      [
-        JSON.stringify(
-          data,
-          null,
-          2
-        )
-      ],
-      {
-        type:
-          "application/json"
-      }
-    );
-
-
-  const url =
-    URL.createObjectURL(
-      blob
-    );
-
-
-  const a =
-    document.createElement(
-      "a"
-    );
-
-
-  a.href =
-    url;
-
-
-  a.download =
-    `baby-log-backup-${todayKey()}.json`;
-
-
-  document.body.appendChild(
-    a
-  );
-
-
-  a.click();
-
-
-  a.remove();
-
-
-  URL.revokeObjectURL(
-    url
-  );
+  renderAll();
 
 }
 
 
-function importData(event){
-
-  const file =
-    event.target.files[0];
-
-
-  if(!file)
-    return;
-
-
-  const reader =
-    new FileReader();
-
-
-  reader.onload =
-    function(){
-
-      try{
-
-        const imported =
-          JSON.parse(
-            reader.result
-          );
-
-
-        if(
-          !imported ||
-          !Array.isArray(
-            imported.events
-          )
-        ){
-
-          throw new Error(
-            "Invalid backup"
-          );
-
-        }
-
-
-        if(
-          !confirm(
-            "Restore this backup? Existing data will be replaced."
-          )
-        ){
-
-          return;
-
-        }
-
-
-        data={
-
-          ...data,
-
-          ...imported,
-
-          baby:{
-            ...data.baby,
-            ...(imported.baby || {})
-          }
-
-        };
-
-
-        saveData();
-
-        loadSettings();
-
-
-        alert(
-          "Backup restored."
-        );
-
-
-      }catch(error){
-
-        console.error(
-          error
-        );
-
-
-        alert(
-          "Could not restore backup."
-        );
-
-      }
-
-    };
-
-
-  reader.readAsText(
-    file
-  );
-
-
-  event.target.value =
-    "";
-
-}
-
-
-function clearAllData(){
-
-  if(
-    !confirm(
-      "This will permanently delete all Baby Log data. Continue?"
-    )
-  )
-    return;
-
-
-  if(
-    !confirm(
-      "Are you absolutely sure?"
-    )
-  )
-    return;
-
-
-  localStorage.removeItem(
-    STORAGE_KEY
-  );
-
-
-  location.reload();
-
-}
-
-
-// -----------------------------
-// RENDER
-// -----------------------------
+/* =========================
+   RENDER ALL
+========================= */
 
 function renderAll(){
 
   renderHome();
 
-
   if(
-    currentPage==="calendar"
+    !document.getElementById(
+      "historyPage"
+    ).classList.contains("hidden")
   ){
 
-    renderCalendar();
+    renderHistory();
 
   }
 
+  if(
+    !document.getElementById(
+      "statsPage"
+    ).classList.contains("hidden")
+  ){
 
-  renderStats();
+    renderSevenDayStats();
 
-  renderAlarms();
+  }
 
 }
 
 
-// -----------------------------
-// STARTUP
-// -----------------------------
+/* =========================
+   LIVE UPDATE
+========================= */
 
-function initialise(){
+setInterval(()=>{
 
-  loadData();
+  if(data.currentSleepStart){
 
+    renderLiveSleep();
 
-  const history =
     document.getElementById(
-      "historyDate"
-    );
+      "sleepTotal"
+    ).textContent=
+      formatDuration(
+        sleepForDate(todayKey())
+      );
+
+  }
+
+},1000);
 
 
-  history.value =
-    todayKey();
-
-
-  loadSettings();
-
-
-  renderAll();
-
-
-  setInterval(
-    ()=>{
-
-      renderHome();
-
-      checkAlarms();
-
-    },
-    30000
-  );
-
-}
-
-
-initialise();
-
-
-// -----------------------------
-// MODAL OUTSIDE TAP
-// -----------------------------
-
-document
-  .querySelectorAll(".modal")
-  .forEach(modal=>{
-
-    modal.addEventListener(
-      "click",
-      function(e){
-
-        if(
-          e.target===modal
-        ){
-
-          modal.classList.remove(
-            "show"
-          );
-
-        }
-
-      }
-    );
-
-  });
-
-
-// -----------------------------
-// SERVICE WORKER
-// -----------------------------
+/* =========================
+   SERVICE WORKER
+========================= */
 
 if(
   "serviceWorker" in navigator
@@ -5230,27 +2675,14 @@ if(
   window.addEventListener(
     "load",
     ()=>{
-
       navigator.serviceWorker
-        .register(
-          "./service-worker.js"
-        )
-        .then(
-          ()=>{
-            console.log(
-              "Baby Log offline mode ready"
-            );
-          }
-        )
-        .catch(
-          error=>{
-            console.error(
-              "Service worker error:",
-              error
-            );
-          }
+        .register("./service-worker.js")
+        .catch(err=>
+          console.log(
+            "Service worker:",
+            err
+          )
         );
-
     }
   );
 
