@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#6c63ff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Baby Log">
+
+  <title>Baby Log</title>
+
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f6fa;
+      color: #222;
+    }
+
+    button {
+      font: inherit;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app {
+      max-width: 600px;
+      margin: auto;
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    header {
+      background: white;
+      padding: 20px 18px 14px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    header p {
+      margin: 4px 0 0;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .content {
+      padding: 16px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    }
+
+    .card-title {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 8px;
+    }
+
+    .card-value {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .action {
+      padding: 22px 12px;
+      border-radius: 18px;
+      color: white;
+      font-weight: 700;
+      font-size: 17px;
+      min-height: 105px;
+    }
+
+    .feed {
+      background: #6c63ff;
+    }
+
+    .nappy {
+      background: #38a169;
+    }
+
+    .sleep {
+      background: #3182ce;
+    }
+
+    .calendar {
+      background: #dd6b20;
+    }
+
+    .section {
+      margin-top: 22px;
+    }
+
+    .section h2 {
+      font-size: 19px;
+      margin: 0 0 10px;
+    }
+
+    .timeline-item {
+      background: white;
+      border-radius: 14px;
+      padding: 13px;
+      margin-bottom: 9px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+
+    .timeline-icon {
+      font-size: 25px;
+    }
+
+    .timeline-main {
+      flex: 1;
+    }
+
+    .timeline-title {
+      font-weight: 700;
+    }
+
+    .timeline-time {
+      color: #777;
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 8px 5px calc(8px + env(safe-area-inset-bottom));
+      box-shadow: 0 -2px 12px rgba(0,0,0,.1);
+      z-index: 20;
+    }
+
+    nav button {
+      background: none;
+      padding: 7px 2px;
+      color: #777;
+      font-size: 12px;
+    }
+
+    nav button.active {
+      color: #6c63ff;
+      font-weight: 700;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 50;
+      align-items: flex-end;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 600px;
+      margin: auto auto 0;
+      background: white;
+      border-radius: 24px 24px 0 0;
+      padding: 22px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-box h2 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font: inherit;
+      background: white;
+    }
+
+    input[type="range"] {
+      padding: 0;
+    }
+
+    .amount {
+      text-align: center;
+      font-size: 38px;
+      font-weight: 800;
+      margin: 10px 0;
+    }
+
+    .primary {
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 14px;
+      background: #6c63ff;
+      color: white;
+      font-weight: 700;
+    }
+
+    .secondary {
+      width: 100%;
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #eee;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .empty {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      color: #777;
+    }
+
+    @media (min-width: 601px) {
+      body {
+        background: #e9ebf2;
+      }
+
+      .app {
+        background: #f5f6fa;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <h1>👶 Baby Log</h1>
+    <p id="todayDate"></p>
+  </header>
+
+  <main class="content">
+
+    <section id="homePage">
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="card-title">🍼 Last Feed</div>
+          <div class="card-value" id="lastFeed">No feeds</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">⏱️ Since Feed</div>
+          <div class="card-value" id="sinceFeed">—</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🥛 Today's Milk</div>
+          <div class="card-value" id="todayMilk">0 mL</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">💩 Nappies</div>
+          <div class="card-value" id="todayNappies">0</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">😴 Today's Sleep</div>
+          <div class="card-value" id="todaySleep">0h 0m</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">👀 Awake</div>
+          <div class="card-value" id="awakeTime">—</div>
+        </div>
+
+      </div>
+
+      <div class="action-grid">
+
+        <button class="action feed" onclick="openFeed()">
+          🍼<br>ADD FEED
+        </button>
+
+        <button class="action nappy" onclick="openNappy()">
+          💩<br>ADD NAPPY
+        </button>
+
+        <button class="action sleep" onclick="toggleSleep()">
+          😴<br><span id="sleepButton">START SLEEP</span>
+        </button>
+
+        <button class="action calendar" onclick="showPage('calendar')">
+          📅<br>CALENDAR
+        </button>
+
+      </div>
+
+      <div class="section">
+        <h2>Today's Timeline</h2>
+        <div id="timeline"></div>
+      </div>
+
+    </section>
+
+    <section id="calendarPage" class="hidden">
+
+      <div class="section">
+        <h2>📅 Calendar</h2>
+
+        <input type="date" id="calendarDate" onchange="showDay()">
+
+        <div id="daySummary" style="margin-top:15px;"></div>
+      </div>
+
+    </section>
+
+    <section id="statsPage" class="hidden">
+
+      <div class="section">
+        <h2>📊 Statistics</h2>
+
+        <div class="cards">
+
+          <div class="card">
+            <div class="card-title">Feeds</div>
+            <div class="card-value" id="statFeeds">0</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Milk</div>
+            <div class="card-value" id="statMilk">0 mL</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Nappies</div>
+            <div class="card-value" id="statNappies">0</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Sleep</div>
+            <div class="card-value" id="statSleep">0h 0m</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section id="settingsPage" class="hidden">
+
+      <div class="section">
+        <h2>⚙️ Settings</h2>
+
+        <div class="card">
+
+          <label>Baby's name</label>
+          <input id="babyName" placeholder="Baby">
+
+          <button class="primary" onclick="saveSettings()">
+            SAVE PROFILE
+          </button>
+
+          <button class="secondary" onclick="exportData()">
+            💾 EXPORT BACKUP
+          </button>
+
+          <label>Import backup</label>
+          <input type="file" accept=".json" onchange="importData(event)">
+
+          <button class="secondary" onclick="clearData()">
+            🗑️ CLEAR ALL DATA
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <nav>
+
+    <button class="active" onclick="showPage('home')" id="navHome">
+      🏠<br>Home
+    </button>
+
+    <button onclick="showPage('calendar')" id="navCalendar">
+      📅<br>Calendar
+    </button>
+
+    <button onclick="showPage('stats')" id="navStats">
+      📊<br>Stats
+    </button>
+
+    <button onclick="showPage('settings')" id="navSettings">
+      ⚙️<br>Settings
+    </button>
+
+  </nav>
+
+</div>
+
+<!-- FEED MODAL -->
+
+<div class="modal" id="feedModal">
+
+  <div class="modal-box">
+
+    <h2>🍼 Add Feed</h2>
+
+    <label>Feed type</label>
+
+    <select id="feedType" onchange="changeFeedType()">
+      <option value="bottle">Bottle</option>
+      <option value="left">Breast — Left</option>
+      <option value="right">Breast — Right</option>
+      <option value="both">Breast — Both</option>
+    </select>
+
+    <div id="bottleAmount">
+
+      <label>Amount</label>
+
+      <div class="amount">
+        <span id="amountDisplay">120</span> mL
+      </div>
+
+      <input
+        type="range"
+        id="amountSlider"
+        min="0"
+        max="300"
+        step="5"
+        value="120"
+        oninput="updateAmount()"
+      >
+
+    </div>
+
+    <label>Time</label>
+    <input type="datetime-local" id="feedTime">
+
+    <label>Notes</label>
+    <textarea id="feedNotes" rows="3"></textarea>
+
+    <button class="primary" onclick="saveFeed()">
+      SAVE FEED
+    </button>
+
+    <button class="secondary" onclick="closeModal('feedModal')">
+      CANCEL
+    </button>
+
+  </div>
+
+</div>
+
+<!-- NAPPY MODAL -->
+
+<div class="modal" id="nappyModal">
+
+  <div class="modal-box">
+
+    <h2>💩 Add Nappy</h2>
+
+    <label>Type</label>
+
+    <select id="nappyType" onchange="changeNappyType()">
+      <option value="wee">💧 Wee</option>
+      <option value="poo">💩 Poo</option>
+      <option value="both">💧💩 Wee + Poo</option>
+    </select>
+
+    <div id="pooDetails">
+
+      <label>Poo colour</label>
+
+      <select id="pooColour">
+        <option>Yellow</option>
+        <option>Brown</option>
+        <option>Green</option>
+        <option>Black</option>
+        <option>Red</option>
+        <option>White</option>
+        <option>Other</option>
+      </select>
+
+      <label>Poo consistency</label>
+
+      <select id="pooConsistency">
+        <option>Soft</option>
+        <option>Runny</option>
+        <option>Watery</option>
+        <option>Firm</option>
+        <option>Hard</option>
+        <option>Mucousy</option>
+        <option>Other</option>
+      </select>
+
+    </div>
+
+    <label>Time</label>
+    <input type="datetime-local" id="nappyTime">
+
+    <label>Notes</label>
+    <textarea id="nappyNotes" rows="3"></textarea>
+
+    <button class="primary" onclick="saveNappy()">
+      SAVE NAPPY
+    </button>
+
+    <button class="secondary" onclick="closeModal('nappyModal')">
+      CANCEL
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+const STORAGE_KEY = "babyLogData";
+
+let data = JSON.parse(
+  localStorage.getItem(STORAGE_KEY)
+) || {
+  baby: {
+    name: "Baby"
+  },
+  events: [],
+  sleeping: false,
+  sleepStart: null
+};
+
+function saveData() {
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
+}
+
+function nowInputValue() {
+
+  const d = new Date();
+
+  const offset =
+    d.getTimezoneOffset();
+
+  const local =
+    new Date(
+      d.getTime() - offset * 60000
+    );
+
+  return local
+    .toISOString()
+    .slice(0, 16);
+}
+
+function formatTime(date) {
+
+  return new Date(date)
+    .toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit"
+    });
+}
+
+function formatDate(date) {
+
+  return new Date(date)
+    .toLocaleDateString([], {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    });
+}
+
+function formatDuration(minutes) {
+
+  minutes = Math.max(
+    0,
+    Math.round(minutes)
+  );
+
+  const h =
+    Math.floor(minutes / 60);
+
+  const m =
+    minutes % 60;
+
+  return `${h}h ${m}m`;
+}
+
+function minutesSince(date) {
+
+  return (
+    Date.now() -
+    new Date(date).getTime()
+  ) / 60000;
+}
+
+function todayEvents() {
+
+  const today =
+    new Date()
+      .toISOString()
+      .slice(0, 10);
+
+  return data.events.filter(e =>
+    new Date(e.time)
+      .toISOString()
+      .slice(0, 10) === today
+  );
+}
+
+function openFeed() {
+
+  document.getElementById(
+    "feedModal"
+  ).classList.add("show");
+
+  document.getElementById(
+    "feedTime"
+  ).value = nowInputValue();
+
+  document.getElementById(
+    "feedNotes"
+  ).value = "";
+
+  changeFeedType();
+}
+
+function openNappy() {
+
+  document.getElementById(
+    "nappyModal"
+  ).classList.add("show");
+
+  document.getElementById(
+    "nappyTime"
+  ).value = nowInputValue();
+
+  document.getElementById(
+    "nappyNotes"
+  ).value = "";
+
+  changeNappyType();
+}
+
+function closeModal(id) {
+
+  document.getElementById(
+    id
+  ).classList.remove("show");
+}
+
+function updateAmount() {
+
+  document.getElementById(
+    "amountDisplay"
+  ).textContent =
+    document.getElementById(
+      "amountSlider"
+    ).value;
+}
+
+function changeFeedType() {
+
+  const type =
+    document.getElementById(
+      "feedType"
+    ).value;
+
+  document.getElementById(
+    "bottleAmount"
+  ).classList.toggle(
+    "hidden",
+    type !== "bottle"
+  );
+}
+
+function changeNappyType() {
+
+  const type =
+    document.getElementById(
+      "nappyType"
+    ).value;
+
+  document.getElementById(
+    "pooDetails"
+  ).classList.toggle(
+    "hidden",
+    type === "wee"
+  );
+}
+
+function saveFeed() {
+
+  const type =
+    document.getElementById(
+      "feedType"
+    ).value;
+
+  const amount =
+    type === "bottle"
+      ? Number(
+          document.getElementById(
+            "amountSlider"
+          ).value
+        )
+      : 0;
+
+  data.events.push({
+
+    id: Date.now(),
+
+    type: "feed",
+
+    feedType: type,
+
+    amount,
+
+    time:
+      new Date(
+        document.getElementById(
+          "feedTime"
+        ).value
+      ).toISOString(),
+
+    notes:
+      document.getElementById(
+        "feedNotes"
+      ).value
+
+  });
+
+  saveData();
+
+  closeModal("feedModal");
+
+  render();
+}
+
+function saveNappy() {
+
+  const type =
+    document.getElementById(
+      "nappyType"
+    ).value;
+
+  const event = {
+
+    id: Date.now(),
+
+    type: "nappy",
+
+    nappyType: type,
+
+    time:
+      new Date(
+        document.getElementById(
+          "nappyTime"
+        ).value
+      ).toISOString(),
+
+    notes:
+      document.getElementById(
+        "nappyNotes"
+      ).value
+
+  };
+
+  if (
+    type === "poo" ||
+    type === "both"
+  ) {
+
+    event.colour =
+      document.getElementById(
+        "pooColour"
+      ).value;
+
+    event.consistency =
+      document.getElementById(
+        "pooConsistency"
+      ).value;
+
+  }
+
+  data.events.push(event);
+
+  saveData();
+
+  closeModal("nappyModal");
+
+  render();
+}
+
+function toggleSleep() {
+
+  if (!data.sleeping) {
+
+    data.sleeping = true;
+
+    data.sleepStart =
+      new Date().toISOString();
+
+  } else {
+
+    const start =
+      new Date(
+        data.sleepStart
+      );
+
+    const end =
+      new Date();
+
+    data.events.push({
+
+      id: Date.now(),
+
+      type: "sleep",
+
+      start:
+        start.toISOString(),
+
+      time:
+        end.toISOString(),
+
+      duration:
+        (end - start) / 60000
+
+    });
+
+    data.sleeping = false;
+
+    data.sleepStart = null;
+
+  }
+
+  saveData();
+
+  render();
+}
+
+function render() {
+
+  const events =
+    todayEvents();
+
+  const feeds =
+    events.filter(
+      e => e.type === "feed"
+    );
+
+  const nappies =
+    events.filter(
+      e => e.type === "nappy"
+    );
+
+  const sleeps =
+    events.filter(
+      e => e.type === "sleep"
+    );
+
+  const milk =
+    feeds.reduce(
+      (sum, e) =>
+        sum + (e.amount || 0),
+      0
+    );
+
+  const sleepMinutes =
+    sleeps.reduce(
+      (sum, e) =>
+        sum + (e.duration || 0),
+      0
+    );
+
+  document.getElementById(
+    "todayMilk"
+  ).textContent =
+    `${milk} mL`;
+
+  document.getElementById(
+    "todayNappies"
+  ).textContent =
+    nappies.length;
+
+  document.getElementById(
+    "todaySleep"
+  ).textContent =
+    formatDuration(sleepMinutes);
+
+  const lastFeed =
+    feeds
+      .sort(
+        (a,b) =>
+          new Date(b.time) -
+          new Date(a.time)
+      )[0];
+
+  if (lastFeed) {
+
+    document.getElementById(
+      "lastFeed"
+    ).textContent =
+      lastFeed.amount
+        ? `${lastFeed.amount} mL`
+        : "Breast";
+
+    document.getElementById(
+      "sinceFeed"
+    ).textContent =
+      formatDuration(
+        minutesSince(
+          lastFeed.time
+        )
+      );
+
+  } else {
+
+    document.getElementById(
+      "lastFeed"
+    ).textContent =
+      "No feeds";
+
+    document.getElementById(
+      "sinceFeed"
+    ).textContent =
+      "—";
+
+  }
+
+  if (data.sleeping) {
+
+    document.getElementById(
+      "sleepButton"
+    ).textContent =
+      "WAKE UP";
+
+  } else {
+
+    document.getElementById(
+      "sleepButton"
+    ).textContent =
+      "START SLEEP";
+
+  }
+
+  renderTimeline();
+
+  updateStats();
+
+  document.getElementById(
+    "todayDate"
+  ).textContent =
+    new Date()
+      .toLocaleDateString([], {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+
+}
+
+function renderTimeline() {
+
+  const container =
+    document.getElementById(
+      "timeline"
+    );
+
+  const events =
+    todayEvents()
+      .sort(
+        (a,b) =>
+          new Date(b.time || b.start) -
+          new Date(a.time || a.start)
+      );
+
+  if (!events.length) {
+
+    container.innerHTML =
+      `<div class="empty">
+        No events recorded today.
+      </div>`;
+
+    return;
+
+  }
+
+  container.innerHTML =
+    events.map(event => {
+
+      let icon = "";
+      let title = "";
+
+      if (
+        event.type === "feed"
+      ) {
+
+        icon = "🍼";
+
+        title =
+          event.amount
+            ? `Bottle — ${event.amount} mL`
+            : `Breast — ${event.feedType}`;
+
+      }
+
+      if (
+        event.type === "nappy"
+      ) {
+
+        icon =
+          event.nappyType === "wee"
+            ? "💧"
+            : event.nappyType === "poo"
+              ? "💩"
+              : "💧💩";
+
+        title =
+          event.nappyType === "wee"
+            ? "Wee"
+            : event.nappyType === "poo"
+              ? `Poo — ${event.colour || ""}`
+              : `Wee + Poo — ${event.colour || ""}`;
+
+      }
+
+      if (
+        event.type === "sleep"
+      ) {
+
+        icon = "😴";
+
+        title =
+          `Sleep — ${formatDuration(
+            event.duration
+          )}`;
+
+      }
+
+      return `
+        <div class="timeline-item">
+
+          <div class="timeline-icon">
+            ${icon}
+          </div>
+
+          <div class="timeline-main">
+
+            <div class="timeline-title">
+              ${title}
+            </div>
+
+            <div class="timeline-time">
+              ${formatTime(
+                event.time || event.start
+              )}
+            </div>
+
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+}
+
+function updateStats() {
+
+  const events =
+    todayEvents();
+
+  const feeds =
+    events.filter(
+      e => e.type === "feed"
+    );
+
+  const nappies =
+    events.filter(
+      e => e.type === "nappy"
+    );
+
+  const sleep =
+    events
+      .filter(
+        e => e.type === "sleep"
+      )
+      .reduce(
+        (sum,e) =>
+          sum + (e.duration || 0),
+        0
+      );
+
+  const milk =
+    feeds.reduce(
+      (sum,e) =>
+        sum + (e.amount || 0),
+      0
+    );
+
+  document.getElementById(
+    "statFeeds"
+  ).textContent =
+    feeds.length;
+
+  document.getElementById(
+    "statMilk"
+  ).textContent =
+    `${milk} mL`;
+
+  document.getElementById(
+    "statNappies"
+  ).textContent =
+    nappies.length;
+
+  document.getElementById(
+    "statSleep"
+  ).textContent =
+    formatDuration(sleep);
+
+}
+
+function showPage(page) {
+
+  const pages = [
+    "home",
+    "calendar",
+    "stats",
+    "settings"
+  ];
+
+  pages.forEach(p => {
+
+    const el =
+      document.getElementById(
+        p + "Page"
+      );
+
+    if (el) {
+
+      el.classList.toggle(
+        "hidden",
+        p !== page
+      );
+
+    }
+
+  });
+
+  document.querySelectorAll(
+    "nav button"
+  ).forEach(
+    b =>
+      b.classList.remove(
+        "active"
+      )
+  );
+
+  const nav =
+    document.getElementById(
+      "nav" +
+      page.charAt(0).toUpperCase() +
+      page.slice(1)
+    );
+
+  if (nav)
+    nav.classList.add("active");
+
+}
+
+function showDay() {
+
+  const date =
+    document.getElementById(
+      "calendarDate"
+    ).value;
+
+  if (!date) return;
+
+  const events =
+    data.events.filter(
+      e =>
+        new Date(
+          e.time || e.start
+        )
+        .toISOString()
+        .slice(0,10)
+        === date
+    )
+    .sort(
+      (a,b) =>
+        new Date(a.time || a.start) -
+        new Date(b.time || b.start)
+    );
+
+  const summary =
+    document.getElementById(
+      "daySummary"
+    );
+
+  if (!events.length) {
+
+    summary.innerHTML =
+      `<div class="empty">
+        No records for this day.
+      </div>`;
+
+    return;
+
+  }
+
+  summary.innerHTML =
+    events.map(e => {
+
+      if (e.type === "feed") {
+
+        return `
+          <div class="timeline-item">
+            <div class="timeline-icon">🍼</div>
+            <div class="timeline-main">
+              <div class="timeline-title">
+                ${e.amount
+                  ? `Bottle — ${e.amount} mL`
+                  : `Breast — ${e.feedType}`}
+              </div>
+              <div class="timeline-time">
+                ${formatTime(e.time)}
+              </div>
+            </div>
+          </div>
+        `;
+
+      }
+
+      if (e.type === "nappy") {
+
+        return `
+          <div class="timeline-item">
+            <div class="timeline-icon">
+              ${e.nappyType === "wee"
+                ? "💧"
+                : e.nappyType === "poo"
+                  ? "💩"
+                  : "💧💩"}
+            </div>
+            <div class="timeline-main">
+              <div class="timeline-title">
+                ${e.nappyType}
+              </div>
+              <div class="timeline-time">
+                ${formatTime(e.time)}
+                ${e.colour
+                  ? ` — ${e.colour}, ${e.consistency}`
+                  : ""}
+              </div>
+            </div>
+          </div>
+        `;
+
+      }
+
+      return `
+        <div class="timeline-item">
+          <div class="timeline-icon">😴</div>
+          <div class="timeline-main">
+            <div class="timeline-title">
+              Sleep — ${formatDuration(e.duration)}
+            </div>
+            <div class="timeline-time">
+              ${formatTime(e.start)}
+              →
+              ${formatTime(e.time)}
+            </div>
+          </div>
+        </div>
+      `;
+
+    }).join("");
+
+}
+
+function saveSettings() {
+
+  data.baby.name =
+    document.getElementById(
+      "babyName"
+    ).value ||
+    "Baby";
+
+  saveData();
+
+  alert("Profile saved.");
+
+}
+
+function exportData() {
+
+  const blob =
+    new Blob(
+      [
+        JSON.stringify(
+          data,
+          null,
+          2
+        )
+      ],
+      {
+        type:
+          "application/json"
+      }
+    );
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+  const a =
+    document.createElement(
+      "a"
+    );
+
+  a.href = url;
+
+  a.download =
+    "baby-log-backup.json";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+}
+
+function importData(event) {
+
+  const file =
+    event.target.files[0];
+
+  if (!file) return;
+
+  const reader =
+    new FileReader();
+
+  reader.onload =
+    function(e) {
+
+      try {
+
+        data =
+          JSON.parse(
+            e.target.result
+          );
+
+        saveData();
+
+        render();
+
+        alert(
+          "Backup imported successfully."
+        );
+
+      } catch {
+
+        alert(
+          "Could not import this backup."
+        );
+
+      }
+
+    };
+
+  reader.readAsText(file);
+
+}
+
+function clearData() {
+
+  if (
+    confirm(
+      "Delete ALL baby log data? This cannot be undone."
+    )
+  ) {
+
+    localStorage.removeItem(
+      STORAGE_KEY
+    );
+
+    location.reload();
+
+  }
+
+}
+
+document.getElementById(
+  "babyName"
+).value =
+  data.baby.name;
+
+document.getElementById(
+  "calendarDate"
+).value =
+  new Date()
+    .toISOString()
+    .slice(0,10);
+
+render();
+
+setInterval(
+  render,
+  30000
+);
+
+</script>
+
+</body>
+</html>
