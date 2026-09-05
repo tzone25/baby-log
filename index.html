@@ -926,11 +926,46 @@ function loadData(){
         }
       };
 
+      /*
+        IMPORTANT:
+        Older sleep records may have duration + time
+        but no start value.
+
+        We automatically rebuild the missing start
+        so those old sleep records can still be edited.
+      */
+
+      data.events=data.events.map(event=>{
+
+        if(
+          event.type==="sleep" &&
+          !event.start &&
+          event.time &&
+          Number(event.duration)>0
+        ){
+
+          const end=new Date(event.time);
+
+          const start=new Date(
+            end.getTime()-
+            Number(event.duration)*60000
+          );
+
+          event.start=start.toISOString();
+
+        }
+
+        return event;
+
+      });
+
+      saveData();
+
     }
 
   }catch(error){
 
-    console.error(error);
+    console.error("Could not load Baby Log data:",error);
 
   }
 
@@ -938,10 +973,22 @@ function loadData(){
 
 function saveData(){
 
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(data)
-  );
+  try{
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(data)
+    );
+
+  }catch(error){
+
+    console.error("Could not save Baby Log data:",error);
+
+    alert(
+      "Baby Log could not save the latest change on this device."
+    );
+
+  }
 
 }
 
@@ -1025,7 +1072,8 @@ document.addEventListener("DOMContentLoaded",()=>{
 
   document.getElementById("historyDate").value=todayKey();
 
-  document.getElementById("feedAmount").value=data.baby.defaultAmount||120;
+  document.getElementById("feedAmount").value=
+    data.baby.defaultAmount||120;
 
   document.getElementById("amountValue").textContent=
     data.baby.defaultAmount||120;
@@ -1407,19 +1455,6 @@ function saveNappy(){
    SLEEP
 ========================= */
 
-/*
-  THIS IS THE IMPORTANT FIX.
-
-  Sleep editing does NOT delete the existing record.
-
-  The existing record stays in data.events until
-  Save Sleep is pressed.
-
-  Cancel simply closes the modal.
-
-  Overnight sleep is supported automatically.
-*/
-
 function startSleep(){
 
   if(data.currentSleepStart){
@@ -1495,13 +1530,21 @@ function stopSleep(){
 
 
 /*
-  Opens the sleep editor for an EXISTING sleep event.
+  EDIT EXISTING SLEEP
+
+  This function now handles both:
+  1. New records with start
+  2. Older records without start
+
+  For an old record without start, the start time
+  is reconstructed from:
+  end time - duration.
 */
 
 function editSleep(eventId){
 
   const event=data.events.find(
-    e=>e.id===eventId &&
+    e=>String(e.id)===String(eventId) &&
        e.type==="sleep"
   );
 
@@ -1513,10 +1556,61 @@ function editSleep(eventId){
 
   }
 
-  editingSleepId=event.id;
+  /*
+    Make sure the record has a start time.
+  */
 
-  const start=new Date(event.start);
+  let start;
+
+  if(event.start){
+
+    start=new Date(event.start);
+
+  }else if(
+    event.time &&
+    Number(event.duration)>0
+  ){
+
+    const endForOldRecord=new Date(event.time);
+
+    start=new Date(
+      endForOldRecord.getTime()-
+      Number(event.duration)*60000
+    );
+
+    /*
+      Save the reconstructed start so the
+      record stays editable next time.
+    */
+
+    event.start=start.toISOString();
+
+    saveData();
+
+  }else{
+
+    alert(
+      "This sleep record does not contain enough information to edit."
+    );
+
+    return;
+
+  }
+
   const end=new Date(event.time);
+
+  if(
+    isNaN(start.getTime()) ||
+    isNaN(end.getTime())
+  ){
+
+    alert("This sleep record contains an invalid date or time.");
+
+    return;
+
+  }
+
+  editingSleepId=event.id;
 
   document.getElementById("sleepModalTitle").textContent=
     "✏️ Edit Sleep";
@@ -1541,7 +1635,7 @@ function editSleep(eventId){
 
 
 /*
-  Manual sleep entry.
+  MANUAL SLEEP
 */
 
 function openManualSleep(){
@@ -1576,11 +1670,7 @@ function openManualSleep(){
 
 
 /*
-  Convert the modal values into actual Date objects.
-
-  If wake time is earlier than start time,
-  the wake time is automatically moved to
-  the following day.
+  GET SLEEP TIMES
 */
 
 function getSleepTimes(){
@@ -1619,8 +1709,6 @@ function getSleepTimes(){
 
   /*
     Overnight sleep.
-    Example:
-    10:00 PM -> 6:00 AM
   */
 
   if(end<start){
@@ -1671,15 +1759,15 @@ function updateSleepDuration(){
 
 
 /*
-  SAVE SLEEP.
+  SAVE SLEEP
 
-  If editingSleepId exists:
-  UPDATE the existing record.
+  EDIT:
+  Updates the existing record.
 
-  Otherwise:
-  CREATE a new record.
+  NEW:
+  Creates a new manual sleep record.
 
-  This is the part that was missing/broken before.
+  The existing ID is always preserved when editing.
 */
 
 function saveSleep(){
@@ -1707,7 +1795,7 @@ function saveSleep(){
   if(editingSleepId){
 
     const event=data.events.find(
-      e=>e.id===editingSleepId &&
+      e=>String(e.id)===String(editingSleepId) &&
          e.type==="sleep"
     );
 
@@ -1720,24 +1808,36 @@ function saveSleep(){
     }
 
     /*
-      IMPORTANT:
-      Keep the SAME ID.
-      We are updating the existing record.
+      KEEP THE SAME RECORD AND SAME ID.
     */
 
-    event.start=times.start.toISOString();
+    event.start=
+      times.start.toISOString();
 
-    event.time=times.end.toISOString();
+    event.time=
+      times.end.toISOString();
 
-    event.duration=times.duration;
+    event.duration=
+      times.duration;
 
-    event.notes=notes;
+    event.notes=
+      notes;
 
     event.edited=true;
 
     /*
-      If the user edits the currently running sleep,
-      stop the live timer so a duplicate isn't created.
+      Preserve whether it was tracked or manual.
+    */
+
+    if(!event.source){
+
+      event.source="manual";
+
+    }
+
+    /*
+      If this record corresponds to the currently
+      running sleep timer, stop the timer.
     */
 
     if(data.currentSleepStart){
@@ -1773,11 +1873,14 @@ function saveSleep(){
 
       type:"sleep",
 
-      start:times.start.toISOString(),
+      start:
+        times.start.toISOString(),
 
-      time:times.end.toISOString(),
+      time:
+        times.end.toISOString(),
 
-      duration:times.duration,
+      duration:
+        times.duration,
 
       source:"manual",
 
@@ -1821,6 +1924,14 @@ function saveNote(){
 
   const text=document.getElementById("noteText").value.trim();
 
+  if(!time){
+
+    alert("Please select a time.");
+
+    return;
+
+  }
+
   if(!text){
 
     alert("Please enter a note.");
@@ -1852,10 +1963,22 @@ function saveNote(){
 function editEvent(id){
 
   const event=data.events.find(
-    e=>e.id===id
+    e=>String(e.id)===String(id)
   );
 
   if(!event) return;
+
+  /*
+    SLEEP IS HANDLED FIRST.
+  */
+
+  if(event.type==="sleep"){
+
+    editSleep(event.id);
+
+    return;
+
+  }
 
   if(event.type==="feed"){
 
@@ -1883,17 +2006,11 @@ function editEvent(id){
 
   }
 
-  if(event.type==="sleep"){
-
-    editSleep(event.id);
-
-    return;
-
-  }
-
   if(event.type==="note"){
 
-    alert("Notes can be deleted but are not editable in this version.");
+    alert(
+      "Notes can be deleted but are not editable in this version."
+    );
 
   }
 
@@ -1907,7 +2024,7 @@ function editEvent(id){
 function deleteEvent(id){
 
   const event=data.events.find(
-    e=>e.id===id
+    e=>String(e.id)===String(id)
   );
 
   if(!event) return;
@@ -1923,7 +2040,7 @@ function deleteEvent(id){
   }
 
   data.events=data.events.filter(
-    e=>e.id!==id
+    e=>String(e.id)!==String(id)
   );
 
   saveData();
@@ -1937,12 +2054,6 @@ function deleteEvent(id){
    SLEEP DATE OVERLAP
 ========================= */
 
-/*
-  Returns sleep events that overlap a selected day.
-
-  This fixes overnight sleep appearing on the wrong day.
-*/
-
 function sleepEventsForDate(key){
 
   const dayStart=new Date(`${key}T00:00:00`);
@@ -1955,8 +2066,45 @@ function sleepEventsForDate(key){
 
     if(event.type!=="sleep") return false;
 
+    /*
+      Legacy protection.
+    */
+
+    if(!event.start){
+
+      if(
+        event.time &&
+        Number(event.duration)>0
+      ){
+
+        const end=new Date(event.time);
+
+        const start=new Date(
+          end.getTime()-
+          Number(event.duration)*60000
+        );
+
+        event.start=start.toISOString();
+
+      }else{
+
+        return false;
+
+      }
+
+    }
+
     const start=new Date(event.start);
     const end=new Date(event.time);
+
+    if(
+      isNaN(start.getTime()) ||
+      isNaN(end.getTime())
+    ){
+
+      return false;
+
+    }
 
     return start<dayEnd && end>dayStart;
 
@@ -1966,8 +2114,7 @@ function sleepEventsForDate(key){
 
 
 /*
-  Calculate how many minutes of sleep occurred
-  during a particular day.
+  Calculate sleep occurring during selected day.
 */
 
 function sleepForDate(key){
@@ -2085,9 +2232,11 @@ function eventDetail(event){
       extras.push(event.pooAmount);
 
     return text+
-      (extras.length
+      (
+        extras.length
         ?" • "+extras.join(" • ")
-        :"");
+        :""
+      );
 
   }
 
@@ -2107,7 +2256,7 @@ function eventDetail(event){
 
   if(event.type==="note"){
 
-    return `📝 ${event.notes}`;
+    return `📝 ${escapeHtml(event.notes)}`;
 
   }
 
@@ -2152,18 +2301,53 @@ function renderTimeline(container,events){
 
       title="😴 Sleep";
 
-      const start=new Date(event.start);
-      const end=new Date(event.time);
+      /*
+        Legacy protection if start is missing.
+      */
 
-      time=
-        `${formatTime(start)} → ${formatTime(end)}`;
+      let start;
 
-      if(
-        localDateKey(start)!==
-        localDateKey(end)
+      if(event.start){
+
+        start=new Date(event.start);
+
+      }else if(
+        event.time &&
+        Number(event.duration)>0
       ){
 
-        time+=` • ${formatDate(end)}`;
+        const endForLegacy=new Date(event.time);
+
+        start=new Date(
+          endForLegacy.getTime()-
+          Number(event.duration)*60000
+        );
+
+      }
+
+      const end=new Date(event.time);
+
+      if(
+        start &&
+        !isNaN(start.getTime()) &&
+        !isNaN(end.getTime())
+      ){
+
+        time=
+          `${formatTime(start)} → ${formatTime(end)}`;
+
+        if(
+          localDateKey(start)!==
+          localDateKey(end)
+        ){
+
+          time+=` • ${formatDate(end)}`;
+
+        }
+
+      }else{
+
+        time=formatTime(event.time);
 
       }
 
@@ -2193,6 +2377,17 @@ function renderTimeline(container,events){
       time=formatTime(event.time);
 
     }
+
+    /*
+      Sleep gets a DIRECT editSleep call.
+      This prevents the generic edit path from
+      interfering with sleep editing.
+    */
+
+    const editAction=
+      event.type==="sleep"
+        ? `editSleep('${event.id}')`
+        : `editEvent('${event.id}')`;
 
     div.innerHTML=`
 
@@ -2225,7 +2420,7 @@ function renderTimeline(container,events){
 
         <button
           class="edit"
-          onclick="editEvent('${event.id}')">
+          onclick="${editAction}">
           ✏️ Edit
         </button>
 
@@ -2258,11 +2453,9 @@ function escapeHtml(text){
 }
 
 
-/*
-  Events displayed on today's timeline.
-
-  Sleep is included if it overlaps today.
-*/
+/* =========================
+   EVENTS FOR DATE
+========================= */
 
 function eventsForDate(key){
 
@@ -2281,8 +2474,8 @@ function eventsForDate(key){
     ...sleeps
   ].sort(
     (a,b)=>
-      new Date(a.type==="sleep"?a.time:a.time)-
-      new Date(b.type==="sleep"?b.time:b.time)
+      new Date(a.time)-
+      new Date(b.time)
   );
 
 }
@@ -2324,7 +2517,9 @@ function renderHome(){
 
   document.getElementById("sleepTotal")
     .textContent=
-      formatDuration(sleepForDate(key));
+      formatDuration(
+        sleepForDate(key)
+      );
 
   renderTimeline(
     document.getElementById("todayTimeline"),
@@ -2532,6 +2727,7 @@ function renderSevenDayStats(){
         justify-content:space-between;
         gap:10px;
         align-items:center;
+        flex-wrap:wrap;
       ">
 
         <strong>
