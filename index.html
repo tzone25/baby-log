@@ -124,6 +124,55 @@ header p{
   margin-top:5px;
 }
 
+/* =========================
+   LAST BOTTLE
+========================= */
+
+.last-bottle-card{
+  background:linear-gradient(135deg,#f0ebff,#f8f4ff);
+  border:1px solid #e3dcff;
+  border-radius:18px;
+  padding:16px;
+  margin-top:14px;
+}
+
+.last-bottle-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.last-bottle-title{
+  font-weight:800;
+  color:#5b45cf;
+}
+
+.last-bottle-time{
+  font-size:14px;
+  color:#666;
+  margin-top:6px;
+}
+
+.last-bottle-elapsed{
+  font-size:28px;
+  font-weight:900;
+  color:#6048d9;
+  margin-top:7px;
+}
+
+.last-bottle-amount{
+  font-size:13px;
+  color:#777;
+  margin-top:4px;
+}
+
+.no-bottle{
+  color:#777;
+  font-size:14px;
+  margin-top:6px;
+}
+
 .actions{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -439,7 +488,12 @@ input[type="range"]{
       <h1>👶 Baby Log</h1>
       <p id="babyGreeting">Baby's daily tracker</p>
     </div>
-    <button class="settings-btn" onclick="openSettings()">⚙️</button>
+
+    <button
+      class="settings-btn"
+      onclick="openSettings()">
+      ⚙️
+    </button>
   </div>
 </header>
 
@@ -450,6 +504,7 @@ input[type="range"]{
 <div id="liveSleepContainer"></div>
 
 <div class="card">
+
   <h2>📊 Today</h2>
 
   <div class="dashboard">
@@ -475,34 +530,81 @@ input[type="range"]{
     </div>
 
   </div>
+
+  <!-- RESTORED LAST BOTTLE TIMER -->
+
+  <div class="last-bottle-card">
+
+    <div class="last-bottle-header">
+
+      <div class="last-bottle-title">
+        🍼 Last Bottle
+      </div>
+
+    </div>
+
+    <div
+      id="lastBottleTime"
+      class="last-bottle-time">
+      No bottle recorded today
+    </div>
+
+    <div
+      id="lastBottleElapsed"
+      class="last-bottle-elapsed">
+      —
+    </div>
+
+    <div
+      id="lastBottleAmount"
+      class="last-bottle-amount">
+    </div>
+
+  </div>
+
 </div>
 
 <div class="card">
+
 <h2>➕ Log</h2>
 
 <div class="actions">
 
-<button class="action feed-btn" onclick="openFeed()">
+<button
+  class="action feed-btn"
+  onclick="openFeed()">
 🍼 Bottle Feed
 </button>
 
-<button class="action breast-btn" onclick="openBreast()">
+<!-- BREASTFEED RESTORED -->
+
+<button
+  class="action breast-btn"
+  onclick="openBreast()">
 🤱 Breastfeed
 </button>
 
-<button class="action nappy-btn" onclick="openNappy()">
+<button
+  class="action nappy-btn"
+  onclick="openNappy()">
 🧷 Nappy
 </button>
 
-<button class="action sleep-btn" onclick="startSleep()">
+<button
+  class="action sleep-btn"
+  onclick="startSleep()">
 😴 Start Sleep
 </button>
 
-<button class="action note-btn" onclick="openNote()">
+<button
+  class="action note-btn"
+  onclick="openNote()">
 📝 Note
 </button>
 
-<button class="action history-btn" onclick="showHistory()">
+<button
+  class="action history-btn"
+  onclick="showHistory()">
 📅 History
 </button>
 
@@ -510,43 +612,77 @@ input[type="range"]{
 </div>
 
 <div class="card">
+
   <div class="section-title">
+
     <h2>🕐 Today's Timeline</h2>
-    <button class="small-btn" onclick="showHistory()">View All</button>
+
+    <button
+      class="small-btn"
+      onclick="showHistory()">
+      View All
+    </button>
+
   </div>
 
   <div id="todayTimeline"></div>
+
 </div>
 
 </section>
 
-<section id="historyPage" class="hidden">
+
+<section
+  id="historyPage"
+  class="hidden">
 
 <div class="card">
 
 <h2>📅 History</h2>
 
 <div class="calendar-row">
-<input type="date" id="historyDate" onchange="renderHistory()">
-<button class="small-btn" onclick="setToday()">Today</button>
+
+<input
+  type="date"
+  id="historyDate"
+  onchange="renderHistory()">
+
+<button
+  class="small-btn"
+  onclick="setToday()">
+Today
+</button>
+
 </div>
 
-<div id="historyTimeline" style="margin-top:15px"></div>
+<div
+  id="historyTimeline"
+  style="margin-top:15px">
+</div>
 
 </div>
 
 <div class="card">
+
 <h2>📊 Selected Day</h2>
+
 <div id="historyStats"></div>
+
 </div>
 
 </section>
 
-<section id="statsPage" class="hidden">
+
+<section
+  id="statsPage"
+  class="hidden">
 
 <div class="card">
+
 <h2>📈 7 Day Summary</h2>
+
 <div id="sevenDayStats"></div>
+
 </div>
 
 </section>
@@ -555,347 +691,717 @@ input[type="range"]{
 
 </div>
 
+
 <div class="nav">
+
 <div class="nav-inner">
 
-<button id="navHome" class="active" onclick="showPage('home')">
+<button
+  id="navHome"
+  class="active"
+  onclick="showPage('home')">
 🏠<br>Home
 </button>
 
-<button id="navHistory" onclick="showPage('history')">
+<button
+  id="navHistory"
+  onclick="showPage('history')">
 📅<br>History
 </button>
 
-<button id="navStats" onclick="showPage('stats')">
+<button
+  id="navStats"
+  onclick="showPage('stats')">
 📊<br>Stats
 </button>
 
 </div>
+
 </div>
 
-<!-- FEED MODAL -->
 
-<div class="overlay" id="feedModal">
+<!-- =========================
+     FEED MODAL
+========================= -->
+
+<div
+  class="overlay"
+  id="feedModal">
+
 <div class="modal">
 
-<h2 id="feedModalTitle">🍼 Bottle Feed</h2>
+<h2 id="feedModalTitle">
+🍼 Bottle Feed
+</h2>
 
 <div class="form-group">
+
 <label>Amount</label>
 
 <div class="amount-display">
+
 <span id="amountValue">120</span> mL
+
 </div>
 
 <input
-type="range"
-id="feedAmount"
-min="10"
-max="300"
-step="10"
-value="120"
-oninput="updateAmount()">
+  type="range"
+  id="feedAmount"
+  min="10"
+  max="300"
+  step="10"
+  value="120"
+  oninput="updateAmount()">
+
 </div>
 
 <div class="form-group">
+
 <label>Time</label>
-<input type="datetime-local" id="feedTime">
+
+<input
+  type="datetime-local"
+  id="feedTime">
+
 </div>
 
 <div class="form-group">
+
 <label>Notes</label>
+
 <textarea id="feedNotes"></textarea>
+
 </div>
 
 <div class="modal-buttons">
-<button class="cancel" onclick="closeModals()">Cancel</button>
-<button class="save" onclick="saveFeed()">Save</button>
+
+<button
+  class="cancel"
+  onclick="closeModals()">
+Cancel
+</button>
+
+<button
+  class="save"
+  onclick="saveFeed()">
+Save
+</button>
+
 </div>
 
 </div>
+
 </div>
 
-<!-- BREAST MODAL -->
 
-<div class="overlay" id="breastModal">
+<!-- =========================
+     BREASTFEED MODAL
+========================= -->
+
+<div
+  class="overlay"
+  id="breastModal">
+
 <div class="modal">
 
 <h2>🤱 Breastfeed</h2>
 
 <div class="form-group">
+
 <label>Side</label>
 
 <select id="breastSide">
-<option value="left">Left</option>
-<option value="right">Right</option>
-<option value="both">Both</option>
+
+<option value="left">
+Left
+</option>
+
+<option value="right">
+Right
+</option>
+
+<option value="both">
+Both
+</option>
+
 </select>
+
 </div>
 
 <div class="row">
 
 <div class="form-group">
+
 <label>Duration (minutes)</label>
-<input type="number" id="breastDuration" min="0" value="15">
+
+<input
+  type="number"
+  id="breastDuration"
+  min="0"
+  value="15">
+
 </div>
 
 <div class="form-group">
+
 <label>Time</label>
-<input type="datetime-local" id="breastTime">
+
+<input
+  type="datetime-local"
+  id="breastTime">
+
 </div>
 
 </div>
 
 <div class="form-group">
+
 <label>Notes</label>
+
 <textarea id="breastNotes"></textarea>
+
 </div>
 
 <div class="modal-buttons">
-<button class="cancel" onclick="closeModals()">Cancel</button>
-<button class="save" onclick="saveBreast()">Save</button>
+
+<button
+  class="cancel"
+  onclick="closeModals()">
+Cancel
+</button>
+
+<button
+  class="save"
+  onclick="saveBreast()">
+Save
+</button>
+
 </div>
 
 </div>
+
 </div>
 
-<!-- NAPPY MODAL -->
 
-<div class="overlay" id="nappyModal">
+<!-- =========================
+     NAPPY MODAL
+========================= -->
+
+<div
+  class="overlay"
+  id="nappyModal">
+
 <div class="modal">
 
 <h2>🧷 Nappy</h2>
 
 <div class="form-group">
+
 <label>Type</label>
 
-<select id="nappyType" onchange="updateNappyFields()">
-<option value="wee">💧 Wee</option>
-<option value="poo">💩 Poo</option>
-<option value="both">💧💩 Wee + Poo</option>
+<select
+  id="nappyType"
+  onchange="updateNappyFields()">
+
+<option value="wee">
+💧 Wee
+</option>
+
+<option value="poo">
+💩 Poo
+</option>
+
+<option value="both">
+💧💩 Wee + Poo
+</option>
+
 </select>
+
 </div>
+
 
 <div id="weeFields">
 
 <div class="row">
 
 <div class="form-group">
+
 <label>Wee Amount</label>
+
 <select id="weeSize">
-<option value="">Not recorded</option>
-<option value="small">Small</option>
-<option value="medium">Medium</option>
-<option value="large">Large</option>
+
+<option value="">
+Not recorded
+</option>
+
+<option value="small">
+Small
+</option>
+
+<option value="medium">
+Medium
+</option>
+
+<option value="large">
+Large
+</option>
+
 </select>
+
 </div>
+
 
 <div class="form-group">
+
 <label>Wee Colour</label>
+
 <select id="weeColour">
-<option value="">Not recorded</option>
-<option>Clear</option>
-<option>Pale yellow</option>
-<option>Yellow</option>
-<option>Dark yellow</option>
-<option>Orange</option>
-<option>Pink/red</option>
-<option>Other</option>
+
+<option value="">
+Not recorded
+</option>
+
+<option>
+Clear
+</option>
+
+<option>
+Pale yellow
+</option>
+
+<option>
+Yellow
+</option>
+
+<option>
+Dark yellow
+</option>
+
+<option>
+Orange
+</option>
+
+<option>
+Pink/red
+</option>
+
+<option>
+Other
+</option>
+
 </select>
-</div>
 
 </div>
 
 </div>
+
+</div>
+
 
 <div id="pooFields">
 
 <div class="row">
 
 <div class="form-group">
+
 <label>Poo Colour</label>
+
 <select id="pooColour">
-<option value="">Not recorded</option>
-<option>Yellow</option>
-<option>Brown</option>
-<option>Green</option>
-<option>Black</option>
-<option>Red</option>
-<option>White</option>
-<option>Other</option>
+
+<option value="">
+Not recorded
+</option>
+
+<option>
+Yellow
+</option>
+
+<option>
+Brown
+</option>
+
+<option>
+Green
+</option>
+
+<option>
+Black
+</option>
+
+<option>
+Red
+</option>
+
+<option>
+White
+</option>
+
+<option>
+Other
+</option>
+
 </select>
+
 </div>
 
+
 <div class="form-group">
+
 <label>Poo Amount</label>
+
 <select id="pooAmount">
-<option value="">Not recorded</option>
-<option>Small</option>
-<option>Medium</option>
-<option>Large</option>
+
+<option value="">
+Not recorded
+</option>
+
+<option>
+Small
+</option>
+
+<option>
+Medium
+</option>
+
+<option>
+Large
+</option>
+
 </select>
+
 </div>
 
 </div>
+
 
 <div class="form-group">
+
 <label>Consistency</label>
+
 <select id="pooConsistency">
-<option value="">Not recorded</option>
-<option>Soft</option>
-<option>Runny</option>
-<option>Watery</option>
-<option>Firm</option>
-<option>Hard</option>
-<option>Mucousy</option>
-<option>Other</option>
+
+<option value="">
+Not recorded
+</option>
+
+<option>
+Soft
+</option>
+
+<option>
+Runny
+</option>
+
+<option>
+Watery
+</option>
+
+<option>
+Firm
+</option>
+
+<option>
+Hard
+</option>
+
+<option>
+Mucousy
+</option>
+
+<option>
+Other
+</option>
+
 </select>
+
 </div>
 
 </div>
+
 
 <div class="form-group">
+
 <label>Time</label>
-<input type="datetime-local" id="nappyTime">
+
+<input
+  type="datetime-local"
+  id="nappyTime">
+
 </div>
 
+
 <div class="form-group">
+
 <label>Notes</label>
+
 <textarea id="nappyNotes"></textarea>
+
 </div>
+
 
 <div class="modal-buttons">
-<button class="cancel" onclick="closeModals()">Cancel</button>
-<button class="save" onclick="saveNappy()">Save</button>
+
+<button
+  class="cancel"
+  onclick="closeModals()">
+Cancel
+</button>
+
+<button
+  class="save"
+  onclick="saveNappy()">
+Save
+</button>
+
 </div>
 
 </div>
+
 </div>
 
-<!-- SLEEP MODAL -->
 
-<div class="overlay" id="sleepModal">
+<!-- =========================
+     SLEEP MODAL
+========================= -->
+
+<div
+  class="overlay"
+  id="sleepModal">
+
 <div class="modal">
 
-<h2 id="sleepModalTitle">😴 Enter Sleep</h2>
+<h2 id="sleepModalTitle">
+😴 Enter Sleep
+</h2>
 
 <div class="warning">
+
 For overnight sleep, enter the start time first and the wake time second. If the wake time is earlier than the start time, Baby Log automatically treats it as the following day.
+
 </div>
 
+
 <div class="form-group">
+
 <label>Sleep Date</label>
-<input type="date" id="sleepDate">
+
+<input
+  type="date"
+  id="sleepDate">
+
 </div>
+
 
 <div class="row">
 
 <div class="form-group">
+
 <label>Start Time</label>
-<input type="time" id="sleepStartTime" oninput="updateSleepDuration()">
+
+<input
+  type="time"
+  id="sleepStartTime"
+  oninput="updateSleepDuration()">
+
 </div>
+
 
 <div class="form-group">
+
 <label>Wake Time</label>
-<input type="time" id="sleepEndTime" oninput="updateSleepDuration()">
+
+<input
+  type="time"
+  id="sleepEndTime"
+  oninput="updateSleepDuration()">
+
 </div>
 
 </div>
+
 
 <div class="sleep-duration">
-⏱️ Duration: <span id="sleepDurationDisplay">0h 0m</span>
+
+⏱️ Duration:
+
+<span id="sleepDurationDisplay">
+0h 0m
+</span>
+
 </div>
 
+
 <div class="form-group">
+
 <label>Notes</label>
-<textarea id="sleepNotes" placeholder="Optional notes"></textarea>
+
+<textarea
+  id="sleepNotes"
+  placeholder="Optional notes">
+</textarea>
+
 </div>
+
 
 <div class="modal-buttons">
 
-<button class="cancel" onclick="closeSleepModal()">
+<button
+  class="cancel"
+  onclick="closeSleepModal()">
 Cancel
 </button>
 
-<button class="save" onclick="saveSleep()">
+<button
+  class="save"
+  onclick="saveSleep()">
 Save Sleep
 </button>
 
 </div>
 
 </div>
+
 </div>
 
-<!-- NOTE MODAL -->
 
-<div class="overlay" id="noteModal">
+<!-- =========================
+     NOTE MODAL
+========================= -->
+
+<div
+  class="overlay"
+  id="noteModal">
+
 <div class="modal">
 
 <h2>📝 Note</h2>
 
 <div class="form-group">
+
 <label>Time</label>
-<input type="datetime-local" id="noteTime">
+
+<input
+  type="datetime-local"
+  id="noteTime">
+
 </div>
 
 <div class="form-group">
+
 <label>Note</label>
+
 <textarea id="noteText"></textarea>
+
 </div>
 
 <div class="modal-buttons">
-<button class="cancel" onclick="closeModals()">Cancel</button>
-<button class="save" onclick="saveNote()">Save</button>
+
+<button
+  class="cancel"
+  onclick="closeModals()">
+Cancel
+</button>
+
+<button
+  class="save"
+  onclick="saveNote()">
+Save
+</button>
+
 </div>
 
 </div>
+
 </div>
 
-<!-- SETTINGS MODAL -->
 
-<div class="overlay" id="settingsModal">
+<!-- =========================
+     SETTINGS MODAL
+========================= -->
+
+<div
+  class="overlay"
+  id="settingsModal">
+
 <div class="modal">
 
 <h2>⚙️ Settings</h2>
 
 <div class="form-group">
+
 <label>Baby's Name</label>
+
 <input id="babyName">
+
 </div>
 
 <div class="form-group">
+
 <label>Date of Birth</label>
-<input type="date" id="babyDob">
+
+<input
+  type="date"
+  id="babyDob">
+
 </div>
 
 <div class="form-group">
-<label>Default Bottle Amount (mL)</label>
-<input type="number" id="defaultAmount" min="10" max="500">
+
+<label>
+Default Bottle Amount (mL)
+</label>
+
+<input
+  type="number"
+  id="defaultAmount"
+  min="10"
+  max="500">
+
 </div>
 
 <div class="modal-buttons">
-<button class="cancel" onclick="closeModals()">Cancel</button>
-<button class="save" onclick="saveSettings()">Save</button>
+
+<button
+  class="cancel"
+  onclick="closeModals()">
+Cancel
+</button>
+
+<button
+  class="save"
+  onclick="saveSettings()">
+Save
+</button>
+
 </div>
 
 </div>
+
 </div>
+
 
 <script>
 
 const STORAGE_KEY="baby-log-v3";
 
 let data={
+
   version:3,
+
   baby:{
     name:"Baby",
     dob:"",
     defaultAmount:120
   },
+
   events:[],
+
   alarms:[],
+
   currentSleepStart:null
+
 };
+
 
 let editingFeedId=null;
 let editingNappyId=null;
@@ -911,7 +1417,8 @@ function loadData(){
 
   try{
 
-    const saved=localStorage.getItem(STORAGE_KEY);
+    const saved=
+      localStorage.getItem(STORAGE_KEY);
 
     if(saved){
 
@@ -920,19 +1427,18 @@ function loadData(){
       data={
         ...data,
         ...parsed,
+
         baby:{
           ...data.baby,
           ...(parsed.baby||{})
         }
+
       };
 
-      /*
-        IMPORTANT:
-        Older sleep records may have duration + time
-        but no start value.
 
-        We automatically rebuild the missing start
-        so those old sleep records can still be edited.
+      /*
+        Restore missing sleep start times
+        from older records.
       */
 
       data.events=data.events.map(event=>{
@@ -965,11 +1471,15 @@ function loadData(){
 
   }catch(error){
 
-    console.error("Could not load Baby Log data:",error);
+    console.error(
+      "Could not load Baby Log data:",
+      error
+    );
 
   }
 
 }
+
 
 function saveData(){
 
@@ -982,7 +1492,10 @@ function saveData(){
 
   }catch(error){
 
-    console.error("Could not save Baby Log data:",error);
+    console.error(
+      "Could not save Baby Log data:",
+      error
+    );
 
     alert(
       "Baby Log could not save the latest change on this device."
@@ -998,8 +1511,11 @@ function saveData(){
 ========================= */
 
 function pad(n){
+
   return String(n).padStart(2,"0");
+
 }
+
 
 function localDateKey(date){
 
@@ -1009,6 +1525,7 @@ function localDateKey(date){
 
 }
 
+
 function localDateTimeValue(date){
 
   const d=new Date(date);
@@ -1016,6 +1533,7 @@ function localDateTimeValue(date){
   return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 
 }
+
 
 function localTimeValue(date){
 
@@ -1025,36 +1543,48 @@ function localTimeValue(date){
 
 }
 
+
 function todayKey(){
 
   return localDateKey(new Date());
 
 }
 
+
 function formatTime(date){
 
   return new Date(date).toLocaleTimeString([],{
+
     hour:"numeric",
     minute:"2-digit"
+
   });
 
 }
+
 
 function formatDate(date){
 
   return new Date(date).toLocaleDateString([],{
+
     day:"numeric",
     month:"short",
     year:"numeric"
+
   });
 
 }
 
+
 function formatDuration(minutes){
 
-  minutes=Math.max(0,Math.round(minutes||0));
+  minutes=Math.max(
+    0,
+    Math.round(minutes||0)
+  );
 
   const h=Math.floor(minutes/60);
+
   const m=minutes%60;
 
   return `${h}h ${m}m`;
@@ -1066,30 +1596,42 @@ function formatDuration(minutes){
    INITIALISE
 ========================= */
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener(
+  "DOMContentLoaded",
+  ()=>{
 
-  loadData();
+    loadData();
 
-  document.getElementById("historyDate").value=todayKey();
+    document.getElementById(
+      "historyDate"
+    ).value=todayKey();
 
-  document.getElementById("feedAmount").value=
-    data.baby.defaultAmount||120;
+    document.getElementById(
+      "feedAmount"
+    ).value=
+      data.baby.defaultAmount||120;
 
-  document.getElementById("amountValue").textContent=
-    data.baby.defaultAmount||120;
+    document.getElementById(
+      "amountValue"
+    ).textContent=
+      data.baby.defaultAmount||120;
 
-  updateBabyGreeting();
+    updateBabyGreeting();
 
-  renderAll();
+    renderAll();
 
-});
+  }
+);
 
 
 function updateBabyGreeting(){
 
-  const name=data.baby.name||"Baby";
+  const name=
+    data.baby.name||"Baby";
 
-  document.getElementById("babyGreeting").textContent=
+  document.getElementById(
+    "babyGreeting"
+  ).textContent=
     `${name}'s daily tracker`;
 
 }
@@ -1101,41 +1643,65 @@ function updateBabyGreeting(){
 
 function showPage(page){
 
-  document.getElementById("homePage").classList.toggle(
+  document.getElementById(
+    "homePage"
+  ).classList.toggle(
     "hidden",
     page!=="home"
   );
 
-  document.getElementById("historyPage").classList.toggle(
+  document.getElementById(
+    "historyPage"
+  ).classList.toggle(
     "hidden",
     page!=="history"
   );
 
-  document.getElementById("statsPage").classList.toggle(
+  document.getElementById(
+    "statsPage"
+  ).classList.toggle(
     "hidden",
     page!=="stats"
   );
 
-  document.getElementById("navHome").classList.toggle(
+
+  document.getElementById(
+    "navHome"
+  ).classList.toggle(
     "active",
     page==="home"
   );
 
-  document.getElementById("navHistory").classList.toggle(
+  document.getElementById(
+    "navHistory"
+  ).classList.toggle(
     "active",
     page==="history"
   );
 
-  document.getElementById("navStats").classList.toggle(
+  document.getElementById(
+    "navStats"
+  ).classList.toggle(
     "active",
     page==="stats"
   );
 
-  if(page==="history") renderHistory();
 
-  if(page==="stats") renderSevenDayStats();
+  if(page==="history"){
+
+    renderHistory();
+
+  }
+
+
+  if(page==="stats"){
+
+    renderSevenDayStats();
+
+  }
 
 }
+
 
 function showHistory(){
 
@@ -1150,7 +1716,9 @@ function showHistory(){
 
 function closeModals(){
 
-  document.querySelectorAll(".overlay").forEach(
+  document.querySelectorAll(
+    ".overlay"
+  ).forEach(
     el=>el.classList.remove("show")
   );
 
@@ -1160,9 +1728,12 @@ function closeModals(){
 
 }
 
+
 function closeSleepModal(){
 
-  document.getElementById("sleepModal").classList.remove("show");
+  document.getElementById(
+    "sleepModal"
+  ).classList.remove("show");
 
   editingSleepId=null;
 
@@ -1175,74 +1746,121 @@ function closeSleepModal(){
 
 function openFeed(event=null){
 
-  editingFeedId=event ? event.id:null;
+  editingFeedId=
+    event ? event.id:null;
 
-  document.getElementById("feedModalTitle").textContent=
-    event ? "✏️ Edit Bottle Feed":"🍼 Bottle Feed";
+  document.getElementById(
+    "feedModalTitle"
+  ).textContent=
+    event
+      ?"✏️ Edit Bottle Feed"
+      :"🍼 Bottle Feed";
+
 
   if(event){
 
-    document.getElementById("feedAmount").value=
-      event.amount||data.baby.defaultAmount;
+    document.getElementById(
+      "feedAmount"
+    ).value=
+      event.amount||
+      data.baby.defaultAmount;
 
-    document.getElementById("feedTime").value=
+    document.getElementById(
+      "feedTime"
+    ).value=
       localDateTimeValue(event.time);
 
-    document.getElementById("feedNotes").value=
+    document.getElementById(
+      "feedNotes"
+    ).value=
       event.notes||"";
 
   }else{
 
-    document.getElementById("feedAmount").value=
+    document.getElementById(
+      "feedAmount"
+    ).value=
       data.baby.defaultAmount||120;
 
-    document.getElementById("feedTime").value=
-      localDateTimeValue(new Date());
+    document.getElementById(
+      "feedTime"
+    ).value=
+      localDateTimeValue(
+        new Date()
+      );
 
-    document.getElementById("feedNotes").value="";
+    document.getElementById(
+      "feedNotes"
+    ).value="";
 
   }
 
+
   updateAmount();
 
-  document.getElementById("feedModal").classList.add("show");
+
+  document.getElementById(
+    "feedModal"
+  ).classList.add("show");
 
 }
+
 
 function updateAmount(){
 
-  document.getElementById("amountValue").textContent=
-    document.getElementById("feedAmount").value;
+  document.getElementById(
+    "amountValue"
+  ).textContent=
+    document.getElementById(
+      "feedAmount"
+    ).value;
 
 }
+
 
 function saveFeed(){
 
   const amount=Number(
-    document.getElementById("feedAmount").value
+    document.getElementById(
+      "feedAmount"
+    ).value
   );
 
-  const time=document.getElementById("feedTime").value;
+  const time=
+    document.getElementById(
+      "feedTime"
+    ).value;
+
 
   if(!time){
 
-    alert("Please select a time.");
+    alert(
+      "Please select a time."
+    );
 
     return;
 
   }
 
+
   if(editingFeedId){
 
-    const event=data.events.find(
-      e=>e.id===editingFeedId
-    );
+    const event=
+      data.events.find(
+        e=>e.id===editingFeedId
+      );
 
     if(event){
 
       event.amount=amount;
-      event.time=new Date(time).toISOString();
-      event.notes=document.getElementById("feedNotes").value;
+
+      event.time=
+        new Date(time).toISOString();
+
+      event.notes=
+        document.getElementById(
+          "feedNotes"
+        ).value;
 
     }
 
@@ -1251,19 +1869,32 @@ function saveFeed(){
     data.events.push({
 
       id:crypto.randomUUID(),
+
       type:"feed",
+
       feedType:"bottle",
+
       amount,
+
       duration:0,
-      time:new Date(time).toISOString(),
-      notes:document.getElementById("feedNotes").value
+
+      time:
+        new Date(time).toISOString(),
+
+      notes:
+        document.getElementById(
+          "feedNotes"
+        ).value
 
     });
 
   }
 
+
   saveData();
+
   closeModals();
+
   renderAll();
 
 }
@@ -1275,48 +1906,90 @@ function saveFeed(){
 
 function openBreast(){
 
-  document.getElementById("breastSide").value="left";
-  document.getElementById("breastDuration").value=15;
-  document.getElementById("breastTime").value=
-    localDateTimeValue(new Date());
-  document.getElementById("breastNotes").value="";
+  document.getElementById(
+    "breastSide"
+  ).value="left";
 
-  document.getElementById("breastModal").classList.add("show");
+  document.getElementById(
+    "breastDuration"
+  ).value=15;
+
+  document.getElementById(
+    "breastTime"
+  ).value=
+    localDateTimeValue(
+      new Date()
+    );
+
+  document.getElementById(
+    "breastNotes"
+  ).value="";
+
+
+  document.getElementById(
+    "breastModal"
+  ).classList.add("show");
 
 }
 
+
 function saveBreast(){
 
-  const side=document.getElementById("breastSide").value;
+  const side=
+    document.getElementById(
+      "breastSide"
+    ).value;
 
   const duration=Number(
-    document.getElementById("breastDuration").value||0
+    document.getElementById(
+      "breastDuration"
+    ).value||0
   );
 
-  const time=document.getElementById("breastTime").value;
+  const time=
+    document.getElementById(
+      "breastTime"
+    ).value;
+
 
   if(!time){
 
-    alert("Please select a time.");
+    alert(
+      "Please select a time."
+    );
 
     return;
 
   }
 
+
   data.events.push({
 
     id:crypto.randomUUID(),
+
     type:"feed",
+
     feedType:side,
+
     amount:0,
+
     duration,
-    time:new Date(time).toISOString(),
-    notes:document.getElementById("breastNotes").value
+
+    time:
+      new Date(time).toISOString(),
+
+    notes:
+      document.getElementById(
+        "breastNotes"
+      ).value
 
   });
 
+
   saveData();
+
   closeModals();
+
   renderAll();
 
 }
@@ -1328,107 +2001,209 @@ function saveBreast(){
 
 function openNappy(event=null){
 
-  editingNappyId=event ? event.id:null;
+  editingNappyId=
+    event ? event.id:null;
+
 
   if(event){
 
-    document.getElementById("nappyType").value=
+    document.getElementById(
+      "nappyType"
+    ).value=
       event.nappyType||"wee";
 
-    document.getElementById("weeSize").value=
+    document.getElementById(
+      "weeSize"
+    ).value=
       event.weeSize||"";
 
-    document.getElementById("weeColour").value=
+    document.getElementById(
+      "weeColour"
+    ).value=
       event.weeColour||"";
 
-    document.getElementById("pooColour").value=
+    document.getElementById(
+      "pooColour"
+    ).value=
       event.pooColour||"";
 
-    document.getElementById("pooConsistency").value=
+    document.getElementById(
+      "pooConsistency"
+    ).value=
       event.pooConsistency||"";
 
-    document.getElementById("pooAmount").value=
+    document.getElementById(
+      "pooAmount"
+    ).value=
       event.pooAmount||"";
 
-    document.getElementById("nappyTime").value=
-      localDateTimeValue(event.time);
+    document.getElementById(
+      "nappyTime"
+    ).value=
+      localDateTimeValue(
+        event.time
+      );
 
-    document.getElementById("nappyNotes").value=
+    document.getElementById(
+      "nappyNotes"
+    ).value=
       event.notes||"";
 
   }else{
 
-    document.getElementById("nappyType").value="wee";
-    document.getElementById("weeSize").value="";
-    document.getElementById("weeColour").value="";
-    document.getElementById("pooColour").value="";
-    document.getElementById("pooConsistency").value="";
-    document.getElementById("pooAmount").value="";
-    document.getElementById("nappyTime").value=
-      localDateTimeValue(new Date());
-    document.getElementById("nappyNotes").value="";
+    document.getElementById(
+      "nappyType"
+    ).value="wee";
+
+    document.getElementById(
+      "weeSize"
+    ).value="";
+
+    document.getElementById(
+      "weeColour"
+    ).value="";
+
+    document.getElementById(
+      "pooColour"
+    ).value="";
+
+    document.getElementById(
+      "pooConsistency"
+    ).value="";
+
+    document.getElementById(
+      "pooAmount"
+    ).value="";
+
+    document.getElementById(
+      "nappyTime"
+    ).value=
+      localDateTimeValue(
+        new Date()
+      );
+
+    document.getElementById(
+      "nappyNotes"
+    ).value="";
 
   }
 
+
   updateNappyFields();
 
-  document.getElementById("nappyModal").classList.add("show");
+
+  document.getElementById(
+    "nappyModal"
+  ).classList.add("show");
 
 }
+
 
 function updateNappyFields(){
 
-  const type=document.getElementById("nappyType").value;
+  const type=
+    document.getElementById(
+      "nappyType"
+    ).value;
 
-  document.getElementById("weeFields").style.display=
-    type==="wee"||type==="both"
-      ?"block":"none";
 
-  document.getElementById("pooFields").style.display=
-    type==="poo"||type==="both"
-      ?"block":"none";
+  document.getElementById(
+    "weeFields"
+  ).style.display=
+    type==="wee"||
+    type==="both"
+      ?"block"
+      :"none";
+
+
+  document.getElementById(
+    "pooFields"
+  ).style.display=
+    type==="poo"||
+    type==="both"
+      ?"block"
+      :"none";
 
 }
 
+
 function saveNappy(){
 
-  const type=document.getElementById("nappyType").value;
-  const time=document.getElementById("nappyTime").value;
+  const type=
+    document.getElementById(
+      "nappyType"
+    ).value;
+
+  const time=
+    document.getElementById(
+      "nappyTime"
+    ).value;
+
 
   if(!time){
 
-    alert("Please select a time.");
+    alert(
+      "Please select a time."
+    );
 
     return;
 
   }
 
+
   const values={
 
     nappyType:type,
 
-    weeSize:document.getElementById("weeSize").value,
-    weeColour:document.getElementById("weeColour").value,
+    weeSize:
+      document.getElementById(
+        "weeSize"
+      ).value,
 
-    pooColour:document.getElementById("pooColour").value,
-    pooConsistency:document.getElementById("pooConsistency").value,
-    pooAmount:document.getElementById("pooAmount").value,
+    weeColour:
+      document.getElementById(
+        "weeColour"
+      ).value,
 
-    time:new Date(time).toISOString(),
+    pooColour:
+      document.getElementById(
+        "pooColour"
+      ).value,
 
-    notes:document.getElementById("nappyNotes").value
+    pooConsistency:
+      document.getElementById(
+        "pooConsistency"
+      ).value,
+
+    pooAmount:
+      document.getElementById(
+        "pooAmount"
+      ).value,
+
+    time:
+      new Date(time).toISOString(),
+
+    notes:
+      document.getElementById(
+        "nappyNotes"
+      ).value
 
   };
 
+
   if(editingNappyId){
 
-    const event=data.events.find(
-      e=>e.id===editingNappyId
-    );
+    const event=
+      data.events.find(
+        e=>e.id===editingNappyId
+      );
 
     if(event){
 
-      Object.assign(event,values);
+      Object.assign(
+        event,
+        values
+      );
 
     }
 
@@ -1437,15 +2212,20 @@ function saveNappy(){
     data.events.push({
 
       id:crypto.randomUUID(),
+
       type:"nappy",
+
       ...values
 
     });
 
   }
 
+
   saveData();
+
   closeModals();
+
   renderAll();
 
 }
@@ -1465,7 +2245,9 @@ function startSleep(){
 
   }
 
-  data.currentSleepStart=new Date().toISOString();
+
+  data.currentSleepStart=
+    new Date().toISOString();
 
   saveData();
 
@@ -1482,23 +2264,32 @@ function stopSleep(){
 
   }
 
-  const start=new Date(data.currentSleepStart);
+
+  const start=
+    new Date(
+      data.currentSleepStart
+    );
+
   const end=new Date();
+
 
   const duration=Math.round(
     (end-start)/60000
   );
+
 
   if(duration<=0){
 
     data.currentSleepStart=null;
 
     saveData();
+
     renderAll();
 
     return;
 
   }
+
 
   data.events.push({
 
@@ -1506,9 +2297,11 @@ function stopSleep(){
 
     type:"sleep",
 
-    start:start.toISOString(),
+    start:
+      start.toISOString(),
 
-    time:end.toISOString(),
+    time:
+      end.toISOString(),
 
     duration,
 
@@ -1520,6 +2313,7 @@ function stopSleep(){
 
   });
 
+
   data.currentSleepStart=null;
 
   saveData();
@@ -1529,61 +2323,56 @@ function stopSleep(){
 }
 
 
-/*
-  EDIT EXISTING SLEEP
-
-  This function now handles both:
-  1. New records with start
-  2. Older records without start
-
-  For an old record without start, the start time
-  is reconstructed from:
-  end time - duration.
-*/
+/* =========================
+   EDIT SLEEP
+========================= */
 
 function editSleep(eventId){
 
-  const event=data.events.find(
-    e=>String(e.id)===String(eventId) &&
-       e.type==="sleep"
-  );
+  const event=
+    data.events.find(
+      e=>
+        String(e.id)===String(eventId) &&
+        e.type==="sleep"
+    );
+
 
   if(!event){
 
-    alert("Sleep record could not be found.");
+    alert(
+      "Sleep record could not be found."
+    );
 
     return;
 
   }
 
-  /*
-    Make sure the record has a start time.
-  */
 
   let start;
 
+
   if(event.start){
 
-    start=new Date(event.start);
+    start=
+      new Date(event.start);
 
   }else if(
     event.time &&
     Number(event.duration)>0
   ){
 
-    const endForOldRecord=new Date(event.time);
+    const endForOldRecord=
+      new Date(event.time);
 
-    start=new Date(
-      endForOldRecord.getTime()-
-      Number(event.duration)*60000
-    );
+    start=
+      new Date(
+        endForOldRecord.getTime()-
+        Number(event.duration)*60000
+      );
 
-    /*
-      Save the reconstructed start so the
-      record stays editable next time.
-    */
 
-    event.start=start.toISOString();
+    event.start=
+      start.toISOString();
 
     saveData();
 
@@ -1597,109 +2386,173 @@ function editSleep(eventId){
 
   }
 
-  const end=new Date(event.time);
+
+  const end=
+    new Date(event.time);
+
 
   if(
     isNaN(start.getTime()) ||
     isNaN(end.getTime())
   ){
 
-    alert("This sleep record contains an invalid date or time.");
+    alert(
+      "This sleep record contains an invalid date or time."
+    );
 
     return;
 
   }
 
-  editingSleepId=event.id;
 
-  document.getElementById("sleepModalTitle").textContent=
+  editingSleepId=
+    event.id;
+
+
+  document.getElementById(
+    "sleepModalTitle"
+  ).textContent=
     "✏️ Edit Sleep";
 
-  document.getElementById("sleepDate").value=
+
+  document.getElementById(
+    "sleepDate"
+  ).value=
     localDateKey(start);
 
-  document.getElementById("sleepStartTime").value=
+
+  document.getElementById(
+    "sleepStartTime"
+  ).value=
     localTimeValue(start);
 
-  document.getElementById("sleepEndTime").value=
+
+  document.getElementById(
+    "sleepEndTime"
+  ).value=
     localTimeValue(end);
 
-  document.getElementById("sleepNotes").value=
+
+  document.getElementById(
+    "sleepNotes"
+  ).value=
     event.notes||"";
+
 
   updateSleepDuration();
 
-  document.getElementById("sleepModal").classList.add("show");
+
+  document.getElementById(
+    "sleepModal"
+  ).classList.add("show");
 
 }
 
 
-/*
-  MANUAL SLEEP
-*/
+/* =========================
+   MANUAL SLEEP
+========================= */
 
 function openManualSleep(){
 
   editingSleepId=null;
 
+
   const end=new Date();
 
-  const start=new Date(
-    end.getTime()-60*60000
-  );
+  const start=
+    new Date(
+      end.getTime()-
+      60*60000
+    );
 
-  document.getElementById("sleepModalTitle").textContent=
+
+  document.getElementById(
+    "sleepModalTitle"
+  ).textContent=
     "😴 Enter Sleep";
 
-  document.getElementById("sleepDate").value=
+
+  document.getElementById(
+    "sleepDate"
+  ).value=
     localDateKey(start);
 
-  document.getElementById("sleepStartTime").value=
+
+  document.getElementById(
+    "sleepStartTime"
+  ).value=
     localTimeValue(start);
 
-  document.getElementById("sleepEndTime").value=
+
+  document.getElementById(
+    "sleepEndTime"
+  ).value=
     localTimeValue(end);
 
-  document.getElementById("sleepNotes").value="";
+
+  document.getElementById(
+    "sleepNotes"
+  ).value="";
+
 
   updateSleepDuration();
 
-  document.getElementById("sleepModal").classList.add("show");
+
+  document.getElementById(
+    "sleepModal"
+  ).classList.add("show");
 
 }
 
 
-/*
-  GET SLEEP TIMES
-*/
+/* =========================
+   GET SLEEP TIMES
+========================= */
 
 function getSleepTimes(){
 
   const dateValue=
-    document.getElementById("sleepDate").value;
+    document.getElementById(
+      "sleepDate"
+    ).value;
 
   const startValue=
-    document.getElementById("sleepStartTime").value;
+    document.getElementById(
+      "sleepStartTime"
+    ).value;
 
   const endValue=
-    document.getElementById("sleepEndTime").value;
+    document.getElementById(
+      "sleepEndTime"
+    ).value;
 
-  if(!dateValue||!startValue||!endValue){
+
+  if(
+    !dateValue||
+    !startValue||
+    !endValue
+  ){
 
     return null;
 
   }
 
-  const start=new Date(
-    `${dateValue}T${startValue}`
-  );
 
-  let end=new Date(
-    `${dateValue}T${endValue}`
-  );
+  const start=
+    new Date(
+      `${dateValue}T${startValue}`
+    );
+
+
+  let end=
+    new Date(
+      `${dateValue}T${endValue}`
+    );
+
 
   if(
-    isNaN(start.getTime()) ||
+    isNaN(start.getTime())||
     isNaN(end.getTime())
   ){
 
@@ -1707,27 +2560,33 @@ function getSleepTimes(){
 
   }
 
-  /*
-    Overnight sleep.
-  */
 
   if(end<start){
 
-    end.setDate(end.getDate()+1);
+    end.setDate(
+      end.getDate()+1
+    );
 
   }
 
-  if(end.getTime()===start.getTime()){
+
+  if(
+    end.getTime()===
+    start.getTime()
+  ){
 
     return null;
 
   }
 
-  const duration=Math.round(
-    (end-start)/60000
-  );
 
-  return {
+  const duration=
+    Math.round(
+      (end-start)/60000
+    );
+
+
+  return{
     start,
     end,
     duration
@@ -1738,41 +2597,41 @@ function getSleepTimes(){
 
 function updateSleepDuration(){
 
-  const times=getSleepTimes();
+  const times=
+    getSleepTimes();
+
 
   if(!times){
 
     document.getElementById(
       "sleepDurationDisplay"
-    ).textContent="Enter valid times";
+    ).textContent=
+      "Enter valid times";
 
     return;
 
   }
 
+
   document.getElementById(
     "sleepDurationDisplay"
   ).textContent=
-    formatDuration(times.duration);
+    formatDuration(
+      times.duration
+    );
 
 }
 
 
-/*
-  SAVE SLEEP
-
-  EDIT:
-  Updates the existing record.
-
-  NEW:
-  Creates a new manual sleep record.
-
-  The existing ID is always preserved when editing.
-*/
+/* =========================
+   SAVE SLEEP
+========================= */
 
 function saveSleep(){
 
-  const times=getSleepTimes();
+  const times=
+    getSleepTimes();
+
 
   if(!times){
 
@@ -1785,31 +2644,34 @@ function saveSleep(){
 
   }
 
-  const notes=
-    document.getElementById("sleepNotes").value;
 
-  /*
-    EDIT EXISTING SLEEP
-  */
+  const notes=
+    document.getElementById(
+      "sleepNotes"
+    ).value;
+
 
   if(editingSleepId){
 
-    const event=data.events.find(
-      e=>String(e.id)===String(editingSleepId) &&
-         e.type==="sleep"
-    );
+    const event=
+      data.events.find(
+        e=>
+          String(e.id)===
+          String(editingSleepId) &&
+          e.type==="sleep"
+      );
+
 
     if(!event){
 
-      alert("The sleep record could not be found.");
+      alert(
+        "The sleep record could not be found."
+      );
 
       return;
 
     }
 
-    /*
-      KEEP THE SAME RECORD AND SAME ID.
-    */
 
     event.start=
       times.start.toISOString();
@@ -1825,9 +2687,6 @@ function saveSleep(){
 
     event.edited=true;
 
-    /*
-      Preserve whether it was tracked or manual.
-    */
 
     if(!event.source){
 
@@ -1835,16 +2694,14 @@ function saveSleep(){
 
     }
 
-    /*
-      If this record corresponds to the currently
-      running sleep timer, stop the timer.
-    */
 
     if(data.currentSleepStart){
 
-      const liveStart=new Date(
-        data.currentSleepStart
-      );
+      const liveStart=
+        new Date(
+          data.currentSleepStart
+        );
+
 
       if(
         Math.abs(
@@ -1859,13 +2716,7 @@ function saveSleep(){
 
     }
 
-  }
-
-  /*
-    CREATE NEW MANUAL SLEEP
-  */
-
-  else{
+  }else{
 
     data.events.push({
 
@@ -1892,6 +2743,7 @@ function saveSleep(){
 
   }
 
+
   saveData();
 
   closeSleepModal();
@@ -1909,48 +2761,80 @@ function openNote(){
 
   editingNoteId=null;
 
-  document.getElementById("noteTime").value=
-    localDateTimeValue(new Date());
 
-  document.getElementById("noteText").value="";
+  document.getElementById(
+    "noteTime"
+  ).value=
+    localDateTimeValue(
+      new Date()
+    );
 
-  document.getElementById("noteModal").classList.add("show");
+
+  document.getElementById(
+    "noteText"
+  ).value="";
+
+
+  document.getElementById(
+    "noteModal"
+  ).classList.add("show");
 
 }
 
+
 function saveNote(){
 
-  const time=document.getElementById("noteTime").value;
+  const time=
+    document.getElementById(
+      "noteTime"
+    ).value;
 
-  const text=document.getElementById("noteText").value.trim();
+  const text=
+    document.getElementById(
+      "noteText"
+    ).value.trim();
+
 
   if(!time){
 
-    alert("Please select a time.");
+    alert(
+      "Please select a time."
+    );
 
     return;
 
   }
+
 
   if(!text){
 
-    alert("Please enter a note.");
+    alert(
+      "Please enter a note."
+    );
 
     return;
 
   }
+
 
   data.events.push({
 
     id:crypto.randomUUID(),
+
     type:"note",
-    time:new Date(time).toISOString(),
+
+    time:
+      new Date(time).toISOString(),
+
     notes:text
 
   });
 
+
   saveData();
+
   closeModals();
+
   renderAll();
 
 }
@@ -1962,15 +2846,18 @@ function saveNote(){
 
 function editEvent(id){
 
-  const event=data.events.find(
-    e=>String(e.id)===String(id)
-  );
+  const event=
+    data.events.find(
+      e=>String(e.id)===String(id)
+    );
 
-  if(!event) return;
 
-  /*
-    SLEEP IS HANDLED FIRST.
-  */
+  if(!event){
+
+    return;
+
+  }
+
 
   if(event.type==="sleep"){
 
@@ -1980,9 +2867,12 @@ function editEvent(id){
 
   }
 
+
   if(event.type==="feed"){
 
-    if(event.feedType==="bottle"){
+    if(
+      event.feedType==="bottle"
+    ){
 
       openFeed(event);
 
@@ -1998,6 +2888,7 @@ function editEvent(id){
 
   }
 
+
   if(event.type==="nappy"){
 
     openNappy(event);
@@ -2005,6 +2896,7 @@ function editEvent(id){
     return;
 
   }
+
 
   if(event.type==="note"){
 
@@ -2023,11 +2915,18 @@ function editEvent(id){
 
 function deleteEvent(id){
 
-  const event=data.events.find(
-    e=>String(e.id)===String(id)
-  );
+  const event=
+    data.events.find(
+      e=>String(e.id)===String(id)
+    );
 
-  if(!event) return;
+
+  if(!event){
+
+    return;
+
+  }
+
 
   if(
     !confirm(
@@ -2039,9 +2938,13 @@ function deleteEvent(id){
 
   }
 
-  data.events=data.events.filter(
-    e=>String(e.id)!==String(id)
-  );
+
+  data.events=
+    data.events.filter(
+      e=>String(e.id)!==
+        String(id)
+    );
+
 
   saveData();
 
@@ -2056,126 +2959,178 @@ function deleteEvent(id){
 
 function sleepEventsForDate(key){
 
-  const dayStart=new Date(`${key}T00:00:00`);
+  const dayStart=
+    new Date(
+      `${key}T00:00:00`
+    );
 
-  const dayEnd=new Date(dayStart);
 
-  dayEnd.setDate(dayEnd.getDate()+1);
+  const dayEnd=
+    new Date(dayStart);
 
-  return data.events.filter(event=>{
 
-    if(event.type!=="sleep") return false;
+  dayEnd.setDate(
+    dayEnd.getDate()+1
+  );
 
-    /*
-      Legacy protection.
-    */
 
-    if(!event.start){
+  return data.events.filter(
+    event=>{
 
       if(
-        event.time &&
-        Number(event.duration)>0
+        event.type!=="sleep"
       ){
-
-        const end=new Date(event.time);
-
-        const start=new Date(
-          end.getTime()-
-          Number(event.duration)*60000
-        );
-
-        event.start=start.toISOString();
-
-      }else{
 
         return false;
 
       }
 
+
+      if(!event.start){
+
+        if(
+          event.time &&
+          Number(event.duration)>0
+        ){
+
+          const end=
+            new Date(event.time);
+
+          const start=
+            new Date(
+              end.getTime()-
+              Number(event.duration)*60000
+            );
+
+          event.start=
+            start.toISOString();
+
+        }else{
+
+          return false;
+
+        }
+
+      }
+
+
+      const start=
+        new Date(event.start);
+
+      const end=
+        new Date(event.time);
+
+
+      if(
+        isNaN(start.getTime())||
+        isNaN(end.getTime())
+      ){
+
+        return false;
+
+      }
+
+
+      return(
+        start<dayEnd &&
+        end>dayStart
+      );
+
     }
-
-    const start=new Date(event.start);
-    const end=new Date(event.time);
-
-    if(
-      isNaN(start.getTime()) ||
-      isNaN(end.getTime())
-    ){
-
-      return false;
-
-    }
-
-    return start<dayEnd && end>dayStart;
-
-  });
+  );
 
 }
 
 
-/*
-  Calculate sleep occurring during selected day.
-*/
+/* =========================
+   SLEEP FOR DATE
+========================= */
 
 function sleepForDate(key){
 
-  const dayStart=new Date(`${key}T00:00:00`);
+  const dayStart=
+    new Date(
+      `${key}T00:00:00`
+    );
 
-  const dayEnd=new Date(dayStart);
 
-  dayEnd.setDate(dayEnd.getDate()+1);
+  const dayEnd=
+    new Date(dayStart);
+
+
+  dayEnd.setDate(
+    dayEnd.getDate()+1
+  );
+
 
   let total=0;
 
-  sleepEventsForDate(key).forEach(event=>{
 
-    const start=Math.max(
-      new Date(event.start).getTime(),
-      dayStart.getTime()
-    );
+  sleepEventsForDate(
+    key
+  ).forEach(event=>{
 
-    const end=Math.min(
-      new Date(event.time).getTime(),
-      dayEnd.getTime()
-    );
+    const start=
+      Math.max(
+        new Date(event.start).getTime(),
+        dayStart.getTime()
+      );
+
+
+    const end=
+      Math.min(
+        new Date(event.time).getTime(),
+        dayEnd.getTime()
+      );
+
 
     if(end>start){
 
-      total+=(end-start)/60000;
+      total+=
+        (end-start)/60000;
 
     }
 
   });
 
-  /*
-    Add currently running sleep to today's total.
-  */
 
   if(data.currentSleepStart){
 
-    const start=new Date(
-      data.currentSleepStart
-    ).getTime();
+    const start=
+      new Date(
+        data.currentSleepStart
+      ).getTime();
+
 
     const now=Date.now();
 
-    const overlapStart=Math.max(
-      start,
-      dayStart.getTime()
-    );
 
-    const overlapEnd=Math.min(
-      now,
-      dayEnd.getTime()
-    );
+    const overlapStart=
+      Math.max(
+        start,
+        dayStart.getTime()
+      );
 
-    if(overlapEnd>overlapStart){
 
-      total+=(overlapEnd-overlapStart)/60000;
+    const overlapEnd=
+      Math.min(
+        now,
+        dayEnd.getTime()
+      );
+
+
+    if(
+      overlapEnd>overlapStart
+    ){
+
+      total+=
+        (overlapEnd-overlapStart)/
+        60000;
 
     }
 
   }
+
 
   return Math.round(total);
 
@@ -2190,75 +3145,149 @@ function eventDetail(event){
 
   if(event.type==="feed"){
 
-    if(event.feedType==="bottle"){
+    if(
+      event.feedType==="bottle"
+    ){
 
       return `🍼 ${event.amount||0} mL`;
 
     }
 
+
     const side={
+
       left:"Left",
       right:"Right",
       both:"Both"
-    }[event.feedType]||event.feedType;
 
-    return `🤱 ${side} • ${event.duration||0} min`;
+    }[event.feedType]||
+      event.feedType;
+
+
+    return(
+      `🤱 ${side} • ${event.duration||0} min`
+    );
 
   }
+
 
   if(event.type==="nappy"){
 
     let text="";
 
-    if(event.nappyType==="wee") text="💧 Wee";
-    if(event.nappyType==="poo") text="💩 Poo";
-    if(event.nappyType==="both") text="💧💩 Wee + Poo";
+
+    if(
+      event.nappyType==="wee"
+    ){
+
+      text="💧 Wee";
+
+    }
+
+
+    if(
+      event.nappyType==="poo"
+    ){
+
+      text="💩 Poo";
+
+    }
+
+
+    if(
+      event.nappyType==="both"
+    ){
+
+      text="💧💩 Wee + Poo";
+
+    }
+
 
     const extras=[];
 
-    if(event.weeSize)
-      extras.push(`Wee: ${event.weeSize}`);
 
-    if(event.weeColour)
-      extras.push(event.weeColour);
+    if(event.weeSize){
 
-    if(event.pooColour)
-      extras.push(`Poo: ${event.pooColour}`);
-
-    if(event.pooConsistency)
-      extras.push(event.pooConsistency);
-
-    if(event.pooAmount)
-      extras.push(event.pooAmount);
-
-    return text+
-      (
-        extras.length
-        ?" • "+extras.join(" • ")
-        :""
+      extras.push(
+        `Wee: ${event.weeSize}`
       );
 
+    }
+
+
+    if(event.weeColour){
+
+      extras.push(
+        event.weeColour
+      );
+
+    }
+
+
+    if(event.pooColour){
+
+      extras.push(
+        `Poo: ${event.pooColour}`
+      );
+
+    }
+
+
+    if(event.pooConsistency){
+
+      extras.push(
+        event.pooConsistency
+      );
+
+    }
+
+
+    if(event.pooAmount){
+
+      extras.push(
+        event.pooAmount
+      );
+
+    }
+
+
+    return(
+      text+
+      (
+        extras.length
+          ?" • "+extras.join(" • ")
+          :""
+      )
+    );
+
   }
+
 
   if(event.type==="sleep"){
 
-    return `😴 ${formatDuration(event.duration)}${
-      event.source==="manual"
-        ?" • Manual"
-        :" • Tracked"
-    }${
-      event.edited
-        ?" • Edited"
-        :""
-    }`;
+    return(
+      `😴 ${formatDuration(event.duration)}${
+        event.source==="manual"
+          ?" • Manual"
+          :" • Tracked"
+      }${
+        event.edited
+          ?" • Edited"
+          :""
+      }`
+    );
 
   }
+
 
   if(event.type==="note"){
 
-    return `📝 ${escapeHtml(event.notes)}`;
+    return(
+      `📝 ${escapeHtml(event.notes)}`
+    );
 
   }
+
 
   return "";
 
@@ -2269,16 +3298,22 @@ function eventDetail(event){
    TIMELINE
 ========================= */
 
-function renderTimeline(container,events){
+function renderTimeline(
+  container,
+  events
+){
 
   if(!events.length){
 
     container.innerHTML=
-      `<div class="empty">No records for this day yet.</div>`;
+      `<div class="empty">
+        No records for this day yet.
+      </div>`;
 
     return;
 
   }
+
 
   events.sort(
     (a,b)=>
@@ -2286,46 +3321,60 @@ function renderTimeline(container,events){
       new Date(b.time)
   );
 
+
   container.innerHTML="";
+
 
   events.forEach(event=>{
 
-    const div=document.createElement("div");
+    const div=
+      document.createElement(
+        "div"
+      );
 
-    div.className="timeline-item";
+
+    div.className=
+      "timeline-item";
+
 
     let title="";
+
     let time="";
+
 
     if(event.type==="sleep"){
 
       title="😴 Sleep";
 
-      /*
-        Legacy protection if start is missing.
-      */
 
       let start;
 
+
       if(event.start){
 
-        start=new Date(event.start);
+        start=
+          new Date(event.start);
 
       }else if(
         event.time &&
         Number(event.duration)>0
       ){
 
-        const endForLegacy=new Date(event.time);
+        const endForLegacy=
+          new Date(event.time);
 
-        start=new Date(
-          endForLegacy.getTime()-
-          Number(event.duration)*60000
-        );
+        start=
+          new Date(
+            endForLegacy.getTime()-
+            Number(event.duration)*60000
+          );
 
       }
 
-      const end=new Date(event.time);
+
+      const end=
+        new Date(event.time);
+
 
       if(
         start &&
@@ -2336,18 +3385,21 @@ function renderTimeline(container,events){
         time=
           `${formatTime(start)} → ${formatTime(end)}`;
 
+
         if(
           localDateKey(start)!==
           localDateKey(end)
         ){
 
-          time+=` • ${formatDate(end)}`;
+          time+=
+            ` • ${formatDate(end)}`;
 
         }
 
       }else{
 
-        time=formatTime(event.time);
+        time=
+          formatTime(event.time);
 
       }
 
@@ -2362,11 +3414,13 @@ function renderTimeline(container,events){
 
       }
 
+
       if(event.type==="nappy"){
 
         title="🧷 Nappy";
 
       }
+
 
       if(event.type==="note"){
 
@@ -2374,20 +3428,18 @@ function renderTimeline(container,events){
 
       }
 
-      time=formatTime(event.time);
+
+      time=
+        formatTime(event.time);
 
     }
 
-    /*
-      Sleep gets a DIRECT editSleep call.
-      This prevents the generic edit path from
-      interfering with sleep editing.
-    */
 
     const editAction=
       event.type==="sleep"
-        ? `editSleep('${event.id}')`
-        : `editEvent('${event.id}')`;
+        ?`editSleep('${event.id}')`
+        :`editEvent('${event.id}')`;
+
 
     div.innerHTML=`
 
@@ -2409,11 +3461,12 @@ function renderTimeline(container,events){
 
       ${
         event.notes
-        ?
-        `<div class="timeline-detail">
-          📝 ${escapeHtml(event.notes)}
-        </div>`
-        :""
+          ?`
+            <div class="timeline-detail">
+              📝 ${escapeHtml(event.notes)}
+            </div>
+          `
+          :""
       }
 
       <div class="item-actions">
@@ -2434,6 +3487,7 @@ function renderTimeline(container,events){
 
     `;
 
+
     container.appendChild(div);
 
   });
@@ -2444,11 +3498,31 @@ function renderTimeline(container,events){
 function escapeHtml(text){
 
   return String(text||"")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
@@ -2459,17 +3533,33 @@ function escapeHtml(text){
 
 function eventsForDate(key){
 
-  const normal=data.events.filter(event=>{
+  const normal=
+    data.events.filter(
+      event=>{
 
-    if(event.type==="sleep") return false;
+        if(
+          event.type==="sleep"
+        ){
 
-    return localDateKey(event.time)===key;
+          return false;
 
-  });
+        }
 
-  const sleeps=sleepEventsForDate(key);
 
-  return [
+        return(
+          localDateKey(event.time)===
+          key
+        );
+
+      }
+    );
+
+
+  const sleeps=
+    sleepEventsForDate(key);
+
+
+  return[
     ...normal,
     ...sleeps
   ].sort(
@@ -2482,49 +3572,230 @@ function eventsForDate(key){
 
 
 /* =========================
+   LAST BOTTLE TIMER
+========================= */
+
+function getLastBottle(){
+
+  const bottles=
+    data.events
+      .filter(
+        event=>
+          event.type==="feed" &&
+          event.feedType==="bottle" &&
+          event.time
+      )
+      .sort(
+        (a,b)=>
+          new Date(b.time)-
+          new Date(a.time)
+      );
+
+
+  return bottles.length
+    ?bottles[0]
+    :null;
+
+}
+
+
+function formatElapsedSince(date){
+
+  const elapsed=
+    Math.max(
+      0,
+      Date.now()-
+      new Date(date).getTime()
+    );
+
+
+  const totalMinutes=
+    Math.floor(
+      elapsed/
+      60000
+    );
+
+
+  const days=
+    Math.floor(
+      totalMinutes/
+      1440
+    );
+
+
+  const hours=
+    Math.floor(
+      (totalMinutes%1440)/
+      60
+    );
+
+
+  const minutes=
+    totalMinutes%60;
+
+
+  if(days>0){
+
+    return `${days}d ${hours}h ${minutes}m ago`;
+
+  }
+
+
+  if(hours>0){
+
+    return `${hours}h ${minutes}m ago`;
+
+  }
+
+
+  return `${minutes}m ago`;
+
+}
+
+
+function renderLastBottle(){
+
+  const timeEl=
+    document.getElementById(
+      "lastBottleTime"
+    );
+
+  const elapsedEl=
+    document.getElementById(
+      "lastBottleElapsed"
+    );
+
+  const amountEl=
+    document.getElementById(
+      "lastBottleAmount"
+    );
+
+
+  if(
+    !timeEl||
+    !elapsedEl||
+    !amountEl
+  ){
+
+    return;
+
+  }
+
+
+  const bottle=
+    getLastBottle();
+
+
+  if(!bottle){
+
+    timeEl.textContent=
+      "No bottle has been recorded yet";
+
+    elapsedEl.textContent=
+      "—";
+
+    amountEl.textContent="";
+
+    return;
+
+  }
+
+
+  const bottleDate=
+    new Date(bottle.time);
+
+
+  timeEl.textContent=
+    `Last bottle at ${formatTime(bottleDate)} • ${formatDate(bottleDate)}`;
+
+
+  elapsedEl.textContent=
+    formatElapsedSince(
+      bottleDate
+    );
+
+
+  amountEl.textContent=
+    `${bottle.amount||0} mL`;
+
+}
+
+
+/* =========================
    HOME
 ========================= */
 
 function renderHome(){
 
-  const key=todayKey();
+  const key=
+    todayKey();
 
-  const events=eventsForDate(key);
 
-  const feeds=events.filter(
-    e=>e.type==="feed"
-  );
+  const events=
+    eventsForDate(key);
 
-  const nappies=events.filter(
-    e=>e.type==="nappy"
-  );
 
-  const milk=feeds
-    .filter(e=>e.feedType==="bottle")
-    .reduce(
-      (sum,e)=>sum+Number(e.amount||0),
-      0
+  const feeds=
+    events.filter(
+      e=>e.type==="feed"
     );
 
-  document.getElementById("feedCount")
-    .textContent=feeds.length;
 
-  document.getElementById("milkTotal")
-    .textContent=`${milk} mL`;
+  const nappies=
+    events.filter(
+      e=>e.type==="nappy"
+    );
 
-  document.getElementById("nappyCount")
-    .textContent=nappies.length;
 
-  document.getElementById("sleepTotal")
-    .textContent=
-      formatDuration(
-        sleepForDate(key)
+  const milk=
+    feeds
+      .filter(
+        e=>e.feedType==="bottle"
+      )
+      .reduce(
+        (sum,e)=>
+          sum+
+          Number(e.amount||0),
+        0
       );
 
+
+  document.getElementById(
+    "feedCount"
+  ).textContent=
+    feeds.length;
+
+
+  document.getElementById(
+    "milkTotal"
+  ).textContent=
+    `${milk} mL`;
+
+
+  document.getElementById(
+    "nappyCount"
+  ).textContent=
+    nappies.length;
+
+
+  document.getElementById(
+    "sleepTotal"
+  ).textContent=
+    formatDuration(
+      sleepForDate(key)
+    );
+
+
+  renderLastBottle();
+
+
   renderTimeline(
-    document.getElementById("todayTimeline"),
+    document.getElementById(
+      "todayTimeline"
+    ),
     events
   );
+
 
   renderLiveSleep();
 
@@ -2534,53 +3805,80 @@ function renderHome(){
 function renderLiveSleep(){
 
   const container=
-    document.getElementById("liveSleepContainer");
+    document.getElementById(
+      "liveSleepContainer"
+    );
+
 
   if(!data.currentSleepStart){
 
     container.innerHTML="";
 
-    const btn=document.querySelector(
-      ".sleep-btn"
-    );
+
+    const btn=
+      document.querySelector(
+        ".sleep-btn"
+      );
+
 
     if(btn){
 
-      btn.textContent="😴 Start Sleep";
+      btn.textContent=
+        "😴 Start Sleep";
 
     }
+
 
     return;
 
   }
 
-  const start=new Date(
-    data.currentSleepStart
-  );
 
-  const minutes=Math.round(
-    (Date.now()-start.getTime())/60000
-  );
+  const start=
+    new Date(
+      data.currentSleepStart
+    );
+
+
+  const minutes=
+    Math.round(
+      (Date.now()-
+        start.getTime())/
+      60000
+    );
+
 
   container.innerHTML=`
 
     <div class="live-sleep">
 
-      <strong>😴 Baby is sleeping</strong>
+      <strong>
+        😴 Baby is sleeping
+      </strong>
 
       <div style="margin-top:7px">
         Started ${formatTime(start)}
       </div>
 
-      <div style="font-size:24px;font-weight:800;margin-top:7px">
+      <div
+        style="
+          font-size:24px;
+          font-weight:800;
+          margin-top:7px;
+        ">
         ${formatDuration(minutes)}
       </div>
 
       <button
         class="action sleep-btn"
-        style="width:100%;margin-top:12px"
+        style="
+          width:100%;
+          margin-top:12px;
+        "
         onclick="stopSleep()">
+
         ☀️ Wake Up & Save Sleep
+
       </button>
 
     </div>
@@ -2596,75 +3894,124 @@ function renderLiveSleep(){
 
 function setToday(){
 
-  document.getElementById("historyDate").value=
+  document.getElementById(
+    "historyDate"
+  ).value=
     todayKey();
+
 
   renderHistory();
 
 }
 
+
 function renderHistory(){
 
   const key=
-    document.getElementById("historyDate").value ||
+    document.getElementById(
+      "historyDate"
+    ).value||
     todayKey();
 
-  const events=eventsForDate(key);
+
+  const events=
+    eventsForDate(key);
+
 
   renderTimeline(
-    document.getElementById("historyTimeline"),
+    document.getElementById(
+      "historyTimeline"
+    ),
     events
   );
 
-  const feeds=events.filter(
-    e=>e.type==="feed"
-  );
 
-  const nappies=events.filter(
-    e=>e.type==="nappy"
-  );
+  const feeds=
+    events.filter(
+      e=>e.type==="feed"
+    );
 
-  const bottles=feeds.filter(
-    e=>e.feedType==="bottle"
-  );
 
-  const milk=bottles.reduce(
-    (sum,e)=>sum+Number(e.amount||0),
-    0
-  );
+  const nappies=
+    events.filter(
+      e=>e.type==="nappy"
+    );
 
-  const sleep=sleepForDate(key);
 
-  document.getElementById("historyStats").innerHTML=`
+  const bottles=
+    feeds.filter(
+      e=>e.feedType==="bottle"
+    );
+
+
+  const milk=
+    bottles.reduce(
+      (sum,e)=>
+        sum+
+        Number(e.amount||0),
+      0
+    );
+
+
+  const sleep=
+    sleepForDate(key);
+
+
+  document.getElementById(
+    "historyStats"
+  ).innerHTML=`
 
     <div class="dashboard">
 
       <div class="stat">
-        <div class="stat-label">Feeds</div>
+
+        <div class="stat-label">
+          Feeds
+        </div>
+
         <div class="stat-value">
           ${feeds.length}
         </div>
+
       </div>
 
+
       <div class="stat">
-        <div class="stat-label">Milk</div>
+
+        <div class="stat-label">
+          Milk
+        </div>
+
         <div class="stat-value">
           ${milk} mL
         </div>
+
       </div>
 
+
       <div class="stat">
-        <div class="stat-label">Nappies</div>
+
+        <div class="stat-label">
+          Nappies
+        </div>
+
         <div class="stat-value">
           ${nappies.length}
         </div>
+
       </div>
 
+
       <div class="stat">
-        <div class="stat-label">Sleep</div>
+
+        <div class="stat-label">
+          Sleep
+        </div>
+
         <div class="stat-value">
           ${formatDuration(sleep)}
         </div>
+
       </div>
 
     </div>
@@ -2681,70 +4028,112 @@ function renderHistory(){
 function renderSevenDayStats(){
 
   const container=
-    document.getElementById("sevenDayStats");
+    document.getElementById(
+      "sevenDayStats"
+    );
+
 
   container.innerHTML="";
 
-  for(let i=6;i>=0;i--){
 
-    const date=new Date();
+  for(
+    let i=6;
+    i>=0;
+    i--
+  ){
+
+    const date=
+      new Date();
+
 
     date.setDate(
       date.getDate()-i
     );
 
-    const key=localDateKey(date);
 
-    const events=eventsForDate(key);
+    const key=
+      localDateKey(date);
 
-    const feeds=events.filter(
-      e=>e.type==="feed"
-    );
 
-    const nappies=events.filter(
-      e=>e.type==="nappy"
-    );
+    const events=
+      eventsForDate(key);
 
-    const milk=feeds
-      .filter(e=>e.feedType==="bottle")
-      .reduce(
-        (sum,e)=>sum+Number(e.amount||0),
-        0
+
+    const feeds=
+      events.filter(
+        e=>e.type==="feed"
       );
 
-    const sleep=sleepForDate(key);
 
-    const row=document.createElement("div");
+    const nappies=
+      events.filter(
+        e=>e.type==="nappy"
+      );
+
+
+    const milk=
+      feeds
+        .filter(
+          e=>e.feedType==="bottle"
+        )
+        .reduce(
+          (sum,e)=>
+            sum+
+            Number(e.amount||0),
+          0
+        );
+
+
+    const sleep=
+      sleepForDate(key);
+
+
+    const row=
+      document.createElement(
+        "div"
+      );
+
 
     row.className="card";
 
-    row.style.marginBottom="10px";
+    row.style.marginBottom=
+      "10px";
+
 
     row.innerHTML=`
 
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        gap:10px;
-        align-items:center;
-        flex-wrap:wrap;
-      ">
+      <div
+        style="
+          display:flex;
+          justify-content:space-between;
+          gap:10px;
+          align-items:center;
+          flex-wrap:wrap;
+        ">
 
         <strong>
-          ${date.toLocaleDateString([],{
-            weekday:"short",
-            day:"numeric",
-            month:"short"
-          })}
+
+          ${date.toLocaleDateString(
+            [],
+            {
+              weekday:"short",
+              day:"numeric",
+              month:"short"
+            }
+          )}
+
         </strong>
+
 
         <span>
           🍼 ${milk} mL
         </span>
 
+
         <span>
           🧷 ${nappies.length}
         </span>
+
 
         <span>
           😴 ${formatDuration(sleep)}
@@ -2753,6 +4142,7 @@ function renderSevenDayStats(){
       </div>
 
     `;
+
 
     container.appendChild(row);
 
@@ -2767,14 +4157,23 @@ function renderSevenDayStats(){
 
 function openSettings(){
 
-  document.getElementById("babyName").value=
+  document.getElementById(
+    "babyName"
+  ).value=
     data.baby.name||"";
 
-  document.getElementById("babyDob").value=
+
+  document.getElementById(
+    "babyDob"
+  ).value=
     data.baby.dob||"";
 
-  document.getElementById("defaultAmount").value=
+
+  document.getElementById(
+    "defaultAmount"
+  ).value=
     data.baby.defaultAmount||120;
+
 
   document.getElementById(
     "settingsModal"
@@ -2782,19 +4181,29 @@ function openSettings(){
 
 }
 
+
 function saveSettings(){
 
   data.baby.name=
-    document.getElementById("babyName").value.trim()||
+    document.getElementById(
+      "babyName"
+    ).value.trim()||
     "Baby";
 
+
   data.baby.dob=
-    document.getElementById("babyDob").value;
+    document.getElementById(
+      "babyDob"
+    ).value;
+
 
   data.baby.defaultAmount=
     Number(
-      document.getElementById("defaultAmount").value
+      document.getElementById(
+        "defaultAmount"
+      ).value
     )||120;
+
 
   saveData();
 
@@ -2815,20 +4224,26 @@ function renderAll(){
 
   renderHome();
 
+
   if(
     !document.getElementById(
       "historyPage"
-    ).classList.contains("hidden")
+    ).classList.contains(
+      "hidden"
+    )
   ){
 
     renderHistory();
 
   }
 
+
   if(
     !document.getElementById(
       "statsPage"
-    ).classList.contains("hidden")
+    ).classList.contains(
+      "hidden"
+    )
   ){
 
     renderSevenDayStats();
@@ -2842,22 +4257,38 @@ function renderAll(){
    LIVE UPDATE
 ========================= */
 
-setInterval(()=>{
+setInterval(
+  ()=>{
 
-  if(data.currentSleepStart){
+    /*
+      Keep sleep timer live.
+    */
 
-    renderLiveSleep();
+    if(data.currentSleepStart){
 
-    document.getElementById(
-      "sleepTotal"
-    ).textContent=
-      formatDuration(
-        sleepForDate(todayKey())
-      );
+      renderLiveSleep();
 
-  }
+      document.getElementById(
+        "sleepTotal"
+      ).textContent=
+        formatDuration(
+          sleepForDate(
+            todayKey()
+          )
+        );
 
-},1000);
+    }
+
+
+    /*
+      KEEP LAST BOTTLE TIMER LIVE
+    */
+
+    renderLastBottle();
+
+  },
+  1000
+);
 
 
 /* =========================
@@ -2871,14 +4302,19 @@ if(
   window.addEventListener(
     "load",
     ()=>{
+
       navigator.serviceWorker
-        .register("./service-worker.js")
-        .catch(err=>
-          console.log(
-            "Service worker:",
-            err
-          )
+        .register(
+          "./service-worker.js"
+        )
+        .catch(
+          err=>
+            console.log(
+              "Service worker:",
+              err
+            )
         );
+
     }
   );
 
